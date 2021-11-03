@@ -8,6 +8,8 @@ namespace Dataservices.Domain
         public int SeasonNumber { get; set; }
 
         public int EpisodeNumber { get; set; }
+        
+        public ImdbTitleBasics MainTitle { get; set; }
 
     }
 }

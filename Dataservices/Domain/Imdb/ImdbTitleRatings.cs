@@ -7,6 +7,8 @@ namespace Dataservices.Domain
         public int SumRating { get; set; }
 
         public int NumVotes { get; set; }
+        
+        public ImdbTitleBasics Title { get; set; }
 
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Dataservices.Domain.User
 {
     public class CUser
@@ -6,5 +8,11 @@ namespace Dataservices.Domain.User
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        
+        public List<CReviews> Reviews { get; set; }
+        public List<CBookmarkPerson> BookmarkedPersons { get; set; }
+        public List<CBookmarkTitle> BookmarkedTitles { get; set; }
+        public List<CRatingHistory> Ratings { get; set; }
+        public List<CSearchHistory> SearchHistories { get; set; }
     }
 }

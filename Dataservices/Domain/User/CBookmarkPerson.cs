@@ -4,5 +4,10 @@ namespace Dataservices.Domain.User
     {
         public string Nconst { get; set; }
         public int UserId { get; set; }
+        
+        public ImdbNameBasics Name { get; set; }
+        
+        public CUser User { get; set; }
+        
     }
 }

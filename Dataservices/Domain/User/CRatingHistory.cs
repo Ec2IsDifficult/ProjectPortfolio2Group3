@@ -7,8 +7,10 @@ namespace Dataservices.Domain.User
         public string Tconst { get; set; }
         public int UserId { get; set; }
         public int Rating { get; set; }
-        //TODO: Is this the correct attribute
         public TimestampAttribute RatingTimeStamp { get; set; }
-
+        
+        public ImdbTitleBasics Title { get; set; }
+        
+        public CUser User { get; set; }
     }
 }
