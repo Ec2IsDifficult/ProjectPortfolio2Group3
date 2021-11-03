@@ -2,7 +2,8 @@
 
 namespace Dataservices
 {
-    public class Class1
+    public class DataServices
     {
+        
     }
 }
