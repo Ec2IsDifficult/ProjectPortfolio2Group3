@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-
-namespace Dataservices
+namespace Dataservices.CRUDRepository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
@@ -16,7 +15,7 @@ namespace Dataservices
             Context = context;
         }
         
-        public TEntity Get(int id)
+        public TEntity Get(string id)
         {
             //The .Set function return a DbSet<TEntity> for access by subclasses (specific repositories)
             return Context.Set<TEntity>().Find(id);

@@ -12,11 +12,26 @@ namespace Dataservices
     public class ImdbContext : DbContext
     {
         public DbSet<ImdbGenre> ImdbGenre { get; set; }
-
+        public DbSet<ImdbCrew> ImdbCrew { get; set; }
+        public DbSet<ImdbCast> ImdbCast { get; set; }
+        public DbSet<ImdbKnownFor> ImdbKnownFor { get; set; }
+        public DbSet<ImdbNameBasics> ImdbNameBasics { get; set; }
+        public DbSet<ImdbPrimeProfession> ImdbPrimeProfession { get; set; }
+        public DbSet<ImdbTitleAkas> ImdbTitleAkas { get; set; }
+        public DbSet<ImdbTitleBasics> ImdbTitleBasics { get; set; }
+        public DbSet<ImdbTitleEpisode> ImdbTitleEpisode { get; set; }
+        public DbSet<ImdbTitleRatings> ImdbTitleRatings { get; set; }
+        public DbSet<CBookmarkPerson> CBookmarkPerson { get; set; }
+        public DbSet<CBookmarkTitle> CBookmarkTitle { get; set; }
+        public DbSet<CRatingHistory> CRatingHistory { get; set; }
+        public DbSet<CReviews> CReviews { get; set; }
+        public DbSet<CSearchHistory> CSearchHistory { get; set; }
+        public DbSet<CUser> CUser { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseNpgsql("host=localhost;db=northwindfinalfinal;uid=postgres;pwd=Pedal14;Encoding=UTF-8;");
+            optionsBuilder.UseNpgsql("host=rawdata.ruc.dk;port=5432;db=raw3;uid=raw3;pwd=UGiCUSoX;Encoding=UTF-8;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +39,14 @@ namespace Dataservices
             base.OnModelCreating(modelBuilder);
             
             //Imdb Related Mapping
+            //ImdbNameBasics
+            modelBuilder.Entity<ImdbNameBasics>().ToTable("imdb_name_basics");
+            modelBuilder.Entity<ImdbNameBasics>().Property(x => x.Nconst).HasColumnName("nconst");
+            modelBuilder.Entity<ImdbNameBasics>().Property(x => x.Name).HasColumnName("name");
+            modelBuilder.Entity<ImdbNameBasics>().Property(x => x.BirthYear).HasColumnName("birthyear");
+            modelBuilder.Entity<ImdbNameBasics>().Property(x => x.DeathYear).HasColumnName("deathyear");
+            modelBuilder.Entity<ImdbNameBasics>().HasKey(x => x.Nconst);
+            
             //ImdbGenre
             modelBuilder.Entity<ImdbGenre>().ToTable("imdb_genre");
             modelBuilder.Entity<ImdbGenre>().Property(x => x.Tconst).HasColumnName("tconst");
@@ -52,29 +75,11 @@ namespace Dataservices
             modelBuilder.Entity<ImdbKnownFor>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<ImdbKnownFor>().HasKey(x => new {x.Nconst, x.Tconst});
 
-            //ImdbNameBasics
-            modelBuilder.Entity<ImdbNameBasics>().ToTable("imdb_name_basics");
-            modelBuilder.Entity<ImdbNameBasics>().Property(x => x.Nconst).HasColumnName("nconst");
-            modelBuilder.Entity<ImdbNameBasics>().Property(x => x.Name).HasColumnName("name");
-            modelBuilder.Entity<ImdbNameBasics>().Property(x => x.BirthYear).HasColumnName("birthyear");
-            modelBuilder.Entity<ImdbNameBasics>().Property(x => x.DeathYear).HasColumnName("deathyear");
-            modelBuilder.Entity<ImdbNameBasics>().HasKey(x => x.Nconst);
-            
             //ImdbPrimeProfession
             modelBuilder.Entity<ImdbPrimeProfession>().ToTable("imdb_prime_profession");
             modelBuilder.Entity<ImdbPrimeProfession>().Property(x => x.Nconst).HasColumnName("nconst");
             modelBuilder.Entity<ImdbPrimeProfession>().Property(x => x.Profession).HasColumnName("profession");
             modelBuilder.Entity<ImdbPrimeProfession>().HasKey(x => new {x.Nconst, x.Profession});
-            
-            //ImdbTitleAkas
-            modelBuilder.Entity<ImdbTitleAkas>().ToTable("imdb_title_akas");
-            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Tconst).HasColumnName("tconst");
-            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Ordering).HasColumnName("ordering");
-            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Title).HasColumnName("title");
-            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Region).HasColumnName("region");
-            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Language).HasColumnName("language");
-            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.IsOriginalTitle).HasColumnName("is_original_title");
-            modelBuilder.Entity<ImdbTitleAkas>().HasKey(x => new {x.Tconst, x.Ordering});
             
             //ImdbTitleBasics
             modelBuilder.Entity<ImdbTitleBasics>().ToTable("imdb_title_basics");
@@ -89,6 +94,20 @@ namespace Dataservices
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Plot).HasColumnName("plot");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Awards).HasColumnName("awards");
             modelBuilder.Entity<ImdbTitleBasics>().HasKey(x => x.Tconst);
+            modelBuilder.Entity<ImdbTitleBasics>().
+                HasOne(x => x.Rating).
+                WithOne(x => x.Title).
+                HasForeignKey<ImdbTitleRatings>(x => x.Tconst);
+            
+            //ImdbTitleAkas
+            modelBuilder.Entity<ImdbTitleAkas>().ToTable("imdb_title_akas");
+            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Tconst).HasColumnName("tconst");
+            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Ordering).HasColumnName("ordering");
+            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Title).HasColumnName("title");
+            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Region).HasColumnName("region");
+            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Language).HasColumnName("language");
+            modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.IsOriginalTitle).HasColumnName("is_original_title");
+            modelBuilder.Entity<ImdbTitleAkas>().HasKey(x => new {x.Tconst, x.Ordering});
 
             //ImdbTitleEpisode
             modelBuilder.Entity<ImdbTitleEpisode>().ToTable("imdb_title_episode");
@@ -149,7 +168,7 @@ namespace Dataservices
             modelBuilder.Entity<CUser>().Property(x => x.UserName).HasColumnName("username");
             modelBuilder.Entity<CUser>().Property(x => x.Email).HasColumnName("email");
             modelBuilder.Entity<CUser>().Property(x => x.Password).HasColumnName("password");
-            modelBuilder.Entity<CSearchHistory>().HasKey(x => x.UserId);
+            modelBuilder.Entity<CUser>().HasKey(x => x.UserId);
         }
     }
 }
