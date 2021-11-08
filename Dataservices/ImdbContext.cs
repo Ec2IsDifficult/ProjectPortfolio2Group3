@@ -9,6 +9,8 @@ using Npgsql;
 
 namespace Dataservices
 {
+    using Domain.Functions;
+
     public class ImdbContext : DbContext
     {
         public DbSet<ImdbGenre> ImdbGenre { get; set; }
@@ -28,6 +30,8 @@ namespace Dataservices
         public DbSet<CSearchHistory> CSearchHistory { get; set; }
         public DbSet<CUser> CUser { get; set; }
         
+        public DbSet<TestFunctionResult> test { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -46,7 +50,7 @@ namespace Dataservices
             modelBuilder.Entity<ImdbNameBasics>().Property(x => x.BirthYear).HasColumnName("birthyear");
             modelBuilder.Entity<ImdbNameBasics>().Property(x => x.DeathYear).HasColumnName("deathyear");
             modelBuilder.Entity<ImdbNameBasics>().HasKey(x => x.Nconst);
-            
+
             //ImdbGenre
             modelBuilder.Entity<ImdbGenre>().ToTable("imdb_genre");
             modelBuilder.Entity<ImdbGenre>().Property(x => x.Tconst).HasColumnName("tconst");

@@ -20,12 +20,12 @@ namespace Dataservices.Repository
 
         public IEnumerable<ImdbTitleBasics> GetCast(string id)
         {
-            return ImdbContext.ImdbTitleBasics.Include(x => x.Casts).Where(x => x.Tconst == id);
+            return ImdbContext.ImdbTitleBasics.Include(x => x.Cast).Where(x => x.Tconst == id);
         }
 
         public IEnumerable<ImdbTitleBasics> GetCrew(string id)
         {
-            return ImdbContext.ImdbTitleBasics.Include(x => x.Casts).Where(x => x.Tconst == id);
+            return ImdbContext.ImdbTitleBasics.Include(x => x.Crew).Where(x => x.Tconst == id);
         }
 
         public IEnumerable<ImdbTitleRatings> GetRating(string id)

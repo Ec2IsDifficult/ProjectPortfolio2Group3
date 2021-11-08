@@ -21,10 +21,12 @@ namespace Dataservices.Domain
         public List<ImdbTitleAkas> AkasList { get; set; }
         public List<CReviews> Reviews { get; set; }
         public List<CBookmarkTitle> BeenBookmarkedBy { get; set; }
-        public List<ImdbCast> Casts { get; set; }
-        public List<ImdbCrew> Crews { get; set; }
+        public List<ImdbCast> Cast { get; set; }
+        public List<ImdbCrew> Crew { get; set; }
         public List<ImdbGenre> Genres { get; set; }
         public List<ImdbKnownFor> KnownFors { get; set; }
         public List<ImdbTitleEpisode> Episodes { get; set; }
+        //public ImdbTitleEpisode EpisodeOf { get; set; }
+
     }
 }
