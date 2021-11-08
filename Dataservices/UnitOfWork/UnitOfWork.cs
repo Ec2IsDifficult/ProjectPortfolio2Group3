@@ -1,8 +1,10 @@
-namespace Dataservices
+namespace DataServices.UnitOfWork
 {
+    using Dataservices;
     using DataServices;
-    using IRepositories;
-    using Repository;
+    using Dataservices.IRepositories;
+    using Dataservices.Repository;
+
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ImdbContext _ctx;
@@ -17,7 +19,6 @@ namespace Dataservices
         {
             _ctx.Dispose();
         }
-        
         public int Complete()
         {
             return _ctx.SaveChanges();
