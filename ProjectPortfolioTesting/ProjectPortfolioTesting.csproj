@@ -24,9 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Webservices\Webservices.csproj" />
-    </ItemGroup>
-    <ItemGroup>
         <ProjectReference Include="..\Dataservices\Dataservices.csproj" />
     </ItemGroup>
 
