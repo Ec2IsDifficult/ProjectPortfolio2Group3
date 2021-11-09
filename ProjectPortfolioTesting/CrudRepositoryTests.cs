@@ -17,7 +17,6 @@ namespace ProjectPortfolioTesting
 
     public class PersonRepositoryTest
     {
-
         private PersonRepository _personRepository;
         private EpisodeRepository _episodeRepository;
         private TitleRepository _titleRepository;
@@ -29,6 +28,7 @@ namespace ProjectPortfolioTesting
             _personRepository = new PersonRepository(_ctx);
             _titleRepository = new TitleRepository(_ctx);
             _episodeRepository = new EpisodeRepository(_ctx);
+            _userRepository = new UserRepository(_ctx);
         }
         
         //Testing the Get method on Persons framework
@@ -70,9 +70,63 @@ namespace ProjectPortfolioTesting
             newUser.Email = "TestUser@Test.dk";
             newUser.Password = "Jajo";
             _userRepository.Add(newUser);
+            _ctx.SaveChanges();
             CUser user = _userRepository.Get(newUser.UserId);
             Assert.Equal("TestUser", user.UserName);
-            Assert.Equal("TestUser", user.UserName);
+            Assert.Equal("TestUser@Test.dk", newUser.Email);
+            Assert.Equal("Jajo", newUser.Password);
+            _userRepository.Delete(newUser);
         }
+
+        [Fact]
+        public void DeleteUser()
+        {
+            CUser newUser = new CUser();
+            newUser.UserName = "TestUser";
+            newUser.Email = "TestUser@Test.dk";
+            newUser.Password = "Jajo";
+            _userRepository.Add(newUser);
+            _ctx.SaveChanges();
+            
+            //Delete user
+            _userRepository.Delete(newUser);
+            _ctx.SaveChanges();
+            
+            //Try to get user
+            CUser user = _userRepository.Get(newUser.UserId);
+            Assert.Null(user);
+        }
+        
+        // [Fact]
+        //A Mock test for GetAll users
+        
+        [Fact]
+        public void UpdateUser()
+        {
+            //Create new user
+            CUser newUser = new CUser();
+            newUser.UserName = "TestUser";
+            newUser.Email = "TestUser@Test.dk";
+            newUser.Password = "Jajo";
+            _userRepository.Add(newUser);
+            _ctx.SaveChanges();
+            
+            //Update user
+            newUser.UserName = "ChangedNameForUser";
+            newUser.Email = "TestUser@Test.dk";
+            newUser.Password = "JajoJajo";
+            _userRepository.Update(newUser);
+            _ctx.SaveChanges();
+            
+            //Get the user and test
+            CUser user = _userRepository.Get(newUser.UserId);
+            Assert.Equal("ChangedNameForUser", user.UserName);
+            Assert.Equal("TestUser@Test.dk", newUser.Email);
+            Assert.Equal("JajoJajo", newUser.Password);
+            _userRepository.Delete(newUser);
+            _ctx.SaveChanges();
+        }
+        
+        
     }
 }
