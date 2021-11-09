@@ -17,6 +17,18 @@ namespace ProjectPortfolioTesting
         public PersonRepositoryTest()
         {
             unit = new UnitOfWork(new ImdbContext());
+        private PersonRepository _personRepository;
+        private EpisodeRepository _episodeRepository;
+        private TitleRepository _titleRepository;
+        private UserRepository _userRepository;
+        private ImdbContext _ctx;
+        public PersonRepositoryTest()
+        {
+            _ctx = new ImdbContext();
+            _personRepository = new PersonRepository(_ctx);
+            _titleRepository = new TitleRepository(_ctx);
+            _episodeRepository = new EpisodeRepository(_ctx);
+            _userRepository = new UserRepository(_ctx);
         }
         [Fact]
         public void GetPerson()
@@ -41,5 +53,7 @@ namespace ProjectPortfolioTesting
                 Assert.Equal("Fred Astaire", VARIABLE.Name);
             }
         }
+        
+        
     }
 }
