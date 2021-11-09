@@ -8,7 +8,7 @@ namespace Dataservices.Repository
     using Domain.User;
     using Microsoft.EntityFrameworkCore;
 
-    public class UserRepository : Repository<CUser>, IUserRepository
+    public class UserRepository : MutableRepository<CUser>, IUserRepository
     {
         public UserRepository(DbContext context) : base(context)
         {

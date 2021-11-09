@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Dataservices.Repository
 {
     //Will inherit all functionality from the Repository class and a functionality contract from its specific interface
-    public class PersonRepository : Repository<ImdbNameBasics>, IPersonRepository
+    public class PersonRepository : ImmutableRepository<ImdbNameBasics>, IPersonRepository
     {
         // : base(context) to access the constructor from the parent class
         public PersonRepository(ImdbContext context) : base(context)

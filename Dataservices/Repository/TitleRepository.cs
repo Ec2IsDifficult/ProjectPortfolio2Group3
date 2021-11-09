@@ -1,13 +1,14 @@
 namespace Dataservices.Repository
 {
     using System.Collections.Generic;
+    using System.Collections.Immutable;
     using System.Linq;
     using Domain;
     using IRepositories;
     using CRUDRepository;
     using Microsoft.EntityFrameworkCore;
 
-    public class TitleRepository : Repository<ImdbTitleBasics>, ITitleRepository
+    public class TitleRepository : ImmutableRepository<ImdbTitleBasics>, ITitleRepository
     {
         public TitleRepository(ImdbContext context) :base(context)
         {

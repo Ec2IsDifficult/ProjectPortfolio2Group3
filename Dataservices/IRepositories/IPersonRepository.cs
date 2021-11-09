@@ -4,7 +4,7 @@ using Dataservices.Domain;
 
 namespace Dataservices.IRepositories
 {
-    public interface IPersonRepository : IRepository<ImdbNameBasics>
+    public interface IPersonRepository : IIMutableRepository<ImdbNameBasics>
     {
         IEnumerable<ImdbKnownFor> GetKnowFor(string id);
         
