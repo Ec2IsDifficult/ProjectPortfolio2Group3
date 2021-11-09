@@ -111,7 +111,14 @@ namespace Dataservices
                 .HasMany(x => x.Crew)
                 .WithOne(x => x.Title)
                 .HasForeignKey(x => x.Tconst);
-            
+            modelBuilder.Entity<ImdbTitleBasics>()
+                .HasMany(x => x.Reviews)
+                .WithOne(x => x.ReviewFor)
+                .HasForeignKey(x => x.Tconst);
+            modelBuilder.Entity<ImdbTitleBasics>()
+                .HasOne(x => x.Rating)
+                .WithOne(x => x.Title);
+
             //ImdbTitleAkas
             modelBuilder.Entity<ImdbTitleAkas>().ToTable("imdb_title_akas");
             modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Tconst).HasColumnName("tconst");
@@ -163,10 +170,9 @@ namespace Dataservices
             modelBuilder.Entity<CReviews>().ToTable("c_reviews");
             modelBuilder.Entity<CReviews>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<CReviews>().Property(x => x.UserId).HasColumnName("user_id");
-            modelBuilder.Entity<CReviews>().Property(x => x.Review).HasColumnName("Review");
-            modelBuilder.Entity<CReviews>().Property(x => x.ReviewTimpStamp).HasColumnName("review_time_stamp");
+            modelBuilder.Entity<CReviews>().Property(x => x.Review).HasColumnName("review");
+            modelBuilder.Entity<CReviews>().Property(x => x.ReviewTimeStamp).HasColumnName("review_time_stamp");
             modelBuilder.Entity<CReviews>().HasKey(x => new { x.Tconst, x.UserId });
-            
 
             //CSearchHistory
             modelBuilder.Entity<CSearchHistory>().ToTable("c_search_history");
@@ -182,6 +188,18 @@ namespace Dataservices
             modelBuilder.Entity<CUser>().Property(x => x.Email).HasColumnName("email");
             modelBuilder.Entity<CUser>().Property(x => x.Password).HasColumnName("password");
             modelBuilder.Entity<CUser>().HasKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.Reviews)
+                .WithOne(x => x.ReviewBy)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.Ratings)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.SearchHistories)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
         }
     }
 }

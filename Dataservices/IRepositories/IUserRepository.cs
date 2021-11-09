@@ -7,6 +7,6 @@ namespace Dataservices.IRepositories
 
     public interface IUserRepository : IMutableRepository<CUser>
     {
-
+        public CUser GetReviews(int id);
     }
 }
