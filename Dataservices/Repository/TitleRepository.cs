@@ -18,21 +18,22 @@ namespace Dataservices.Repository
             return ImdbContext.ImdbTitleBasics.Where(x => x.StartYear == year);
         }
 
-        public IEnumerable<ImdbTitleBasics> GetCast(string id)
+        public ImdbTitleBasics GetCast(string id)
         {
-            return ImdbContext.ImdbTitleBasics.Include(x => x.Cast).Where(x => x.Tconst == id);
+            return ImdbContext.ImdbTitleBasics.Include(x => x.Cast).FirstOrDefault(x => x.Tconst == id);
         }
 
-        public IEnumerable<ImdbTitleBasics> GetCrew(string id)
+        public ImdbTitleBasics GetCrew(string id)
         {
-            return ImdbContext.ImdbTitleBasics.Include(x => x.Crew).Where(x => x.Tconst == id);
+            return ImdbContext.ImdbTitleBasics.Include(x => x.Crew).FirstOrDefault(x => x.Tconst == id);
         }
 
-        public IEnumerable<ImdbTitleRatings> GetRating(string id)
+        public ImdbTitleRatings GetRating(string id)
         {
-            return ImdbContext.ImdbTitleRatings.Where(x => x.Tconst == id);
+            return ImdbContext.ImdbTitleRatings.FirstOrDefault(x => x.Tconst == id);
         }
 
+        
         public IEnumerable<ImdbTitleBasics> GetSeasons(string id)
         {
             //TODO: Probably should be created using an SQL function
@@ -45,10 +46,9 @@ namespace Dataservices.Repository
             return ImdbContext.ImdbTitleBasics.Where(x => x.StartYear >= startYear && x.StartYear <= endYear);
         }
 
-        public IEnumerable<ImdbTitleBasics> GetEpisodes(string id)
+        public ImdbTitleBasics GetEpisodes(string id)
         {
-            //TODO: Has to be made so that it checks whether it is null before it requests episodes
-            return ImdbContext.ImdbTitleBasics.Include(x => x.Episodes);
+            return ImdbContext.ImdbTitleBasics.Include(x => x.Episodes).FirstOrDefault(x => x.Tconst == id);
         }
         
         public ImdbContext ImdbContext

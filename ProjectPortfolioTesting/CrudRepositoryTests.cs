@@ -15,14 +15,14 @@ namespace ProjectPortfolioTesting
     using Dataservices.Repository;
     using Dataservices.Domain.User;
 
-    public class PersonRepositoryTest
+    public class CrudRepositoryTest
     {
         private PersonRepository _personRepository;
         private EpisodeRepository _episodeRepository;
         private TitleRepository _titleRepository;
         private UserRepository _userRepository;
         private ImdbContext _ctx;
-        public PersonRepositoryTest()
+        public CrudRepositoryTest()
         {
             _ctx = new ImdbContext();
             _personRepository = new PersonRepository(_ctx);

@@ -18,14 +18,14 @@ namespace Dataservices.Domain
         
         public ImdbTitleRatings Rating { get; set; }
         
-        public List<ImdbTitleAkas> AkasList { get; set; }
-        public List<CReviews> Reviews { get; set; }
-        public List<CBookmarkTitle> BeenBookmarkedBy { get; set; }
-        public List<ImdbCast> Cast { get; set; }
-        public List<ImdbCrew> Crew { get; set; }
-        public List<ImdbGenre> Genres { get; set; }
-        public List<ImdbKnownFor> KnownFors { get; set; }
-        public List<ImdbTitleEpisode> Episodes { get; set; }
+        public IList<ImdbTitleAkas> AkasList { get; set; }
+        public IList<CReviews> Reviews { get; set; }
+        public IList<CBookmarkTitle> BeenBookmarkedBy { get; set; }
+        public IList<ImdbCast> Cast { get; set; }
+        public IList<ImdbCrew> Crew { get; set; }
+        public IList<ImdbGenre> Genres { get; set; }
+        public IList<ImdbKnownFor> KnownFors { get; set; }
+        public IList<ImdbTitleEpisode> Episodes { get; set; }
         //public ImdbTitleEpisode EpisodeOf { get; set; }
 
     }
