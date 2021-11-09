@@ -1,0 +1,40 @@
+﻿<Properties StartupConfiguration="{5B8AB8DF-E14F-44E2-85FB-F359D4A4333E}|Default">
+  <MonoDevelop.Ide.ItemProperties.WebServiceAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebServiceAPI/Controllers/Authenticate.cs">
+    <Files>
+      <File FileName="ProjectPortfolioTesting/PersonRepositoryTest.cs" Line="1" Column="1" />
+      <File FileName="Dataservices/Authentication/AuthenticatedUser.cs" Line="5" Column="38" />
+      <File FileName="Dataservices/Authentication/Entities.cs" Line="6" Column="33" />
+      <File FileName="Dataservices/Authentication/LoginModel.cs" Line="2" Column="1" />
+      <File FileName="WebServiceAPI/Program.cs" Line="1" Column="1" />
+      <File FileName="WebServiceAPI/Startup.cs" Line="48" Column="16" />
+      <File FileName="WebServiceAPI/Controllers/Authenticate.cs" Line="9" Column="31" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ProjectPortfolio2Group3" expanded="True">
+            <Node name="Dataservices" expanded="True">
+              <Node name="Authentication" expanded="True" />
+              <Node name="Domain" expanded="True">
+                <Node name="User" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="WebServiceAPI" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="Authenticate.cs" selected="True" />
+              </Node>
+              <Node name="Models" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -7,29 +7,27 @@ namespace Dataservices.Repository
     using CRUDRepository;
     using Microsoft.EntityFrameworkCore;
 
-    public class EpisodeRepository : Repository<ImdbTitleEpisode>, IEpisodeRepository
+    public class EpisodeRepository : Repository<ImdbTitleBasics>, IEpisodeRepository
     {
         public EpisodeRepository(ImdbContext context) : base(context)
         {
-            
         }
 
-        public IEnumerable<ImdbTitleEpisode> GetEpisodeCast(string id)
-        
+        public IEnumerable<ImdbTitleBasics> GetEpisodeCast(string id)
         {
             //TODO: There has to be a smarter way to check if the episode is actually an episode, than to check if the episodeOf attr. is null or not...
             //return ImdbContext.ImdbTitleBasics.Include(x => x.Cast).Where(x => x.Tconst == id && x.EpisodeOf != null);
             return null;
         }
 
-        public IEnumerable<ImdbTitleEpisode> GetEpisodeCrew(string id)
+        public IEnumerable<ImdbTitleBasics> GetEpisodeCrew(string id)
         {
             //TODO: There has to be a smarter way to check if the episode is actually an episode, than to check if the episodeOf attr. is null or not...
             //return ImdbContext.ImdbTitleBasics.Include(x => x.Crew).Where(x => x.Tconst == id && x.EpisodeOf != null);
             return null;
         }
 
-        public IEnumerable<ImdbTitleEpisode> GetEpisodeRating(string id)
+        public IEnumerable<ImdbTitleBasics> GetEpisodeRating(string id)
         {
             //return ImdbContext.ImdbTitleBasics.Include(x => x.Rating).Where(x => x.Tconst == id && x.EpisodeOf != null);
             return null;
