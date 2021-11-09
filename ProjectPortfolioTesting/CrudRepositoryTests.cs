@@ -9,7 +9,6 @@ namespace ProjectPortfolioTesting
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Linq;
-    using Autofac.Extras.Moq;
     using Dataservices.CRUDRepository;
     using Dataservices.IRepositories;
     using Dataservices.Repository;
@@ -126,7 +125,5 @@ namespace ProjectPortfolioTesting
             _userRepository.Delete(newUser);
             _ctx.SaveChanges();
         }
-        
-        
     }
 }
