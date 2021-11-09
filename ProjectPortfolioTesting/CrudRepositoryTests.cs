@@ -47,12 +47,12 @@ namespace ProjectPortfolioTesting
             Assert.Equal(234484, result.Count());
         }
         
-        [Fact]
-        public void GetEpisode()
+        //[Fact]
+        /*public void GetEpisode()
         {
             ImdbTitleEpisode result = _episodeRepository.Get("tt0734667");
             Assert.Equal("tt0734667", result.EpisodeTconst);
-        }
+        }*/
         
         [Fact]
         public void GetTitle()

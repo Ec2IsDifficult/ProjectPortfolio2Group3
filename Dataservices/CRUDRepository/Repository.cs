@@ -15,7 +15,7 @@ namespace Dataservices.CRUDRepository
             Context = context;
         }
         
-        public TEntity Get(string id)
+        public TEntity Get<T>(T id)
         {
             //The .Set function return a DbSet<TEntity> for access by subclasses (specific repositories)
             return Context.Set<TEntity>().Find(id);

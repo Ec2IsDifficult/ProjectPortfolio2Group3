@@ -8,6 +8,5 @@ namespace Dataservices.IRepositories
         IEnumerable<ImdbTitleBasics> GetEpisodeCast(string id);
         IEnumerable<ImdbTitleBasics> GetEpisodeCrew(string id);
         IEnumerable<ImdbTitleBasics> GetEpisodeRating(string id);
-
     }
 }

@@ -9,7 +9,6 @@ using Npgsql;
 
 namespace Dataservices
 {
-    using Domain.Functions;
 
     public class ImdbContext : DbContext
     {
@@ -30,8 +29,6 @@ namespace Dataservices
         public DbSet<CSearchHistory> CSearchHistory { get; set; }
         public DbSet<CUser> CUser { get; set; }
         
-        public DbSet<TestFunctionResult> test { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
