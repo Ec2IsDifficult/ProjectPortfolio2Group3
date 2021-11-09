@@ -1,16 +1,7 @@
 namespace Dataservices.Repository
 {
-    using Domain.User;
-    using IRepositories;
-    using CRUDRepository;
-    using Microsoft.EntityFrameworkCore;
-
-    public class UserRepository : Repository<CUser>, IUserRepository
-
+    public class UserRepository
     {
-        public UserRepository(DbContext context) : base(context)
-        {
-            
-        }
+        
     }
 }
