@@ -1,9 +1,10 @@
 namespace Dataservices.IRepositories
 {
     using System.Collections.Generic;
+    using CRUDRepository;
     using Domain;
 
-    public interface ITitleRepository
+    public interface ITitleRepository : IRepository<ImdbTitleBasics>
     {
         IEnumerable<ImdbTitleBasics> GetTitlesByYear(int year);
         IEnumerable<ImdbTitleBasics> GetCast(string id);

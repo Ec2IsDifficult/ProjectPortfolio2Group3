@@ -1,13 +1,14 @@
 namespace Dataservices.IRepositories
 {
     using System.Collections.Generic;
+    using CRUDRepository;
     using Domain;
 
-    public interface IEpisodeRepository
+    public interface IEpisodeRepository : IRepository<ImdbTitleEpisode>
     {
-        IEnumerable<ImdbTitleBasics> GetEpisodeCast(string id);
-        IEnumerable<ImdbTitleBasics> GetEpisodeCrew(string id);
-        IEnumerable<ImdbTitleBasics> GetEpisodeRating(string id);
+        IEnumerable<ImdbTitleEpisode> GetEpisodeCast(string id);
+        IEnumerable<ImdbTitleEpisode> GetEpisodeCrew(string id);
+        IEnumerable<ImdbTitleEpisode> GetEpisodeRating(string id);
 
     }
 }

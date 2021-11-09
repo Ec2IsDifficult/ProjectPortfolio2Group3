@@ -9,7 +9,7 @@ namespace Dataservices.Domain
 
         public int EpisodeNumber { get; set; }
         
-        public ImdbTitleBasics MainTitle { get; set; }
+        //public ImdbTitleBasics MainTitle { get; set; }
 
     }
 }

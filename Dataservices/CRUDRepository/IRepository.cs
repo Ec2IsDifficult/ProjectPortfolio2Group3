@@ -8,7 +8,7 @@ namespace Dataservices.CRUDRepository
     public interface IRepository<TEntity> where TEntity : class
     {
         
-        TEntity Get(string id);
+        TEntity Get<T>(T id);
         IEnumerable<TEntity> GetAll();
         
         //The find function takes a predicate which is a lambda function "Expression<Func<TEntity, bool>>"
