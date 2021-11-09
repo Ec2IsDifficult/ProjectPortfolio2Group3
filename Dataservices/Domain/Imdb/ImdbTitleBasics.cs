@@ -10,7 +10,7 @@ namespace Dataservices.Domain
         public string TitleType { get; set; }
         public bool IsAdult { get; set; }
         public int StartYear { get; set; }
-        public int? EndYear { get; set; }
+        public int EndYear { get; set; }
         public int RunTime { get; set; }
         public string Poster { get; set; }
         public string Plot { get; set; }

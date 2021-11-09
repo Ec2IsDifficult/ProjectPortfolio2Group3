@@ -7,72 +7,39 @@ using Dataservices.Domain;
 namespace ProjectPortfolioTesting
 {
     using System.Collections.Generic;
-    using System.Collections.Immutable;
     using System.Linq;
-    using Autofac.Extras.Moq;
-    using Dataservices.CRUDRepository;
-    using Dataservices.IRepositories;
-    using Dataservices.Repository;
-    using Dataservices.Domain.User;
+    using Dataservices.Domain.Functions;
+    using DataServices.UnitOfWork;
 
     public class PersonRepositoryTest
     {
-
-        private PersonRepository _personRepository;
-        private EpisodeRepository _episodeRepository;
-        private TitleRepository _titleRepository;
-        private UserRepository _userRepository;
-        private ImdbContext _ctx;
+        private UnitOfWork unit;
         public PersonRepositoryTest()
         {
-            _ctx = new ImdbContext();
-            _personRepository = new PersonRepository(_ctx);
-            _titleRepository = new TitleRepository(_ctx);
-            _episodeRepository = new EpisodeRepository(_ctx);
+            unit = new UnitOfWork(new ImdbContext());
         }
-        
-        //Testing the Get method on Persons framework
-        [Theory]
-        [InlineData("nm0000001", "Fred Astaire")]
-        [InlineData("nm0000002", "Lauren Bacall")]
-        public void GetPersons(string input, string expected)
+        [Fact]
+        public void GetPerson()
         {
-            ImdbNameBasics result = _personRepository.Get(input);
-            Assert.NotNull(result);
-            Assert.Equal(expected, result.Name);
+            ImdbNameBasics result  =  unit.Persons.Get("nm0000001");
+            Assert.Equal("Fred Astaire", result.Name);
         }
         [Fact]
         public void GetAll()
         {
-            IEnumerable<ImdbNameBasics> result = _personRepository.GetAll();
+            IEnumerable<ImdbNameBasics> result  =  unit.Persons.GetAll();
             Assert.Equal(234484, result.Count());
         }
-        
         [Fact]
-        public void GetEpisode()
+        public void Testfunction()
         {
-            ImdbTitleEpisode result = _episodeRepository.Get("tt0734667");
-            Assert.Equal("tt0734667", result.EpisodeTconst);
-        }
-        
-        [Fact]
-        public void GetTitle()
-        {
-            ImdbTitleBasics result = _titleRepository.Get("tt0734667");
-            Assert.Equal("The Obsolete Man", result.PrimaryTitle);
-        }
-        
-        [Fact]
-        public void CreateUser()
-        {
-            CUser newUser = new CUser();
-            newUser.UserName = "TestUser";
-            newUser.Email = "TestUser@Test.dk";
-            newUser.Password = "Jajo";
-            _userRepository.Add(newUser);
-            CUser user = _userRepository.Get(newUser.UserId);
-            Assert.Equal("TestUser", user.UserName);
-            Assert.Equal("TestUser", user.UserName);
+            ImdbContext _ctx = new ImdbContext();
+            var _input = "nm0000001";
+            var res = _ctx.ImdbNameBasics.FromSqlInterpolated($"select * from testfunction({_input});");
+            foreach (var VARIABLE in res)
+            {
+                Assert.Equal("Fred Astaire", VARIABLE.Name);
+            }
         }
     }
 }
