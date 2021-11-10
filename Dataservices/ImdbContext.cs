@@ -9,6 +9,7 @@ using Npgsql;
 
 namespace Dataservices
 {
+    using Domain.FunctionObjects;
 
     public class ImdbContext : DbContext
     {
@@ -28,7 +29,8 @@ namespace Dataservices
         public DbSet<CReviews> CReviews { get; set; }
         public DbSet<CSearchHistory> CSearchHistory { get; set; }
         public DbSet<CUser> CUser { get; set; }
-        
+        public DbSet<MoviesByGenre> MoviesByGenres { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -200,6 +202,29 @@ namespace Dataservices
                 .HasMany(x => x.SearchHistories)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId);
-        }
+
+            
+            //Function mapping
+            modelBuilder.Entity<MoviesByGenre>().Property(x => x.Tconst).HasColumnName("m_tconst");
+            modelBuilder.Entity<MoviesByGenre>().Property(x => x.GenreCount).HasColumnName("genre_count");
+            modelBuilder.Entity<MoviesByGenre>().HasNoKey();
+            
+            /*modelBuilder.HasDbFunction(typeof(ImdbContext)
+                    .GetMethod(nameof(GetMoviesByGenre)
+                        , new[] {typeof(string)}) ?? throw new InvalidOperationException())
+                .HasName("similar_movies_genre");*/
+            
+            
+            /*modelBuilder.HasDbFunction(typeof(ImdbContext)
+                    .GetMethod(nameof(Rate)) ?? throw new InvalidOperationException())
+                .HasName("rate");*/
+        } 
+        
+        /* DONE public IQueryable<MoviesByGenre> GetMoviesByGenre(string movie) => FromExpression(() => GetMoviesByGenre(movie));
+        DONE public void Rate(string genre) => throw new NotSupportedException();
+        DONE public void AddReview(string genre) => throw new NotSupportedException();
+        public void AddToSearchHistory(string genre) => throw new NotSupportedException();
+        public void BookmarkTitle(string genre) => throw new NotSupportedException();
+        public void BookmarkPerson(string genre) => throw new NotSupportedException();*/
     }
 }

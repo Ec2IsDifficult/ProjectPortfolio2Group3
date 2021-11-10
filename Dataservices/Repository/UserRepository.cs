@@ -31,6 +31,22 @@ namespace Dataservices.Repository
             return ImdbContext.CUser.Include(x => x.SearchHistories).FirstOrDefault(x => x.UserId == id);
         }
         
+        
+        public void Rate(int uid, string movieConst, int rating)
+        {
+            ImdbContext.Database.ExecuteSqlInterpolated($"select * from rate({uid}, {movieConst}, {rating})");
+        }
+        
+        public void AddReview(int uid, string movieConst, string review)
+        {
+            ImdbContext.Database.ExecuteSqlInterpolated($"select * from add_review({movieConst}, {uid}, {review})");
+        }
+        
+        public void AddToSearchHistory(int uid, string searchstring)
+        {
+            ImdbContext.Database.ExecuteSqlInterpolated($"select * from add_to_search_history({uid}, {searchstring})");
+        }
+        
         public ImdbContext ImdbContext
         {
             get { return Context as ImdbContext; }

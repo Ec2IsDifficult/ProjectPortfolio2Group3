@@ -6,6 +6,7 @@ namespace Dataservices.Repository
     using Domain;
     using IRepositories;
     using CRUDRepository;
+    using Domain.FunctionObjects;
     using Microsoft.EntityFrameworkCore;
 
     public class TitleRepository : ImmutableRepository<ImdbTitleBasics>, ITitleRepository
@@ -50,6 +51,11 @@ namespace Dataservices.Repository
         public ImdbTitleBasics GetEpisodes(string id)
         {
             return ImdbContext.ImdbTitleBasics.Include(x => x.Episodes).FirstOrDefault(x => x.Tconst == id);
+        }
+
+        public IQueryable<MoviesByGenre> GetMoviesByGenre(string name)
+        {
+            return ImdbContext.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({name})");
         }
         
         public ImdbContext ImdbContext

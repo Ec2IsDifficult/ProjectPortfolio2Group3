@@ -38,5 +38,33 @@ namespace ProjectPortfolioTesting
             Assert.Contains(user.SearchHistories, x => x.SearchPhrase == "World");
             Assert.Contains(user.SearchHistories, x => x.SearchPhrase == "Hello World");
         }
+        
+        //Use mocking {uid}, {movieConst}, {rating}
+        
+        [Fact]
+        public void TestAddToSearchHistory()
+        {
+            var uid = 1;
+            string searchphrase  = "Asa Akira";
+            _userRepository.AddToSearchHistory(uid, searchphrase);
+        }
+        
+        [Fact]
+        public void TestRate()
+        {
+            var uid = 1;
+            string movieConst = "ttTEST";
+            int rating = 8;
+            _userRepository.Rate(uid, movieConst, rating);
+        }
+        
+        [Fact]
+        public void TestAddReview()
+        {
+            var uid = 1;
+            string movieConst = "ttTEST";
+            string review  = "The greatest review of them all";
+            _userRepository.AddReview(uid, movieConst, review);
+        }
     }
 }
