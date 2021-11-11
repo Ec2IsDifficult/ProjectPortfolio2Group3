@@ -43,23 +43,31 @@ namespace DataServices.Authentication
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            try
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = secretKey,
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero
-            }, out var validatedToken);
-
-            var jwtToken = validatedToken as JwtSecurityToken;
-
-            var claim_user_id = jwtToken.Claims.FirstOrDefault(x => x.Type == "user_id");
-
-            if (claim_user_id != null)
-            {
-                return claim_user_id.Value.ToString();
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = secretKey,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out var validatedToken);
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                throw;
+            }
+
+            //var jwtToken = validatedToken as JwtSecurityToken;
+
+            //var claim_user_id = jwtToken.Claims.FirstOrDefault(x => x.Type == "user_id");
+
+            //if (claim_user_id != null)
+            //{
+            //    return claim_user_id.Value.ToString();
+            //}
 
             return "";
         }

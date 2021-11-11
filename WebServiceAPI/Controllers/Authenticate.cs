@@ -7,13 +7,22 @@ using Microsoft.AspNetCore.Http;
 using Dataservices;
 
 using DataServices.Authentication;
+using Microsoft.Extensions.Configuration;
 
 namespace WebServiceAPI.Controllers
 {
+
     [ApiController]
     [Route("api/login")]
     public class UserLogin : Controller
     {
+
+        private IConfiguration _config;
+
+        public UserLogin(IConfiguration config)
+        {
+            _config = config;
+        }
 
         [HttpPost()]
         public IActionResult Login(LoginRequestModel model)
@@ -29,7 +38,7 @@ namespace WebServiceAPI.Controllers
             if (password == null)
                 return Unauthorized("Password not provided");
 
-            var ctx = new ImdbContext();
+            var ctx = new ImdbContext(_config);
             var user_found = ctx.CUser.Where(x => x.UserName == username);
             var found = user_found.ToList();
 
