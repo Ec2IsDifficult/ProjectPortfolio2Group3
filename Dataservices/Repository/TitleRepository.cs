@@ -11,6 +11,7 @@ namespace Dataservices.Repository
 
     public class TitleRepository : ImmutableRepository<ImdbTitleBasics>, ITitleRepository
     {
+        
         public TitleRepository(ImdbContext context) :base(context)
         {
             

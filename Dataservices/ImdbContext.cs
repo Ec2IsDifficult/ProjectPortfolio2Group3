@@ -104,7 +104,7 @@ namespace Dataservices
                 .HasForeignKey<ImdbTitleRatings>(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Cast)
-                .WithOne(x => x.Title)
+                .WithOne()
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Episodes)
@@ -112,7 +112,7 @@ namespace Dataservices
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Crew)
-                .WithOne(x => x.Title)
+                .WithOne()
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Reviews)
