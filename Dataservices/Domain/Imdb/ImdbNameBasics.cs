@@ -9,6 +9,7 @@ namespace Dataservices.Domain
         public string Name { get; set; }
         public int? BirthYear { get; set; }
         public int? DeathYear { get; set; }
+
         public List<ImdbKnownFor> KnownFors { get; set; }
         public List<ImdbCrew> ImdbCrews { get; set; }
         public List<ImdbCast> ImdbCasts { get; set; }

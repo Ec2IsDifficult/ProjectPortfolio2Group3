@@ -7,7 +7,7 @@ namespace Dataservices.Repository
     using CRUDRepository;
     using Microsoft.EntityFrameworkCore;
 
-    public class EpisodeRepository : Repository<ImdbTitleBasics>, IEpisodeRepository
+    public class EpisodeRepository : ImmutableRepository<ImdbTitleBasics>, IEpisodeRepository
     {
         public EpisodeRepository(ImdbContext context) : base(context)
         {

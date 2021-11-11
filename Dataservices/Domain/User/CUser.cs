@@ -12,10 +12,10 @@ namespace Dataservices.Domain.User
         public string Email { get; set; }
         public string Password { get; set; }
         
-        public List<CReviews> Reviews { get; set; }
-        public List<CBookmarkPerson> BookmarkedPersons { get; set; }
-        public List<CBookmarkTitle> BookmarkedTitles { get; set; }
-        public List<CRatingHistory> Ratings { get; set; }
-        public List<CSearchHistory> SearchHistories { get; set; }
+        public IEnumerable<CReviews> Reviews { get; set; }
+        public IEnumerable<CBookmarkPerson> BookmarkedPersons { get; set; }
+        public IEnumerable<CBookmarkTitle> BookmarkedTitles { get; set; }
+        public IEnumerable<CRatingHistory> Ratings { get; set; }
+        public IEnumerable<CSearchHistory> SearchHistories { get; set; }
     }
 }
