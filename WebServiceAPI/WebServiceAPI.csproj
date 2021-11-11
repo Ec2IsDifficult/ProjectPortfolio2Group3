@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <None Remove="Controllers\" />
+    <None Remove="System.IdentityModel.Tokens.Jwt" />
+    <None Remove="Newtonsoft.Json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
@@ -14,5 +16,9 @@
     <ProjectReference Include="..\Dataservices\Dataservices.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.14.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 </Project>

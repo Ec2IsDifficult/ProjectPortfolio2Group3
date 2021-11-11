@@ -1,26 +1,94 @@
 ﻿using System;
-using System.Linq;
-using Dataservices;
 using Microsoft.AspNetCore.Mvc;
-using WebServiceAPI.Models;
+using System.Security.Claims;
+using System.Text;
+
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+
+using DataServices.Authentication;
+
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Dataservices.Domain.User;
+using Dataservices;
 
 namespace WebServiceAPI.Controllers
 {
     [ApiController]
     [Route("api/login")]
-    public class MoviesController : ControllerBase
+    public class UserLogin : Controller
     {
 
-        [HttpGet()]
-        public IActionResult Login(HttpContext context)
+        [HttpPost()]
+        public IActionResult Login(LoginRequestModel model)
         {
-            var username = (CUser)context.Items["username"];
-            //var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var username = model.Username;
+            var password = model.Password;
 
-            return BadRequest(new { message = $"Username {username} or password is incorrect" });
+            bool user_ok = false;
+
+            if (username == null)
+                return Unauthorized("Username not provided");
+
+            if (password == null)
+                return Unauthorized("Password not provided");
+
+            var ctx = new ImdbContext();
+            var user_found = ctx.CUser.Where(x => x.UserName == username);
+            var found = user_found.ToList();
+
+            if (found.Count() > 0)
+            {
+                if (password == found.First().Password)
+                {
+                    model.UserId = found.First().UserId;
+                    user_ok = true;
+                }
+            }
+
+            if (user_ok == false)
+                return Unauthorized("Login incorrect");
+
+            var auth = new AuthenticateResponse();
+
+            String token = auth.GenerateJwtToken(model);
+
+            Console.WriteLine(token);
+
+            var processed_info = new
+            {
+                token = token
+            };
+
+            return Ok(JsonConvert.SerializeObject(processed_info));
         }
+
+    }
+
+    [ApiController]
+    [Route("api/authenticate")]
+    public class AuthenticateToken : Controller
+    {
+
+        [HttpPost()]
+        public IActionResult Authenticate()
+        {
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
+
+            var auth = new AuthenticateResponse();
+
+            String user_id = auth.AuthenticateJwtToken(token);
+
+            if (user_id.Length > 0) 
+                return Ok();
+
+            return Unauthorized("Invalid token");
+        }
+
     }
 }

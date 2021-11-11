@@ -8,17 +8,16 @@
     }
   },
   "profiles": {
-    "WebServiceAPI": {
-      "commandName": "Project",
+    "IIS Express": {
+      "commandName": "IISExpress",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:21815",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
+    "WebServiceAPI": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:21815",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
