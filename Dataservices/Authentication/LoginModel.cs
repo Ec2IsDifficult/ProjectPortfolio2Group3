@@ -2,8 +2,10 @@
 
 namespace DataServices.Authentication
 {
-    public class LoginRequest
+    public class LoginRequestModel
     {
+        public int UserId { get; set; }
+
         [Required]
         public string Username { get; set; }
 
