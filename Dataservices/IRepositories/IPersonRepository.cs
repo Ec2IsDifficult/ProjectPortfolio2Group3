@@ -4,12 +4,12 @@ using Dataservices.Domain;
 
 namespace Dataservices.IRepositories
 {
+    using Domain.FunctionObjects;
+
     public interface IPersonRepository : IIMutableRepository<ImdbNameBasics>
     {
         IEnumerable<ImdbKnownFor> GetKnowFor(string id);
-        
-        //This should be changed to an object called CoActors or just an IEnumerable of ImdbNameBasics
-        IEnumerable<ImdbNameBasics> CoActors(string id);
+        IEnumerable<CoActors> CoActors(string id);
         IEnumerable<ImdbNameBasics> GetPersonsByYear(int year);
     }
 }

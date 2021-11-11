@@ -47,6 +47,27 @@ namespace Dataservices.Repository
             ImdbContext.Database.ExecuteSqlInterpolated($"select * from add_to_search_history({uid}, {searchstring})");
         }
         
+        public void BookmarkPerson(string nConst, int uid, bool alreadyMarked)
+        {
+            ImdbContext.Database.ExecuteSqlInterpolated($"select * from person_bookmarking({nConst}, {uid}, {alreadyMarked})");
+        }
+        
+        public void BookmarkTitle(string tConst, int uid, bool alreadyMarked)
+        {
+            ImdbContext.Database.ExecuteSqlInterpolated($"select * from title_bookmarking({tConst}, {uid}, {alreadyMarked})");
+        }
+
+        public IEnumerable<CBookmarkTitle> GetTitleBookmarksByUser(int id)
+        {
+            return ImdbContext.CBookmarkTitle.Where(x => x.UserId == id);
+        }
+
+        public IEnumerable<CBookmarkPerson> GetPersonBookmarksByUser(int id)
+        {
+            return ImdbContext.CBookmarkPerson.Where(x => x.UserId == id);
+
+        }
+        
         public ImdbContext ImdbContext
         {
             get { return Context as ImdbContext; }

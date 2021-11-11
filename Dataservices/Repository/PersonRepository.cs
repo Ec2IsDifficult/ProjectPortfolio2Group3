@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dataservices.Repository
 {
+    using Domain.FunctionObjects;
+
     //Will inherit all functionality from the Repository class and a functionality contract from its specific interface
     public class PersonRepository : ImmutableRepository<ImdbNameBasics>, IPersonRepository
     {
@@ -21,10 +23,9 @@ namespace Dataservices.Repository
             return ImdbContext.ImdbKnownFor.Where(x => x.Nconst == id);
         }
         
-        //TODO: Either an object has to be created based on a new entity in the database, or some query has to be made to reach this result. This is basicly a recursive relationship ImdbNameBasics has with itself
-        public IEnumerable<ImdbNameBasics> CoActors(string id)
+        public IEnumerable<CoActors> CoActors(string name)
         {
-            throw new System.NotImplementedException();
+            return ImdbContext.CoActors.FromSqlInterpolated($"select * from find_co_actors({name})");
         }
 
         public IEnumerable<ImdbNameBasics> GetPersonsByYear(int year)

@@ -29,7 +29,10 @@ namespace Dataservices
         public DbSet<CReviews> CReviews { get; set; }
         public DbSet<CSearchHistory> CSearchHistory { get; set; }
         public DbSet<CUser> CUser { get; set; }
+        
+        //Functions
         public DbSet<MoviesByGenre> MoviesByGenres { get; set; }
+        public DbSet<CoActors> CoActors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -49,6 +52,9 @@ namespace Dataservices
             modelBuilder.Entity<ImdbNameBasics>().Property(x => x.BirthYear).HasColumnName("birthyear");
             modelBuilder.Entity<ImdbNameBasics>().Property(x => x.DeathYear).HasColumnName("deathyear");
             modelBuilder.Entity<ImdbNameBasics>().HasKey(x => x.Nconst);
+            modelBuilder.Entity<ImdbNameBasics>()
+                .HasMany(x => x.BookmarkPersons)
+                .WithOne(x => x.Name).HasForeignKey(x => x.Nconst);
 
             //ImdbGenre
             modelBuilder.Entity<ImdbGenre>().ToTable("imdb_genre");
@@ -120,6 +126,10 @@ namespace Dataservices
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasOne(x => x.Rating)
                 .WithOne(x => x.Title);
+            modelBuilder.Entity<ImdbTitleBasics>()
+                .HasMany(x => x.BeenBookmarkedBy)
+                .WithOne(x => x.Title).HasForeignKey(x => x.Tconst);
+            
 
             //ImdbTitleAkas
             modelBuilder.Entity<ImdbTitleAkas>().ToTable("imdb_title_akas");
@@ -202,12 +212,25 @@ namespace Dataservices
                 .HasMany(x => x.SearchHistories)
                 .WithOne(x => x.User)
                 .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.BookmarkedTitles)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.BookmarkedPersons)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
 
             
             //Function mapping
             modelBuilder.Entity<MoviesByGenre>().Property(x => x.Tconst).HasColumnName("m_tconst");
             modelBuilder.Entity<MoviesByGenre>().Property(x => x.GenreCount).HasColumnName("genre_count");
             modelBuilder.Entity<MoviesByGenre>().HasNoKey();
+            
+            modelBuilder.Entity<CoActors>().Property(x => x.CoActorNconst).HasColumnName("co_actor_nconst");
+            modelBuilder.Entity<CoActors>().Property(x => x.CoActorName).HasColumnName("co_actor_name");
+            modelBuilder.Entity<CoActors>().Property(x => x.ActCount).HasColumnName("act_count");
+            modelBuilder.Entity<CoActors>().HasNoKey();
             
             /*modelBuilder.HasDbFunction(typeof(ImdbContext)
                     .GetMethod(nameof(GetMoviesByGenre)
@@ -220,11 +243,16 @@ namespace Dataservices
                 .HasName("rate");*/
         } 
         
-        /* DONE public IQueryable<MoviesByGenre> GetMoviesByGenre(string movie) => FromExpression(() => GetMoviesByGenre(movie));
+        /*
+        DONE public IQueryable<MoviesByGenre> GetMoviesByGenre(string movie) => FromExpression(() => GetMoviesByGenre(movie));
         DONE public void Rate(string genre) => throw new NotSupportedException();
         DONE public void AddReview(string genre) => throw new NotSupportedException();
-        public void AddToSearchHistory(string genre) => throw new NotSupportedException();
-        public void BookmarkTitle(string genre) => throw new NotSupportedException();
-        public void BookmarkPerson(string genre) => throw new NotSupportedException();*/
+        DONE public void AddToSearchHistory(string genre) => throw new NotSupportedException();
+        DONE public void BookmarkTitle(string genre) => throw new NotSupportedException();
+        DONE public void BookmarkPerson(string genre) => throw new NotSupportedException();
+        public void GetTitleBookmarksByUser
+        public void GetPersonBookmarksByUser
+        */
+        
     }
 }

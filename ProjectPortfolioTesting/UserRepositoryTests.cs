@@ -66,5 +66,38 @@ namespace ProjectPortfolioTesting
             string review  = "The greatest review of them all";
             _userRepository.AddReview(uid, movieConst, review);
         }
+        
+        [Fact]
+        public void TestBookmarkPerson()
+        {
+            int uid = 1;
+            string personConst = "nm0000001";
+            _userRepository.BookmarkPerson(personConst, uid, false);
+        }
+        
+        [Fact]
+        public void TestBookmarkTitle()
+        {
+            int uid = 1;
+            string movieConst = "tt9025492";
+            _userRepository.BookmarkTitle(movieConst, uid, false);
+        }
+        
+        [Fact] 
+        public void TestGetTitleBookmarksByUser()
+        {
+            int uid = 1;
+            var res = _userRepository.GetTitleBookmarksByUser(1);
+            Assert.Contains(res, x => x.Tconst == "tt9025492");
+        }
+        
+        [Fact] 
+        public void TestGetPersonBookmarksByUser()
+        {
+            int uid = 1;
+            var res = _userRepository.GetPersonBookmarksByUser(1);
+            Assert.Contains(res, x => x.Nconst == "nm0000001");
+
+        }
     }
 }
