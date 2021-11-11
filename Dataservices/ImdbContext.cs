@@ -5,9 +5,18 @@ using Microsoft.EntityFrameworkCore;
 namespace Dataservices
 {
     using Domain.FunctionObjects;
+    using Microsoft.Extensions.Configuration;
 
     public class ImdbContext : DbContext
     {
+
+        private IConfiguration _config;
+
+        public ImdbContext(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public DbSet<ImdbGenre> ImdbGenre { get; set; }
         public DbSet<ImdbCrew> ImdbCrew { get; set; }
         public DbSet<ImdbCast> ImdbCast { get; set; }
@@ -31,8 +40,14 @@ namespace Dataservices
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            string host = _config["database:host"];
+            string port = _config["database:port"];
+            string db = _config["database:db"];
+            string uid = _config["database:uid"];
+            string pwd = _config["database:pwd"];
+
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseNpgsql("host=rawdata.ruc.dk;port=5432;db=raw3;uid=raw3;pwd=UGiCUSoX;Encoding=UTF-8;");
+            optionsBuilder.UseNpgsql($"host={host};port={port};db={db};uid={uid};pwd={pwd};Encoding=UTF-8;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
