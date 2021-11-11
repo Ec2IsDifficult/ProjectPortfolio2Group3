@@ -22,7 +22,6 @@ namespace WebServiceAPI.Controllers
         public UserLogin(IConfiguration config)
         {
             _config = config;
-            Console.WriteLine(_config["Jwt:Issuer"]);
         }
 
         [HttpPost()]
