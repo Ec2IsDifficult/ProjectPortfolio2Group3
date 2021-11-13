@@ -26,6 +26,9 @@ namespace WebServiceAPI
             services.AddMvc();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<ITitleRepository, TitleRepository>();
+            services.AddSingleton<IEpisodeRepository, EpisodeRepository>();
+            services.AddSingleton<IPersonRepository, PersonRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
             services.AddDbContext<ImdbContext>(ServiceLifetime.Singleton);
             //services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings
               //  .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
