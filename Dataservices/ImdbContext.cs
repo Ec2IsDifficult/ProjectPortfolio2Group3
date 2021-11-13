@@ -108,7 +108,8 @@ namespace Dataservices
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.IsAdult).HasColumnName("isadult");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.StartYear).HasColumnName("startyear");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.EndYear).HasColumnName("endyear");
-            modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.RunTime).HasColumnName("runtime");
+            //gives some null error in the titlescontroller, needs further investigation on why
+            //modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.RunTime).HasColumnName("runtime");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Poster).HasColumnName("poster");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Plot).HasColumnName("plot");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Awards).HasColumnName("awards");
@@ -121,9 +122,10 @@ namespace Dataservices
                 .HasMany(x => x.Cast)
                 .WithOne()
                 .HasForeignKey(x => x.Tconst);
+            //causes possible object cycle with MainTitle
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Episodes)
-                .WithOne(x => x.MainTitle)
+                .WithOne(/*x => x.MainTitle*/)
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Crew)
