@@ -5,6 +5,7 @@ namespace Dataservices.Domain.User
         public string Tconst { get; set; }
         public ImdbTitleBasics Title { get; set; }
         public int UserId { get; set; }
-        public CUser User { get; set; }
+        //possible object cycle
+        //public CUser User { get; set; }
     }
 }

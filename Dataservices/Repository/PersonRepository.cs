@@ -17,17 +17,19 @@ namespace Dataservices.Repository
         {
             
         }
-
+        //implemented in person controller
         public IEnumerable<ImdbKnownFor> GetKnowFor(string id)
         {
             return ImdbContext.ImdbKnownFor.Where(x => x.Nconst == id);
         }
         
+        //implemented in person controller
         public IEnumerable<CoActors> CoActors(string name)
         {
             return ImdbContext.CoActors.FromSqlInterpolated($"select * from find_co_actors({name})");
         }
-
+        
+        //implemented in person controller
         public IEnumerable<ImdbNameBasics> GetPersonsByYear(int year)
         {
             return ImdbContext.ImdbNameBasics.Where(x => x.BirthYear == year);

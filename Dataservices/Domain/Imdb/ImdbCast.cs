@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Dataservices.Domain
 {
     using System.ComponentModel.DataAnnotations.Schema;
@@ -8,8 +10,7 @@ namespace Dataservices.Domain
         public ImdbNameBasics Name { get; set; }
         
         public string Tconst { get; set; }
-        public ImdbTitleBasics Title { get; set; }
-        
+
         public string CharacterName { get; set; }
         public int Rating { get; set; }
         
