@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using WebServiceAPI.Middleware;
 
 namespace WebServiceAPI
 {
@@ -51,7 +52,7 @@ namespace WebServiceAPI
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseJwtAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

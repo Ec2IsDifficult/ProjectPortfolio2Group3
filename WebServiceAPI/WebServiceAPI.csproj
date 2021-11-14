@@ -6,8 +6,10 @@
 
   <ItemGroup>
     <None Remove="Controllers\" />
+    <None Remove="Middleware\" />
   </ItemGroup>
   <ItemGroup>
+
     <ProjectReference Include="..\Dataservices\Dataservices.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

@@ -5,17 +5,23 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace DataServices.Authentication
 {
     public class AuthenticateResponse
     {
 
-        // Secret-key: move to an external file
-        private String ServerAuthKey = "the safe word is bitcoin!";
+        private IConfiguration _config;
+
+        public AuthenticateResponse(IConfiguration config)
+        {
+            _config = config;
+        }
 
         public String GenerateJwtToken(LoginRequestModel user)
         {
+            string ServerAuthKey = _config["Jwt:Key"];
 
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ServerAuthKey));
 
@@ -39,12 +45,14 @@ namespace DataServices.Authentication
 
         public String AuthenticateJwtToken(String token)
         {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ServerAuthKey));
+            string ServerAuthKey = _config["Jwt:Key"];
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ServerAuthKey));
 
             try
             {
+                var tokenHandler = new JwtSecurityTokenHandler();
+
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -53,23 +61,24 @@ namespace DataServices.Authentication
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 }, out var validatedToken);
+
+                var jwtToken = validatedToken as JwtSecurityToken;
+
+                var claim_user_id = jwtToken.Claims.FirstOrDefault(x => x.Type == "user_id");
+
+                if (claim_user_id != null)
+                {
+                    return claim_user_id.Value.ToString();
+                }
+
             }
-            catch (Exception e)
+            catch
             {
-                Console.WriteLine(e.ToString());
-                throw;
+                return null;
             }
 
-            //var jwtToken = validatedToken as JwtSecurityToken;
+            return null;
 
-            //var claim_user_id = jwtToken.Claims.FirstOrDefault(x => x.Type == "user_id");
-
-            //if (claim_user_id != null)
-            //{
-            //    return claim_user_id.Value.ToString();
-            //}
-
-            return "";
         }
 
     }
