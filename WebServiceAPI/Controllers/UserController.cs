@@ -1,0 +1,126 @@
+using System.Linq;
+using AutoMapper;
+using Dataservices.Domain.User;
+using Dataservices.IRepositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using WebServiceAPI.Models;
+using WebServiceAPI.Models.UserViews;
+using RatingViewModel = WebServiceAPI.Models.UserViews.RatingViewModel;
+
+namespace WebServiceAPI.Controllers
+{
+    [Route("api/user")]
+    [ApiController]
+    public class UserController : Controller
+    {
+        private readonly IUserRepository _userService;
+        private readonly LinkGenerator _linkGenerator;
+        private readonly IMapper _mapper;
+
+        public UserController(IUserRepository userService, LinkGenerator linkGenerator, IMapper mapper)
+        {
+            _userService = userService;
+            _linkGenerator = linkGenerator;
+            _mapper = mapper;
+        }
+
+        [HttpGet("reviews/{id}")]
+        public IActionResult GetReviews(int id)
+        {
+            var reviews = _userService.GetReviews(id);
+            if (reviews == null)
+            {
+                return NotFound("No reviews available");
+            }
+
+            var model = CreateReviewViewModel(reviews);
+            return Ok(model);
+        }
+
+        //SOMETHING WRONG WITH THE MAPPING
+        [HttpGet("ratings/{id}")]
+        public IActionResult GetRatings(int id)
+        {
+            var ratings = _userService.GetRatings(id);
+            if (ratings == null)
+            {
+                return NotFound();
+            }
+
+            var model = CreateRatingViewModel(ratings);
+            return Ok(model);
+        }
+
+        [HttpGet("searchhistory/{id}")]
+        public IActionResult GetSearchHistory(int id)
+        {
+            var history = _userService.GetSearchHistory(id);
+            if (history == null)
+            {
+                return NotFound("no previous searches");
+            }
+
+            var model = CreateSearchHistoryViewModel(history);
+            return Ok(model);
+        }
+
+        [HttpGet("bookmarks/titles/{id}")]
+        public IActionResult GetTitleBookmarksByUser(int id)
+        {
+            var marks = _userService.GetTitleBookmarksByUser(id);
+            if (marks == null)
+            {
+                return NotFound();
+            }
+
+            var model = marks.Select(CreateBookmarkTitleViewModel);
+            return Ok(model);
+        }
+
+        [HttpGet("bookmarks/person/{id}")]
+        public IActionResult GetPersonBookmarksByUser(int id)
+        {
+            var persons = _userService.GetPersonBookmarksByUser(id);
+            if (persons == null)
+            {
+                return NotFound();
+            }
+
+            var model = persons.Select(CreateBookmarkPersonViewModel);
+            return Ok(model);
+        }
+
+        public BookmarkPersonViewModel CreateBookmarkPersonViewModel(CBookmarkPerson person)
+        {
+            var model = _mapper.Map<BookmarkPersonViewModel>(person);
+            return model;
+        }
+
+        public BookmarkTitleViewModel CreateBookmarkTitleViewModel(CBookmarkTitle title)
+        {
+            var model = _mapper.Map<BookmarkTitleViewModel>(title);
+            return model;
+        }
+
+        public SearchHistoryViewModel CreateSearchHistoryViewModel(CUser history)
+        {
+            var model = _mapper.Map<SearchHistoryViewModel>(history);
+            return model;
+        }
+
+        public RatingViewModel CreateRatingViewModel(CUser ratings)
+        {
+            var model = _mapper.Map<RatingViewModel>(ratings);
+            return model;
+        }
+        public ReviewViewModel CreateReviewViewModel(CUser reviews)
+        {
+            var model = _mapper.Map<ReviewViewModel>(reviews);
+            //model.Url = GetUrl(titles);
+
+            return model;
+        }
+    }
+}
+    
