@@ -59,12 +59,13 @@ namespace Dataservices.Repository
             ImdbContext.Database.ExecuteSqlInterpolated($"select * from title_bookmarking({tConst}, {uid}, {alreadyMarked})");
         }
 
-        
+        //implemented in user controller
         public IEnumerable<CBookmarkTitle> GetTitleBookmarksByUser(int id)
         {
             return ImdbContext.CBookmarkTitle.Where(x => x.UserId == id);
         }
 
+        //imlpemented in user controller
         public IEnumerable<CBookmarkPerson> GetPersonBookmarksByUser(int id)
         {
             return ImdbContext.CBookmarkPerson.Where(x => x.UserId == id);
