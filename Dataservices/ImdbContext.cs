@@ -10,6 +10,7 @@ using Npgsql;
 namespace Dataservices
 {
     using Domain.FunctionObjects;
+    using Domain.Imdb;
 
     public class ImdbContext : DbContext
     {
@@ -68,7 +69,7 @@ namespace Dataservices
             modelBuilder.Entity<ImdbCrew>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<ImdbCrew>().Property(x => x.Category).HasColumnName("category");
             modelBuilder.Entity<ImdbCrew>().Property(x => x.Job).HasColumnName("job");
-            modelBuilder.Entity<ImdbCrew>().HasKey(x => new {x.Nconst, x.Tconst});
+            modelBuilder.Entity<ImdbCrew>().HasKey(x => new {x.Nconst, x.Tconst, x.Job});
             
             //ImdbCast
             modelBuilder.Entity<ImdbCast>().ToTable("imdb_cast");
@@ -76,7 +77,7 @@ namespace Dataservices
             modelBuilder.Entity<ImdbCast>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<ImdbCast>().Property(x => x.CharacterName).HasColumnName("charactername");
             modelBuilder.Entity<ImdbCast>().Property(x => x.Rating).HasColumnName("rating");
-            modelBuilder.Entity<ImdbCast>().HasKey(x => new {x.Nconst, x.Tconst});
+            modelBuilder.Entity<ImdbCast>().HasKey(x => new {x.Nconst, x.Tconst, x.CharacterName});
             
             //ImdbKnowFor
             modelBuilder.Entity<ImdbKnownFor>().ToTable("imdb_known_for");
@@ -109,7 +110,7 @@ namespace Dataservices
                 .HasForeignKey<ImdbTitleRatings>(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Cast)
-                .WithOne(x => x.Title)
+                .WithOne()
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Episodes)
@@ -117,7 +118,7 @@ namespace Dataservices
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Crew)
-                .WithOne(x => x.Title)
+                .WithOne()
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Reviews)
@@ -148,7 +149,10 @@ namespace Dataservices
             modelBuilder.Entity<ImdbTitleEpisode>().Property(x => x.SeasonNumber).HasColumnName("season_number");
             modelBuilder.Entity<ImdbTitleEpisode>().Property(x => x.EpisodeNumber).HasColumnName("episode_number");
             modelBuilder.Entity<ImdbTitleEpisode>().HasKey(x => x.EpisodeTconst);
-            
+            modelBuilder.Entity<ImdbTitleEpisode>()
+                .HasOne(x => x.MainTitle)
+                .WithMany(x => x.Episodes);
+
             //ImdbTitleRatings
             modelBuilder.Entity<ImdbTitleRatings>().ToTable("imdb_title_ratings");
             modelBuilder.Entity<ImdbTitleRatings>().Property(x => x.Tconst).HasColumnName("tconst");
@@ -250,9 +254,8 @@ namespace Dataservices
         DONE public void AddToSearchHistory(string genre) => throw new NotSupportedException();
         DONE public void BookmarkTitle(string genre) => throw new NotSupportedException();
         DONE public void BookmarkPerson(string genre) => throw new NotSupportedException();
-        public void GetTitleBookmarksByUser
-        public void GetPersonBookmarksByUser
+        DONE public void GetTitleBookmarksByUser
+        DONE public void GetPersonBookmarksByUser
         */
-        
     }
 }

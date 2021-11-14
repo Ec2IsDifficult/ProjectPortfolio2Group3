@@ -1,6 +1,7 @@
 namespace ProjectPortfolioTesting
 {
     using System;
+    using System.Linq;
     using Dataservices;
     using Dataservices.Repository;
     using Xunit;
@@ -8,11 +9,16 @@ namespace ProjectPortfolioTesting
     public class UserRepositoryTests
     {
         private UserRepository _userRepository;
+        private PersonBookMarkRepository _personBookMarkRepository;
+        private TitleBookmarkRepository _titleBookMarkRepository;
+
+
 
         public UserRepositoryTests()
         {
             var _ctx = new ImdbContext();
             _userRepository = new UserRepository(_ctx);
+            _personBookMarkRepository = new PersonBookMarkRepository(_ctx);
         }
 
         [Fact]
@@ -73,6 +79,8 @@ namespace ProjectPortfolioTesting
             int uid = 1;
             string personConst = "nm0000001";
             _userRepository.BookmarkPerson(personConst, uid, false);
+            var toBeDeleted = _userRepository.GetPersonBookmarksByUser(1);
+            _personBookMarkRepository.Delete(toBeDeleted.FirstOrDefault());
         }
         
         [Fact]
@@ -81,6 +89,8 @@ namespace ProjectPortfolioTesting
             int uid = 1;
             string movieConst = "tt9025492";
             _userRepository.BookmarkTitle(movieConst, uid, false);
+            var toBeDeleted = _userRepository.GetTitleBookmarksByUser(1);
+            _titleBookMarkRepository.Delete(toBeDeleted.FirstOrDefault());
         }
         
         [Fact] 
@@ -97,7 +107,22 @@ namespace ProjectPortfolioTesting
             int uid = 1;
             var res = _userRepository.GetPersonBookmarksByUser(1);
             Assert.Contains(res, x => x.Nconst == "nm0000001");
+        }
 
+        [Fact]
+        public void TestSetNewPassword()
+        {
+            int uid = 1;
+            string newPassword = "New Password";
+            _userRepository.SetNewPassword(uid, newPassword);
+            var userWithNewPassword = _userRepository.Get(1);
+            Assert.Equal("New Password", userWithNewPassword.Password);
+        }
+
+        [Fact]
+        public void TestMockingExample()
+        {
+            
         }
     }
 }

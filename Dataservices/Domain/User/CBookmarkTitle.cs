@@ -1,5 +1,7 @@
 namespace Dataservices.Domain.User
 {
+    using Imdb;
+
     public class CBookmarkTitle
     {
         public string Tconst { get; set; }

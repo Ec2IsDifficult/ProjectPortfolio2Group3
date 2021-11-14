@@ -38,8 +38,5 @@ namespace ProjectPortfolioTesting
             Assert.Contains(actors, x => x.CoActorNconst == "nm0000173");
             Assert.Contains(actors, x => x.CoActorName == "Nicole Kidman");
         }
-        
-        //[Fact]
-        //Need test for CoActors
     }
 }

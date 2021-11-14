@@ -10,6 +10,7 @@ namespace ProjectPortfolioTesting
     using System.Collections.Immutable;
     using System.Linq;
     using Dataservices.CRUDRepository;
+    using Dataservices.Domain.Imdb;
     using Dataservices.IRepositories;
     using Dataservices.Repository;
     using Dataservices.Domain.User;

@@ -18,6 +18,14 @@ namespace ProjectPortfolioTesting
             _ctx = new ImdbContext();
             _titleRepository = new TitleRepository(_ctx);
         }
+        
+        [Fact]
+        public void GetEpisodes()
+        {
+            var titles = _titleRepository.GetEpisodes("tt9025492");
+            Assert.Contains(titles.Episodes, x => x.EpisodeTconst == "tt11576432");
+            Assert.Contains(titles.Episodes, x => x.EpisodeTconst == "tt11598718");        
+        }
 
         [Fact]
         public void GetTitlesByYearTest()
@@ -46,16 +54,8 @@ namespace ProjectPortfolioTesting
         public void GetRating()
         {
             var titles = _titleRepository.GetRating("tt9025492");
-            Assert.Equal(5475, titles.SumRating);
-            Assert.Equal(643, titles.NumVotes);
-        }
-        
-        [Fact]
-        public void GetEpisodes()
-        {
-            var titles = _titleRepository.GetEpisodes("tt9025492");
-            Assert.Contains(titles.Episodes, x => x.EpisodeTconst == "tt11576432");
-            Assert.Contains(titles.Episodes, x => x.EpisodeTconst == "tt11598718");        
+            Assert.Equal(5451, titles.SumRating);
+            Assert.Equal(640, titles.NumVotes);
         }
 
         [Fact]
@@ -66,6 +66,16 @@ namespace ProjectPortfolioTesting
             //var otherMovies = _ctx.GetMoviesByGenre("The Twilight Zone");
             Assert.Contains(otherMovies, x => x.Tconst == "tt10220588");
             Assert.Contains(otherMovies, x => x.Tconst == "tt12624348");
+        }
+
+        [Fact]
+        public void TestGetAdultMovies()
+        {
+            var res = _titleRepository.GetAdultMovies();
+            Assert.Contains(res, x => x
+                .Tconst == "tt10666102" && x
+                .IsAdult == true && x
+                .PrimaryTitle == "Longwood goes deep into Amber Jayne") ;
         }
     }
 }

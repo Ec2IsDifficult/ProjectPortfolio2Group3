@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Dataservices.Domain.User
 {
     using System;
+    using Imdb;
 
     public class CRatingHistory
     {

@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Dataservices.Domain.User;
 
-namespace Dataservices.Domain
+namespace Dataservices.Domain.Imdb
 {
+    using Imdb;
+
     public class ImdbTitleBasics
     {
         public string Tconst { get; set; }
@@ -11,7 +13,7 @@ namespace Dataservices.Domain
         public bool IsAdult { get; set; }
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
-        public int RunTime { get; set; }
+        public int? RunTime { get; set; }
         public string Poster { get; set; }
         public string Plot { get; set; }
         public string Awards { get; set; }

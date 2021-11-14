@@ -1,5 +1,7 @@
 namespace Dataservices.Domain
 {
+    using Imdb;
+
     public class ImdbKnownFor
     {
         public string Nconst { get; set; }

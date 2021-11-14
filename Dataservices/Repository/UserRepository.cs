@@ -67,7 +67,12 @@ namespace Dataservices.Repository
             return ImdbContext.CBookmarkPerson.Where(x => x.UserId == id);
 
         }
-        
+
+        public void SetNewPassword(int uid, string password)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public ImdbContext ImdbContext
         {
             get { return Context as ImdbContext; }
