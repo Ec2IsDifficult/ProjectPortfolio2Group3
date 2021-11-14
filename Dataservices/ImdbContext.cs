@@ -39,7 +39,7 @@ namespace Dataservices
         public DbSet<CUser> CUser { get; set; }
         public DbSet<MoviesByGenre> MoviesByGenres { get; set; }
         public DbSet<CoActors> CoActors { get; set; }
-
+        private string IWantToKillMyself = "";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 
             string host = _config["database:host"];
