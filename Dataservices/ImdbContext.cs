@@ -1,19 +1,22 @@
-using System;
-using System.Linq;
-using System.Text;
 using Dataservices.Domain;
 using Dataservices.Domain.User;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql;
 
 namespace Dataservices
 {
     using Domain.FunctionObjects;
     using Domain.Imdb;
+    using Microsoft.Extensions.Configuration;
 
     public class ImdbContext : DbContext
     {
+        private IConfiguration _config;
+
+        public ImdbContext(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public DbSet<ImdbGenre> ImdbGenre { get; set; }
         public DbSet<ImdbCrew> ImdbCrew { get; set; }
         public DbSet<ImdbCast> ImdbCast { get; set; }
