@@ -2,6 +2,8 @@ using Dataservices.Domain;
 
 namespace WebServiceAPI.Models
 {
+    using Dataservices.Domain.Imdb;
+
     public class RatingViewModel
     {
         public string Url { get; set; }

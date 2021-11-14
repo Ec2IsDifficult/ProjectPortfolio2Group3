@@ -2,6 +2,8 @@ using Dataservices.Domain;
 
 namespace WebServiceAPI.Models.PersonViews
 {
+    using Dataservices.Domain.Imdb;
+
     public class KnownForViewModel
     {
         public string Url { get; set; }

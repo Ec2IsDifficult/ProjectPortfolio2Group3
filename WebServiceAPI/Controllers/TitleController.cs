@@ -11,6 +11,8 @@ using WebServiceAPI.Models;
 
 namespace WebServiceAPI.Controllers
 {
+    using Dataservices.Domain.Imdb;
+
     [Route("api/titles")]
     [ApiController]
     public class TitleController : Controller

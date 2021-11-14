@@ -3,6 +3,8 @@ using Dataservices.Domain;
 
 namespace WebServiceAPI.Models
 {
+    using Dataservices.Domain.Imdb;
+
     public class EpisodeViewModel
     {
         public string Url { get; set; }

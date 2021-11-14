@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Routing.Matching;
 
 namespace WebServiceAPI.Models.UserViews
 {
+    using Dataservices.Domain.Imdb;
+
     public class BookmarkTitleViewModel
     {
         public string Url { get; set; }

@@ -3,6 +3,8 @@ using Dataservices.Domain;
 
 namespace WebServiceAPI.Models.Profiles
 {
+    using Dataservices.Domain.Imdb;
+
     public class TitlesProfile : Profile
     {
         public TitlesProfile()
