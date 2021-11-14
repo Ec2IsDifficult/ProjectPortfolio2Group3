@@ -1,0 +1,27 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1180a643_002D404d_002D4db0_002Da39c_002Dec829524db01/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetPerson #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.PersonRepositoryTests.PersonKnownForTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.PersonRepositoryTests.GetPersonByYearTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.GetTitlesByYearTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.GetCast&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.UserRepositoryTests.TestSetNewPassword&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0519b955_002Da1c0_002D405d_002Db3d5_002D883b1afc2eb0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetCast" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.GetCast&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.GetCrew&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.GetRating&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.GetEpisodes&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.CrudRepositoryTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.PersonRepositoryTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.UserRepositoryTests.GetUserRatings&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.UserRepositoryTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.TestMoviesByGenre&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.TestRate&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.TestAddReview&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.EpisodeRepositoryTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C537A235-24EC-471F-8024-7C5118877A41::net5.0::ProjectPortfolioTesting.TitleRepositoryTests.TestGetAdultMovies&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
