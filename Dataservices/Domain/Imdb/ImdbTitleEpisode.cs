@@ -8,8 +8,8 @@ namespace Dataservices.Domain.Imdb
         public int SeasonNumber { get; set; }
 
         public int EpisodeNumber { get; set; }
-        
-        public ImdbTitleBasics MainTitle { get; set; }
+        //creates object cycle
+        //public ImdbTitleBasics MainTitle { get; set; }
 
     }
 }

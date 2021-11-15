@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 //install AutoMapper from nuget
 using AutoMapper;
 using Dataservices.Domain;
+using Dataservices.Domain.FunctionObjects;
 using Dataservices.IRepositories;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace WebServiceAPI.Controllers
         }
         
         
-        [HttpGet("cast/{id}")]
+        [HttpGet("cast/{id}", Name = nameof(GetCast))]
         public IActionResult GetCast(string id)
         {
             var cast = _titleService.GetCast(id);
@@ -105,6 +106,41 @@ namespace WebServiceAPI.Controllers
             var model = titles.Select(CreateTitlesViewModel);
             return Ok(model);
         }
+
+        [HttpGet("adult")]
+        public IActionResult GetAdultMovies()
+        {
+            var movies = _titleService.GetAdultMovies();
+            if (movies == null)
+            {
+                return NotFound();
+            }
+
+            var model = movies.Select(CreateTitlesViewModel);
+            return Ok(model);
+        }
+
+        [HttpGet("bygenre/{name}")]
+        public IActionResult GetMoviesByGenre(string name)
+        {
+            var movies = _titleService.GetMoviesByGenre(name);
+            if (movies == null)
+            {
+                return NotFound();
+            }
+
+            var model = movies.Select(CreateGenreViewModel);
+            return Ok(model);
+        }
+        
+        public GenreViewModel CreateGenreViewModel(MoviesByGenre titles)
+        {
+            var model = _mapper.Map<GenreViewModel>(titles);
+            //model.Url = GetUrl(titles);
+
+            return model;
+        }
+        
         public TitlesViewModel CreateTitlesViewModel(ImdbTitleBasics titles)
         {
             var model = _mapper.Map<TitlesViewModel>(titles);
@@ -143,7 +179,7 @@ namespace WebServiceAPI.Controllers
 
         private string GetUrl(ImdbTitleBasics title)
         {
-           return _linkGenerator.GetUriByName(HttpContext, nameof(GetCast), new {title.Tconst});
+           return _linkGenerator.GetUriByName(HttpContext, "cast", 1);
         }
     }
 }

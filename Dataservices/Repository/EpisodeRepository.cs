@@ -16,17 +16,19 @@ namespace Dataservices.Repository
 
         public IEnumerable<ImdbTitleEpisode> GetEpisodeCast(string id)
         {
-            return ImdbContext.ImdbTitleEpisode.Include(x => x.MainTitle).ThenInclude(x => x.Cast).Where(x => x.EpisodeTconst == id);
+            //return ImdbContext.ImdbTitleEpisode.Include(x => x.MainTitle).ThenInclude(x => x.Cast).Where(x => x.EpisodeTconst == id);
+            return null;
         }
 
         public IEnumerable<ImdbTitleEpisode> GetEpisodeCrew(string id)
         {
-            return ImdbContext.ImdbTitleEpisode.Include(x => x.MainTitle).ThenInclude(x => x.Crew).Where(x => x.EpisodeTconst == id);
+            //return ImdbContext.ImdbTitleEpisode.Include(x => x.MainTitle).ThenInclude(x => x.Crew).Where(x => x.EpisodeTconst == id);
+            return null;
         }
 
         public IEnumerable<ImdbTitleEpisode> GetEpisodeRating(string id)
         {
-            return ImdbContext.ImdbTitleEpisode.Include(x => x.MainTitle).ThenInclude(x => x.Rating).Where(x => x.EpisodeTconst == id);
+            //return ImdbContext.ImdbTitleEpisode.Include(x => x.MainTitle).ThenInclude(x => x.Rating).Where(x => x.EpisodeTconst == id);
             return null;
         }
         

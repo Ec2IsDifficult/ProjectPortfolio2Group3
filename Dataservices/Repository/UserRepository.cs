@@ -15,17 +15,20 @@ namespace Dataservices.Repository
             
         }
 
+        //in user controller
         public CUser GetReviews(int id)
         {
             //TODO: Should we make one more function for only getting one review based on TConst
             return ImdbContext.CUser.Include(x => x.Reviews).FirstOrDefault(x => x.UserId == id);
         }
-
+    
+        //in user controller
         public CUser GetRatings(int id)
         {
             return ImdbContext.CUser.Include(x => x.Ratings).FirstOrDefault(x => x.UserId == id);
         }
         
+        //in user controller
         public CUser GetSearchHistory(int id)
         {
             return ImdbContext.CUser.Include(x => x.SearchHistories).FirstOrDefault(x => x.UserId == id);
@@ -57,11 +60,13 @@ namespace Dataservices.Repository
             ImdbContext.Database.ExecuteSqlInterpolated($"select * from title_bookmarking({tConst}, {uid}, {alreadyMarked})");
         }
 
+        //in user controller
         public IEnumerable<CBookmarkTitle> GetTitleBookmarksByUser(int id)
         {
             return ImdbContext.CBookmarkTitle.Where(x => x.UserId == id);
         }
 
+        //in user controller
         public IEnumerable<CBookmarkPerson> GetPersonBookmarksByUser(int id)
         {
             return ImdbContext.CBookmarkPerson.Where(x => x.UserId == id);

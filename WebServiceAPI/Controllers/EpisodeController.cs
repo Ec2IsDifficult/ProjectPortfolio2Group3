@@ -1,7 +1,10 @@
+using System.Linq;
 using AutoMapper;
+using Dataservices.Domain.Imdb;
 using Dataservices.IRepositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using WebServiceAPI.Models;
 
 namespace WebServiceAPI.Controllers
 {

@@ -1,11 +1,13 @@
 using System.Linq;
 using AutoMapper;
+using Dataservices.Domain.Imdb;
 using Dataservices.Domain.User;
 using Dataservices.IRepositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using WebServiceAPI.Models;
 using WebServiceAPI.Models.UserViews;
+using CreateRatingViewModel = WebServiceAPI.Models.UserViews.CreateRatingViewModel;
 using RatingViewModel = WebServiceAPI.Models.UserViews.RatingViewModel;
 
 namespace WebServiceAPI.Controllers
@@ -78,6 +80,7 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
+        //in user controller
         [HttpGet("bookmarks/person/{id}")]
         public IActionResult GetPersonBookmarksByUser(int id)
         {
@@ -90,6 +93,16 @@ namespace WebServiceAPI.Controllers
             var model = persons.Select(CreateBookmarkPersonViewModel);
             return Ok(model);
         }
+
+        /*
+        [HttpPost("rate")]
+        public IActionResult RateMovie([FromBody] CreateRatingViewModel model)
+        {
+            var rating = _mapper.Map<>(model);
+            _userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
+            return Created(rating.Url , rating);
+        }*/
+        
 
         public BookmarkPersonViewModel CreateBookmarkPersonViewModel(CBookmarkPerson person)
         {
