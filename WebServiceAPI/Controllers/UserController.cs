@@ -94,16 +94,45 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        /*
-        [HttpPost("rate")]
-        public IActionResult RateMovie([FromBody] CreateRatingViewModel model)
-        {
-            var rating = _mapper.Map<>(model);
-            _userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
-            return Created(rating.Url , rating);
-        }*/
         
+        [HttpPost("rate")]
+        public IActionResult RateMovie([FromBody] CRatingHistory rating)
+        {
+            
+            //var rating = _mapper.Map<CRatingHistory>(model);
+            _userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
+            return Created("Success",rating);
+        }
 
+        [HttpPost("AddReview")]
+        public IActionResult AddReview([FromBody] CReviews review)
+        {
+            //var model = _mapper.Map<CReviews>(review);
+            _userService.AddReview(review.UserId, review.Tconst, review.Review);
+            return Created("Success", review);
+        }
+
+        [HttpPost("addSearch")]
+        public IActionResult AddToSearchHistory([FromBody] CSearchHistory search)
+        {
+            _userService.AddToSearchHistory(search.UserId, search.SearchPhrase);
+            return Created("success", search);
+        }
+
+        [HttpPost("bookmarkPerson")]
+        public IActionResult BookmarkPerson([FromBody] CBookmarkPerson person)
+        {
+            _userService.BookmarkPerson(person.Nconst, person.UserId, false);
+            return Created("Success", person);
+        }
+
+        [HttpPost("bookmarkTitle")]
+        public IActionResult BookmarkTitle([FromBody] CBookmarkTitle title)
+        {
+            _userService.BookmarkTitle(title.Tconst, title.UserId, false);
+            return Created("Success", title);
+        }
+        
         public BookmarkPersonViewModel CreateBookmarkPersonViewModel(CBookmarkPerson person)
         {
             var model = _mapper.Map<BookmarkPersonViewModel>(person);

@@ -34,27 +34,27 @@ namespace Dataservices.Repository
             return ImdbContext.CUser.Include(x => x.SearchHistories).FirstOrDefault(x => x.UserId == id);
         }
         
-        
+        //implemented in user controller
         public void Rate(int uid, string movieConst, int rating)
         {
             ImdbContext.Database.ExecuteSqlInterpolated($"select * from rate({uid}, {movieConst}, {rating})");
         }
-        
+        //implemented in user controller
         public void AddReview(int uid, string movieConst, string review)
         {
             ImdbContext.Database.ExecuteSqlInterpolated($"select * from add_review({movieConst}, {uid}, {review})");
         }
-        
+        //implemented in user controller
         public void AddToSearchHistory(int uid, string searchstring)
         {
             ImdbContext.Database.ExecuteSqlInterpolated($"select * from add_to_search_history({uid}, {searchstring})");
         }
-        
+        //implemented in user controller
         public void BookmarkPerson(string nConst, int uid, bool alreadyMarked)
         {
             ImdbContext.Database.ExecuteSqlInterpolated($"select * from person_bookmarking({nConst}, {uid}, {alreadyMarked})");
         }
-        
+        //implemented in user controller
         public void BookmarkTitle(string tConst, int uid, bool alreadyMarked)
         {
             ImdbContext.Database.ExecuteSqlInterpolated($"select * from title_bookmarking({tConst}, {uid}, {alreadyMarked})");
