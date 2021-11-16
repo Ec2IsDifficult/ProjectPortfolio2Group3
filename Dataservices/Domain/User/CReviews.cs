@@ -8,7 +8,8 @@ namespace Dataservices.Domain.User
     public class CReviews
     {
         public int UserId { get; set; }
-        public CUser ReviewBy { get; set; }
+        //create object cycle
+        //public CUser ReviewBy { get; set; }
         public string Tconst { get; set; }
         public ImdbTitleBasics ReviewFor { get; set; }
         

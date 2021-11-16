@@ -36,7 +36,7 @@ namespace ProjectPortfolioTesting
             Assert.Contains(user.Ratings, x => x.Rating == 8);
             Assert.Contains(user.Ratings, x => x.Rating == 5);
         }
-        
+
         [Fact]
         public void GetSearchHistoryTest()
         {
@@ -44,7 +44,7 @@ namespace ProjectPortfolioTesting
             Assert.Contains(user.SearchHistories, x => x.SearchPhrase == "World");
             Assert.Contains(user.SearchHistories, x => x.SearchPhrase == "Hello World");
         }
-        
+
         //Use mocking {uid}, {movieConst}, {rating}
         
         [Fact]

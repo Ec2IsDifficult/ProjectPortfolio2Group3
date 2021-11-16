@@ -9,7 +9,7 @@ namespace Dataservices.Domain.User
         public int UserId{ get; set; }
         public string SearchPhrase { get; set; }
         public DateTime SearchHistoryTimeStamp { get; set; }
-
-        public CUser User {get; set;}
+        //create object cycle
+        //public CUser User {get; set;}
     }
 }

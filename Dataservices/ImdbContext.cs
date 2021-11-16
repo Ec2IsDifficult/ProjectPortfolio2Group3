@@ -216,7 +216,8 @@ namespace Dataservices
             modelBuilder.Entity<CUser>().HasKey(x => x.UserId);
             modelBuilder.Entity<CUser>()
                 .HasMany(x => x.Reviews)
-                .WithOne(x => x.ReviewBy)
+                //object cycle
+                .WithOne(/*x => x.ReviewBy*/)
                 .HasForeignKey(x => x.UserId);
             modelBuilder.Entity<CUser>()
                 .HasMany(x => x.Ratings)
@@ -224,7 +225,8 @@ namespace Dataservices
                 .HasForeignKey(x => x.UserId);
             modelBuilder.Entity<CUser>()
                 .HasMany(x => x.SearchHistories)
-                .WithOne(x => x.User)
+                //object cycle
+                .WithOne(/*x => x.User*/)
                 .HasForeignKey(x => x.UserId);
             modelBuilder.Entity<CUser>()
                 .HasMany(x => x.BookmarkedTitles)
