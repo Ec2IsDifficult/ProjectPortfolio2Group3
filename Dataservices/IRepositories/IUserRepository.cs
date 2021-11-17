@@ -17,6 +17,9 @@ namespace Dataservices.IRepositories
         void BookmarkTitle(string tConst, int uid, bool alreadyMarked);
         IEnumerable<CBookmarkTitle> GetTitleBookmarksByUser(int id);
         IEnumerable<CBookmarkPerson> GetPersonBookmarksByUser(int id);
+        CUser GetUser(string username);
         void SetNewPassword(int uid, string password);
+        void UserUpdateEmail(int uid, string email);
+        void CreateUser(string username, string email, string password);
     }
 }

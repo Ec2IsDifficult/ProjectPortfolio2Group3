@@ -6,7 +6,7 @@ using WebServiceAPI.Attributes;
 namespace WebServiceAPI.Controllers
 {
     [ApiController]
-    [Route("api/v1/users")]
+    [Route("api/v1/users/test")]
     public class TestController : ControllerBase
     {
         [Authorization]
