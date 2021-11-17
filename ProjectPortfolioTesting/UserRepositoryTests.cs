@@ -19,6 +19,7 @@ namespace ProjectPortfolioTesting
             var _ctx = new ImdbContext();
             _userRepository = new UserRepository(_ctx);
             _personBookMarkRepository = new PersonBookMarkRepository(_ctx);
+            _titleBookMarkRepository = new TitleBookmarkRepository(_ctx);
         }
 
         [Fact]
@@ -79,7 +80,7 @@ namespace ProjectPortfolioTesting
             int uid = 1;
             string personConst = "nm0000007";
             _userRepository.BookmarkPerson(personConst, uid, false);
-            var toBeDeleted = _userRepository.GetPersonBookmarksByUser(1).Where(x => x.Nconst == "nm0000007");
+            var toBeDeleted = _userRepository.GetPersonBookmarksByUser(uid).Where(x => x.Nconst == personConst);
             _personBookMarkRepository.Delete(toBeDeleted.FirstOrDefault());
         }
         
@@ -89,7 +90,7 @@ namespace ProjectPortfolioTesting
             int uid = 1;
             string movieConst = "tt0063929";
             _userRepository.BookmarkTitle(movieConst, uid, false);
-            var toBeDeleted = _userRepository.GetTitleBookmarksByUser(1).Where(x => x.Tconst == "tt0063929");
+            var toBeDeleted = _userRepository.GetTitleBookmarksByUser(uid).Where(x => x.Tconst == movieConst);
             _titleBookMarkRepository.Delete(toBeDeleted.FirstOrDefault());
         }
         
