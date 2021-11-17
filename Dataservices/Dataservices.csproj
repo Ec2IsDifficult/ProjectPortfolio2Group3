@@ -16,5 +16,8 @@
 
     <ItemGroup>
       <None Remove="Authentication\" />
+      <None Update="Dependencies.svg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 </Project>
