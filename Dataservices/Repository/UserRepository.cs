@@ -73,9 +73,24 @@ namespace Dataservices.Repository
 
         }
 
+        public void CreateUser(string username, string email, string password)
+        {
+            ImdbContext.Database.ExecuteSqlInterpolated($"select * from add_new_user({username}, {email}, {password})");
+        }
+
+        public CUser GetUser(string username)
+        {
+            return ImdbContext.CUser.FirstOrDefault(x => x.UserName == username);
+        }
+
         public void SetNewPassword(int uid, string password)
         {
-            throw new System.NotImplementedException();
+            ImdbContext.Database.ExecuteSqlInterpolated($"select * from set_new_password({uid}, {password})");
+        }
+
+        public void UserUpdateEmail(int uid, string email)
+        {
+            ImdbContext.Database.ExecuteSqlInterpolated($"select * from update_user_information({uid}, {email})");
         }
 
         public ImdbContext ImdbContext

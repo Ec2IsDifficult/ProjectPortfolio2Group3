@@ -43,6 +43,30 @@ namespace DataServices.Authentication
             return tokenHandler.WriteToken(token);
         }
 
+        public String InvalidateJwtToken()
+        {
+            string ServerAuthKey = _config["Jwt:Key"];
+
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ServerAuthKey));
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] {
+                    new Claim("user_id", "")
+                }),
+
+                Expires = DateTime.UtcNow.AddSeconds(1),
+
+                SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return tokenHandler.WriteToken(token);
+        }
+
         public String AuthenticateJwtToken(String token)
         {
             string ServerAuthKey = _config["Jwt:Key"];
