@@ -26,13 +26,7 @@ namespace WebServiceAPI
         {
             services.AddMvc();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
-            // 2 alternativer
             services.AddSingleton<ITitleRepository, TitleRepository>();
-            
-            // ---
-            
-            
             services.AddSingleton<IEpisodeRepository, EpisodeRepository>();
             services.AddSingleton<IPersonRepository, PersonRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
