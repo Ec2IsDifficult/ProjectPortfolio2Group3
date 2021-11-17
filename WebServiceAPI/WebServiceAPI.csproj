@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <None Remove="Controllers\" />
+    <None Remove="Models\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Models\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dataservices\Dataservices.csproj">
