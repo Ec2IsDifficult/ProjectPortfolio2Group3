@@ -2,11 +2,10 @@ using System.Linq;
 using AutoMapper;
 using Dataservices.Domain.User;
 using Dataservices.IRepositories;
+using Dataservices.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using WebServiceAPI.Models;
 using WebServiceAPI.Models.UserViews;
-using RatingViewModel = WebServiceAPI.Models.UserViews.RatingViewModel;
 
 namespace WebServiceAPI.Controllers
 {
@@ -14,18 +13,31 @@ namespace WebServiceAPI.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private readonly IUserRepository _userService;
+        private readonly UserRepository _userService;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
 
-        public UserController(IUserRepository userService, LinkGenerator linkGenerator, IMapper mapper)
+        public UserController(UserRepository userService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _userService = userService;
             _linkGenerator = linkGenerator;
             _mapper = mapper;
         }
 
-        [HttpGet("reviews/{id}")]
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var user = _userService.Get(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = CreateUserViewModel(user);
+            return Ok(model);
+        }
+            //object cycle
+        [HttpGet("{id}/reviews")]
         public IActionResult GetReviews(int id)
         {
             var reviews = _userService.GetReviews(id);
@@ -39,7 +51,7 @@ namespace WebServiceAPI.Controllers
         }
 
         //SOMETHING WRONG WITH THE MAPPING
-        [HttpGet("ratings/{id}")]
+        [HttpGet("{id}/ratings")]
         public IActionResult GetRatings(int id)
         {
             var ratings = _userService.GetRatings(id);
@@ -52,7 +64,8 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("searchhistory/{id}")]
+            //object cycle
+        [HttpGet("{id}/searchhistory")]
         public IActionResult GetSearchHistory(int id)
         {
             var history = _userService.GetSearchHistory(id);
@@ -65,7 +78,7 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("bookmarks/titles/{id}")]
+        [HttpGet("{id}/bookmarks/titles")]
         public IActionResult GetTitleBookmarksByUser(int id)
         {
             var marks = _userService.GetTitleBookmarksByUser(id);
@@ -78,7 +91,8 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("bookmarks/person/{id}")]
+        //in user controller
+        [HttpGet("{id}/bookmarks/person")]
         public IActionResult GetPersonBookmarksByUser(int id)
         {
             var persons = _userService.GetPersonBookmarksByUser(id);
@@ -91,9 +105,54 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
+        
+        [HttpPost("rate")]
+        public IActionResult RateMovie([FromBody] CRatingHistory rating)
+        {
+            
+            //var rating = _mapper.Map<CRatingHistory>(model);
+            _userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
+            return Created("Success",rating);
+        }
+
+        [HttpPost("review")]
+        public IActionResult AddReview([FromBody] CReviews review)
+        {
+            //var model = _mapper.Map<CReviews>(review);
+            _userService.AddReview(review.UserId, review.Tconst, review.Review);
+            return Created("Success", review);
+        }
+
+        [HttpPost("search")]
+        public IActionResult AddToSearchHistory([FromBody] CSearchHistory search)
+        {
+            _userService.AddToSearchHistory(search.UserId, search.SearchPhrase);
+            return Created("success", search);
+        }
+
+        [HttpPost("bookmark/person")]
+        public IActionResult BookmarkPerson([FromBody] CBookmarkPerson person)
+        {
+            _userService.BookmarkPerson(person.Nconst, person.UserId, false);
+            return Created("Success", person);
+        }
+
+        [HttpPost("bookmark/title")]
+        public IActionResult BookmarkTitle([FromBody] CBookmarkTitle title)
+        {
+            _userService.BookmarkTitle(title.Tconst, title.UserId, false);
+            return Created("Success", title);
+        }
+        
         public BookmarkPersonViewModel CreateBookmarkPersonViewModel(CBookmarkPerson person)
         {
             var model = _mapper.Map<BookmarkPersonViewModel>(person);
+            return model;
+        }
+        
+        public UserViewModel CreateUserViewModel(CUser user)
+        {
+            var model = _mapper.Map<UserViewModel>(user);
             return model;
         }
 

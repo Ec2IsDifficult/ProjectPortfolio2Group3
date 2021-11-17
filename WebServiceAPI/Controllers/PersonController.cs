@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Dataservices.Domain;
 using Dataservices.Domain.FunctionObjects;
 using Dataservices.IRepositories;
+using Dataservices.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using WebServiceAPI.Models.PersonViews;
 
@@ -15,18 +14,43 @@ namespace WebServiceAPI.Controllers
     [ApiController]
     public class PersonController : Controller
     {
-        private readonly IPersonRepository _personService;
+        private readonly PersonRepository _personService;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
         
-        public PersonController(IPersonRepository personService, LinkGenerator linkGenerator, IMapper mapper)
+        public PersonController(PersonRepository personService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _personService = personService;
             _linkGenerator = linkGenerator;
             _mapper = mapper;
         }
 
-        [HttpGet("knownfor/{id}")]
+        [HttpGet()]
+        public IActionResult GetAll()
+        {
+            var actors = _personService.GetAll();
+            if (actors == null)
+            {
+                return NotFound();
+            }
+
+            var model = actors.Select(CreateNameBasicsViewModel);
+            return Ok(model);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(string id)
+        {
+            var actors = _personService.Get(id);
+            if (actors == null)
+            {
+                return NotFound();
+            }
+
+            var model = CreateNameBasicsViewModel(actors);
+            return Ok(model);
+        }
+        [HttpGet("{id}/knownfor")]
         //works but all viewed values are null
         public IActionResult GetKnownFor(string id)
         {
@@ -40,7 +64,7 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("coactors/{name}")]
+        [HttpGet("{name}/coactors")]
         public IActionResult CoActors(string name)
         {
             var actors = _personService.CoActors(name);

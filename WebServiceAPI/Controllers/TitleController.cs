@@ -1,12 +1,9 @@
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-//install AutoMapper from nuget
 using AutoMapper;
-using Dataservices.Domain;
-using Dataservices.IRepositories;
+using Dataservices.Domain.FunctionObjects;
+using Dataservices.Repository;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
 using WebServiceAPI.Models;
 
 namespace WebServiceAPI.Controllers
@@ -17,19 +14,42 @@ namespace WebServiceAPI.Controllers
     [ApiController]
     public class TitleController : Controller
     {
-        private readonly ITitleRepository _titleService;
+        private readonly TitleRepository _titleService;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
         
-        public TitleController(ITitleRepository titleService, LinkGenerator linkGenerator, IMapper mapper)
+        public TitleController(TitleRepository titleService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _titleService = titleService;
             _linkGenerator = linkGenerator;
             _mapper = mapper;
         }
+
+        [HttpGet()]
+        public IActionResult GetAll()
+        {
+            var titles = _titleService.GetAll();
+            if (titles == null)
+            {
+                return NotFound();
+            }
+            var model = titles.Select(CreateTitlesViewModel);
+            return Ok(model);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(string id)
+        {
+            var title = _titleService.Get(id);
+            if (title == null)
+            {
+                return NotFound();
+            }
+            var model = CreateCastViewModel(title);
+            return Ok(model);
+        }
         
-        
-        [HttpGet("cast/{id}")]
+        [HttpGet("{id}/cast", Name = nameof(GetCast))]
         public IActionResult GetCast(string id)
         {
             var cast = _titleService.GetCast(id);
@@ -41,7 +61,7 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("crew/{id}")]
+        [HttpGet("{id}/crew")]
         public IActionResult GetCrew(string id)
         {
             var crew = _titleService.GetCrew(id);
@@ -54,7 +74,7 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet(("rating/{id}"))]
+        [HttpGet(("{id}/rating"))]
         public IActionResult GetRating(string id)
         {
             var rating = _titleService.GetRating(id);
@@ -67,7 +87,7 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("episodes/{id}")]
+        [HttpGet("{id}/episodes")]
         public IActionResult GetEpisodes(string id)
         {
             var episodes = _titleService.GetEpisodes(id);
@@ -105,6 +125,41 @@ namespace WebServiceAPI.Controllers
             var model = titles.Select(CreateTitlesViewModel);
             return Ok(model);
         }
+
+        [HttpGet("adult")]
+        public IActionResult GetAdultMovies()
+        {
+            var movies = _titleService.GetAdultMovies();
+            if (movies == null)
+            {
+                return NotFound();
+            }
+
+            var model = movies.Select(CreateTitlesViewModel);
+            return Ok(model);
+        }
+
+        [HttpGet("{id}/genre")]
+        public IActionResult GetMoviesByGenre(string id)
+        {
+            var movies = _titleService.GetMoviesByGenre(id);
+            if (movies == null)
+            {
+                return NotFound();
+            }
+
+            var model = movies.Select(CreateGenreViewModel);
+            return Ok(model);
+        }
+        
+        public GenreViewModel CreateGenreViewModel(MoviesByGenre titles)
+        {
+            var model = _mapper.Map<GenreViewModel>(titles);
+            //model.Url = GetUrl(titles);
+
+            return model;
+        }
+        
         public TitlesViewModel CreateTitlesViewModel(ImdbTitleBasics titles)
         {
             var model = _mapper.Map<TitlesViewModel>(titles);
@@ -143,7 +198,7 @@ namespace WebServiceAPI.Controllers
 
         private string GetUrl(ImdbTitleBasics title)
         {
-           return _linkGenerator.GetUriByName(HttpContext, nameof(GetCast), new {title.Tconst});
+           return _linkGenerator.GetUriByName(HttpContext, "cast", 1);
         }
     }
 }

@@ -1,5 +1,4 @@
 using AutoMapper;
-using Dataservices.Domain;
 using Dataservices.Domain.FunctionObjects;
 using WebServiceAPI.Models.PersonViews;
 
