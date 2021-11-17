@@ -30,8 +30,13 @@ namespace ProjectPortfolioTesting
             var person = _personRepository.GetPersonsByYear(1265);
             Assert.Equal("nm0019604", person.First().Nconst);
         }
-        
-        //[Fact]
-        //Need test for CoActors
+
+        [Fact]
+        public void TestGetCoActors()
+        {
+            var actors = _personRepository.CoActors("Lauren Bacall");
+            Assert.Contains(actors, x => x.CoActorNconst == "nm0000173");
+            Assert.Contains(actors, x => x.CoActorName == "Nicole Kidman");
+        }
     }
 }

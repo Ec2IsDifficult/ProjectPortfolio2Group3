@@ -1,17 +1,26 @@
-using System;
-using System.Linq;
-using System.Text;
 using Dataservices.Domain;
 using Dataservices.Domain.User;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql;
 
 namespace Dataservices
 {
+    using Domain.FunctionObjects;
+    using Domain.Imdb;
+    using Microsoft.Extensions.Configuration;
 
     public class ImdbContext : DbContext
     {
+        private IConfiguration _config;
+        public ImdbContext()
+        {
+
+        }
+
+        public ImdbContext(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public DbSet<ImdbGenre> ImdbGenre { get; set; }
         public DbSet<ImdbCrew> ImdbCrew { get; set; }
         public DbSet<ImdbCast> ImdbCast { get; set; }
@@ -28,11 +37,18 @@ namespace Dataservices
         public DbSet<CReviews> CReviews { get; set; }
         public DbSet<CSearchHistory> CSearchHistory { get; set; }
         public DbSet<CUser> CUser { get; set; }
-        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        public DbSet<MoviesByGenre> MoviesByGenres { get; set; }
+        public DbSet<CoActors> CoAActors { get; set; }
+        private string IWantToKillMyself = "";
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+
+            string host = _config["database:host"];
+            string port = _config["database:port"];
+            string db = _config["database:db"];
+            string uid = _config["database:uid"];
+            string pwd = _config["database:pwd"];
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseNpgsql("host=rawdata.ruc.dk;port=5432;db=raw3;uid=raw3;pwd=UGiCUSoX;Encoding=UTF-8;");
+            optionsBuilder.UseNpgsql($"host={host};port={port};db={db};uid={uid};pwd={pwd};Encoding=UTF-8;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,6 +63,9 @@ namespace Dataservices
             modelBuilder.Entity<ImdbNameBasics>().Property(x => x.BirthYear).HasColumnName("birthyear");
             modelBuilder.Entity<ImdbNameBasics>().Property(x => x.DeathYear).HasColumnName("deathyear");
             modelBuilder.Entity<ImdbNameBasics>().HasKey(x => x.Nconst);
+            modelBuilder.Entity<ImdbNameBasics>()
+                .HasMany(x => x.BookmarkPersons)
+                .WithOne(x => x.Name).HasForeignKey(x => x.Nconst);
 
             //ImdbGenre
             modelBuilder.Entity<ImdbGenre>().ToTable("imdb_genre");
@@ -60,7 +79,7 @@ namespace Dataservices
             modelBuilder.Entity<ImdbCrew>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<ImdbCrew>().Property(x => x.Category).HasColumnName("category");
             modelBuilder.Entity<ImdbCrew>().Property(x => x.Job).HasColumnName("job");
-            modelBuilder.Entity<ImdbCrew>().HasKey(x => new {x.Nconst, x.Tconst});
+            modelBuilder.Entity<ImdbCrew>().HasKey(x => new {x.Nconst, x.Tconst, x.Job});
             
             //ImdbCast
             modelBuilder.Entity<ImdbCast>().ToTable("imdb_cast");
@@ -68,7 +87,7 @@ namespace Dataservices
             modelBuilder.Entity<ImdbCast>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<ImdbCast>().Property(x => x.CharacterName).HasColumnName("charactername");
             modelBuilder.Entity<ImdbCast>().Property(x => x.Rating).HasColumnName("rating");
-            modelBuilder.Entity<ImdbCast>().HasKey(x => new {x.Nconst, x.Tconst});
+            modelBuilder.Entity<ImdbCast>().HasKey(x => new {x.Nconst, x.Tconst, x.CharacterName});
             
             //ImdbKnowFor
             modelBuilder.Entity<ImdbKnownFor>().ToTable("imdb_known_for");
@@ -101,7 +120,7 @@ namespace Dataservices
                 .HasForeignKey<ImdbTitleRatings>(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Cast)
-                .WithOne(x => x.Title)
+                .WithOne()
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Episodes)
@@ -109,9 +128,20 @@ namespace Dataservices
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Crew)
-                .WithOne(x => x.Title)
+                .WithOne()
                 .HasForeignKey(x => x.Tconst);
+            modelBuilder.Entity<ImdbTitleBasics>()
+                .HasMany(x => x.Reviews)
+                .WithOne(x => x.ReviewFor)
+                .HasForeignKey(x => x.Tconst);
+            modelBuilder.Entity<ImdbTitleBasics>()
+                .HasOne(x => x.Rating)
+                .WithOne(x => x.Title);
+            modelBuilder.Entity<ImdbTitleBasics>()
+                .HasMany(x => x.BeenBookmarkedBy)
+                .WithOne(x => x.Title).HasForeignKey(x => x.Tconst);
             
+
             //ImdbTitleAkas
             modelBuilder.Entity<ImdbTitleAkas>().ToTable("imdb_title_akas");
             modelBuilder.Entity<ImdbTitleAkas>().Property(x => x.Tconst).HasColumnName("tconst");
@@ -129,7 +159,10 @@ namespace Dataservices
             modelBuilder.Entity<ImdbTitleEpisode>().Property(x => x.SeasonNumber).HasColumnName("season_number");
             modelBuilder.Entity<ImdbTitleEpisode>().Property(x => x.EpisodeNumber).HasColumnName("episode_number");
             modelBuilder.Entity<ImdbTitleEpisode>().HasKey(x => x.EpisodeTconst);
-            
+            modelBuilder.Entity<ImdbTitleEpisode>()
+                .HasOne(x => x.MainTitle)
+                .WithMany(x => x.Episodes);
+
             //ImdbTitleRatings
             modelBuilder.Entity<ImdbTitleRatings>().ToTable("imdb_title_ratings");
             modelBuilder.Entity<ImdbTitleRatings>().Property(x => x.Tconst).HasColumnName("tconst");
@@ -163,10 +196,9 @@ namespace Dataservices
             modelBuilder.Entity<CReviews>().ToTable("c_reviews");
             modelBuilder.Entity<CReviews>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<CReviews>().Property(x => x.UserId).HasColumnName("user_id");
-            modelBuilder.Entity<CReviews>().Property(x => x.Review).HasColumnName("Review");
-            modelBuilder.Entity<CReviews>().Property(x => x.ReviewTimpStamp).HasColumnName("review_time_stamp");
+            modelBuilder.Entity<CReviews>().Property(x => x.Review).HasColumnName("review");
+            modelBuilder.Entity<CReviews>().Property(x => x.ReviewTimeStamp).HasColumnName("review_time_stamp");
             modelBuilder.Entity<CReviews>().HasKey(x => new { x.Tconst, x.UserId });
-            
 
             //CSearchHistory
             modelBuilder.Entity<CSearchHistory>().ToTable("c_search_history");
@@ -182,6 +214,58 @@ namespace Dataservices
             modelBuilder.Entity<CUser>().Property(x => x.Email).HasColumnName("email");
             modelBuilder.Entity<CUser>().Property(x => x.Password).HasColumnName("password");
             modelBuilder.Entity<CUser>().HasKey(x => x.UserId);
-        }
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.Reviews)
+                .WithOne(x => x.ReviewBy)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.Ratings)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.SearchHistories)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.BookmarkedTitles)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
+            modelBuilder.Entity<CUser>()
+                .HasMany(x => x.BookmarkedPersons)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
+
+            
+            //Function mapping
+            modelBuilder.Entity<MoviesByGenre>().Property(x => x.Tconst).HasColumnName("m_tconst");
+            modelBuilder.Entity<MoviesByGenre>().Property(x => x.GenreCount).HasColumnName("genre_count");
+            modelBuilder.Entity<MoviesByGenre>().HasNoKey();
+            
+            modelBuilder.Entity<CoActors>().Property(x => x.CoActorNconst).HasColumnName("co_actor_nconst");
+            modelBuilder.Entity<CoActors>().Property(x => x.CoActorName).HasColumnName("co_actor_name");
+            modelBuilder.Entity<CoActors>().Property(x => x.ActCount).HasColumnName("act_count");
+            modelBuilder.Entity<CoActors>().HasNoKey();
+            
+            /*modelBuilder.HasDbFunction(typeof(ImdbContext)
+                    .GetMethod(nameof(GetMoviesByGenre)
+                        , new[] {typeof(string)}) ?? throw new InvalidOperationException())
+                .HasName("similar_movies_genre");*/
+            
+            
+            /*modelBuilder.HasDbFunction(typeof(ImdbContext)
+                    .GetMethod(nameof(Rate)) ?? throw new InvalidOperationException())
+                .HasName("rate");*/
+        } 
+        
+        /*
+        DONE public IQueryable<MoviesByGenre> GetMoviesByGenre(string movie) => FromExpression(() => GetMoviesByGenre(movie));
+        DONE public void Rate(string genre) => throw new NotSupportedException();
+        DONE public void AddReview(string genre) => throw new NotSupportedException();
+        DONE public void AddToSearchHistory(string genre) => throw new NotSupportedException();
+        DONE public void BookmarkTitle(string genre) => throw new NotSupportedException();
+        DONE public void BookmarkPerson(string genre) => throw new NotSupportedException();
+        DONE public void GetTitleBookmarksByUser
+        DONE public void GetPersonBookmarksByUser
+        */
     }
 }

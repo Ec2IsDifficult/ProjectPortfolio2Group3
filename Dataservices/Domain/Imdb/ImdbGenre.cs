@@ -1,5 +1,7 @@
 namespace Dataservices.Domain
 {
+    using Imdb;
+
     public class ImdbGenre
     {
         public string Tconst { get; set; }

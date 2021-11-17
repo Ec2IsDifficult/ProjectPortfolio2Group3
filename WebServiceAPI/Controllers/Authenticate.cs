@@ -1,28 +1,28 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using System.Text;
-
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-
-using DataServices.Authentication;
 
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
-using Dataservices.Domain.User;
 using Dataservices;
+
+using DataServices.Authentication;
+using Microsoft.Extensions.Configuration;
 
 namespace WebServiceAPI.Controllers
 {
+
     [ApiController]
-    [Route("api/login")]
-    public class UserLogin : Controller
+    [Route("api/v1/login")]
+    public class UserLogin : ControllerBase
     {
+
+        private IConfiguration _config;
+
+        public UserLogin(IConfiguration config)
+        {
+            _config = config;
+        }
 
         [HttpPost()]
         public IActionResult Login(LoginRequestModel model)
@@ -38,7 +38,7 @@ namespace WebServiceAPI.Controllers
             if (password == null)
                 return Unauthorized("Password not provided");
 
-            var ctx = new ImdbContext();
+            var ctx = new ImdbContext(_config);
             var user_found = ctx.CUser.Where(x => x.UserName == username);
             var found = user_found.ToList();
 
@@ -54,11 +54,9 @@ namespace WebServiceAPI.Controllers
             if (user_ok == false)
                 return Unauthorized("Login incorrect");
 
-            var auth = new AuthenticateResponse();
+            var auth = new AuthenticateResponse(_config);
 
-            String token = auth.GenerateJwtToken(model);
-
-            Console.WriteLine(token);
+            string token = auth.GenerateJwtToken(model);
 
             var processed_info = new
             {
@@ -71,21 +69,31 @@ namespace WebServiceAPI.Controllers
     }
 
     [ApiController]
-    [Route("api/authenticate")]
-    public class AuthenticateToken : Controller
+    [Route("api/v1/authenticate")]
+    public class AuthenticateToken : ControllerBase
     {
+
+        private IConfiguration _config;
+
+        public AuthenticateToken(IConfiguration config)
+        {
+            _config = config;
+        }
 
         [HttpPost()]
         public IActionResult Authenticate()
         {
             var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
 
-            var auth = new AuthenticateResponse();
+            var auth = new AuthenticateResponse(_config);
 
-            String user_id = auth.AuthenticateJwtToken(token);
+            string user_id = auth.AuthenticateJwtToken(token);
 
-            if (user_id.Length > 0) 
-                return Ok();
+            if (user_id.Length > 0)
+            {
+                HttpContext.Items["user"] = user_id;
+                return Ok($"Validated for user {user_id}");
+            }
 
             return Unauthorized("Invalid token");
         }

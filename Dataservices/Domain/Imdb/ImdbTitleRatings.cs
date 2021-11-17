@@ -1,4 +1,4 @@
-namespace Dataservices.Domain
+namespace Dataservices.Domain.Imdb
 {
     public class ImdbTitleRatings
     {
