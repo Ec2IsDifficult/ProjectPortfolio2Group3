@@ -5,14 +5,14 @@ namespace ProjectPortfolioTesting
     using Dataservices;
     using Dataservices.Repository;
     using Xunit;
+    using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+
 
     public class UserRepositoryTests
     {
         private UserRepository _userRepository;
         private PersonBookMarkRepository _personBookMarkRepository;
         private TitleBookmarkRepository _titleBookMarkRepository;
-
-
 
         public UserRepositoryTests()
         {
@@ -26,7 +26,7 @@ namespace ProjectPortfolioTesting
         {
             var user = _userRepository.GetReviews(1);
             Assert.Contains(user.Reviews, x => x.Review == "new review");
-            Assert.Contains(user.Reviews, x => x.Review == "newesT! review");
+            Assert.Contains(user.Reviews, x => x.Review == "Sick movie");
         }
         
         [Fact]
@@ -77,9 +77,9 @@ namespace ProjectPortfolioTesting
         public void TestBookmarkPerson()
         {
             int uid = 1;
-            string personConst = "nm0000001";
+            string personConst = "nm0000007";
             _userRepository.BookmarkPerson(personConst, uid, false);
-            var toBeDeleted = _userRepository.GetPersonBookmarksByUser(1);
+            var toBeDeleted = _userRepository.GetPersonBookmarksByUser(1).Where(x => x.Nconst == "nm0000007");
             _personBookMarkRepository.Delete(toBeDeleted.FirstOrDefault());
         }
         
@@ -87,9 +87,9 @@ namespace ProjectPortfolioTesting
         public void TestBookmarkTitle()
         {
             int uid = 1;
-            string movieConst = "tt9025492";
+            string movieConst = "tt0063929";
             _userRepository.BookmarkTitle(movieConst, uid, false);
-            var toBeDeleted = _userRepository.GetTitleBookmarksByUser(1);
+            var toBeDeleted = _userRepository.GetTitleBookmarksByUser(1).Where(x => x.Tconst == "tt0063929");
             _titleBookMarkRepository.Delete(toBeDeleted.FirstOrDefault());
         }
         
@@ -116,13 +116,7 @@ namespace ProjectPortfolioTesting
             string newPassword = "New Password";
             _userRepository.SetNewPassword(uid, newPassword);
             var userWithNewPassword = _userRepository.Get(1);
-            Assert.Equal("New Password", userWithNewPassword.Password);
-        }
-
-        [Fact]
-        public void TestMockingExample()
-        {
-            
+            Assert.Equal("ae3bb2a1ac61750150b606298091d38a", userWithNewPassword.Password);
         }
     }
 }

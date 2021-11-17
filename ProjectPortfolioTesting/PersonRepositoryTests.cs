@@ -5,11 +5,14 @@ namespace ProjectPortfolioTesting
     using Dataservices.Domain;
     using Dataservices.Repository;
     using Xunit;
+    using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+
 
     public class PersonRepositoryTests
     {
         private ImdbContext _ctx;
         private PersonRepository _personRepository;
+
 
         public PersonRepositoryTests()
         {

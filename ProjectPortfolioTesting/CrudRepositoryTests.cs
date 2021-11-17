@@ -9,6 +9,7 @@ namespace ProjectPortfolioTesting
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Linq;
+    using Castle.Core.Configuration;
     using Dataservices.CRUDRepository;
     using Dataservices.Domain.Imdb;
     using Dataservices.IRepositories;
@@ -18,16 +19,15 @@ namespace ProjectPortfolioTesting
     public class CrudRepositoryTest
     {
         private PersonRepository _personRepository;
-        private EpisodeRepository _episodeRepository;
         private TitleRepository _titleRepository;
         private UserRepository _userRepository;
         private ImdbContext _ctx;
+
         public CrudRepositoryTest()
         {
             _ctx = new ImdbContext();
             _personRepository = new PersonRepository(_ctx);
             _titleRepository = new TitleRepository(_ctx);
-            _episodeRepository = new EpisodeRepository(_ctx);
             _userRepository = new UserRepository(_ctx);
         }
         
@@ -47,14 +47,7 @@ namespace ProjectPortfolioTesting
             IEnumerable<ImdbNameBasics> result = _personRepository.GetAll();
             Assert.Equal(234484, result.Count());
         }
-        
-        //[Fact]
-        /*public void GetEpisode()
-        {
-            ImdbTitleEpisode result = _episodeRepository.Get("tt0734667");
-            Assert.Equal("tt0734667", result.EpisodeTconst);
-        }*/
-        
+
         [Fact]
         public void GetTitle()
         {

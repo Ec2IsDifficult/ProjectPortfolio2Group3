@@ -4,13 +4,16 @@ namespace ProjectPortfolioTesting
     using Dataservices;
     using Dataservices.Repository;
     using Xunit;
+    using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+
 
     public class EpisodeRepositoryTest
     {
         private EpisodeRepository _episodeRepository;
         private ImdbContext _ctx;
 
-        public EpisodeRepositoryTest()
+
+        public EpisodeRepositoryTest( )
         {
             _ctx = new ImdbContext();
             _episodeRepository = new EpisodeRepository(_ctx);
@@ -35,8 +38,8 @@ namespace ProjectPortfolioTesting
         [Fact]
         public void TestGetEpisodeRating()
         {
-            var res = _episodeRepository.GetEpisodeRating("tt11872474");
-            Assert.Contains(res, x => x.MainTitle.Rating.NumVotes == 376);
+            var res = _episodeRepository.GetEpisodeRating("tt11584286");
+            Assert.Contains(res, x => x.MainTitle.Rating.NumVotes == 635);
         }
     }
 }
