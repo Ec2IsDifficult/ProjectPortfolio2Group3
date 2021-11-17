@@ -5,7 +5,7 @@ namespace Dataservices.IRepositories
     using CRUDRepository;
     using Domain.User;
 
-    public interface IUserRepository : IMutableRepository<CUser>
+    public interface IUserRepository : IMutableRepository<CUser>, IIMutableRepository<CUser>
     {
         public CUser GetReviews(int id);
         CUser GetRatings(int id);
