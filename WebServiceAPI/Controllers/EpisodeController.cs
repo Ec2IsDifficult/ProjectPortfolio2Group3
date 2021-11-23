@@ -12,6 +12,7 @@ namespace WebServiceAPI.Controllers
     [ApiController]
     public class EpisodeController : Controller
     {
+        //we need the IRepository here for dependency injection
         private readonly IEpisodeRepository _episodeService;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
