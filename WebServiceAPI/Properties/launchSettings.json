@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "WebServiceAPI": {
+    "WebService": {
       "commandName": "Project",
       "applicationUrl": "http://localhost:21815",
       "environmentVariables": {

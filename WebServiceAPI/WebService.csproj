@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'WebServiceAPI' " />
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'WebService' " />
   <ItemGroup>
     <None Remove="Controllers\" />
     <None Remove="Middleware\" />
@@ -19,7 +19,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="bootstrap" Version="5.1.2" />
+    <PackageReference Include="jQuery" Version="3.6.0" />
+    <PackageReference Include="knockoutjs" Version="3.5.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RequireJS" Version="2.3.6" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.14.1" />
     <PackageReference Include="DependencyTracker.LibManReader" Version="1.2.2" />
   </ItemGroup>
