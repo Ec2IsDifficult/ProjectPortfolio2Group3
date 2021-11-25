@@ -3,6 +3,7 @@ using AutoMapper;
 using Dataservices.Domain.User;
 using Dataservices.IRepositories;
 using Dataservices.Repository;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using WebServiceAPI.Models.UserViews;
@@ -148,37 +149,41 @@ namespace WebServiceAPI.Controllers
         public BookmarkPersonViewModel CreateBookmarkPersonViewModel(CBookmarkPerson person)
         {
             var model = _mapper.Map<BookmarkPersonViewModel>(person);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
         
         public UserViewModel CreateUserViewModel(CUser user)
         {
             var model = _mapper.Map<UserViewModel>(user);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
 
         public BookmarkTitleViewModel CreateBookmarkTitleViewModel(CBookmarkTitle title)
         {
             var model = _mapper.Map<BookmarkTitleViewModel>(title);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
 
         public SearchHistoryViewModel CreateSearchHistoryViewModel(CUser history)
         {
             var model = _mapper.Map<SearchHistoryViewModel>(history);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
 
         public RatingViewModel CreateRatingViewModel(CUser ratings)
         {
             var model = _mapper.Map<RatingViewModel>(ratings);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
         public ReviewViewModel CreateReviewViewModel(CUser reviews)
         {
             var model = _mapper.Map<ReviewViewModel>(reviews);
-            //model.Url = GetUrl(titles);
-
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
     }

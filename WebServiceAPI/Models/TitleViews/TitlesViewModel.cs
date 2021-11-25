@@ -3,9 +3,10 @@ namespace WebServiceAPI.Models
     public class TitlesViewModel
     {
         public string Url { get; set; }
+        public string Tconst { get; set; }
         public string PrimaryTitle { get; set; }
         public string TitleType { get; set; }
-        public bool IsAdult { get; set; }
+        //public bool IsAdult { get; set; }
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
         //runtime column is null
@@ -17,9 +18,10 @@ namespace WebServiceAPI.Models
 
     public class CreateTitlesViewModel
     {
+        public string Tconst { get; set; }
         public string PrimaryTitle { get; set; }
         public string TitleType { get; set; }
-        public bool IsAdult { get; set; }
+        //public bool IsAdult { get; set; }
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
         //column runtime is null error

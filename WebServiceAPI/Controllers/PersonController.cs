@@ -4,6 +4,7 @@ using Dataservices.Domain;
 using Dataservices.Domain.FunctionObjects;
 using Dataservices.IRepositories;
 using Dataservices.Repository;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using WebServiceAPI.Models.PersonViews;
@@ -39,8 +40,8 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        [HttpGet("{id}", Name = nameof(GetPerson))]
+        public IActionResult GetPerson(string id)
         {
             var actors = _personService.Get(id);
             if (actors == null)
@@ -94,21 +95,26 @@ namespace WebServiceAPI.Controllers
         public NameBasicsViewModel CreateNameBasicsViewModel(ImdbNameBasics actors)
         {
             var model = _mapper.Map<NameBasicsViewModel>(actors);
-            //model.Url = GetUrl(titles);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
         public CoActorsViewModel CreateCoActorsViewModel(CoActors actor)
         {
             var model = _mapper.Map<CoActorsViewModel>(actor);
-            //model.Url = GetUrl(titles);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
 
         public KnownForViewModel CreateKnownForViewModel(ImdbKnownFor actors)
         {
             var model = _mapper.Map<KnownForViewModel>(actors);
-            //model.Url = GetUrl(titles);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
+        }
+        
+        private string GetUrl(string nconst)
+        {
+            return _linkGenerator.GetUriByName(HttpContext,nameof(GetPerson) , new {id = nconst});
         }
     }
 }

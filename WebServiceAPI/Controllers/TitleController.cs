@@ -1,10 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using AutoMapper.Internal;
 using Dataservices.Domain.FunctionObjects;
 using Dataservices.IRepositories;
 using Dataservices.Repository;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using WebServiceAPI.Models;
 
 namespace WebServiceAPI.Controllers
@@ -27,7 +35,8 @@ namespace WebServiceAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet()]
+        
+        [HttpGet(Name = nameof(GetAll))]
         public IActionResult GetAll()
         {
             var titles = _titleService.GetAll();
@@ -35,19 +44,22 @@ namespace WebServiceAPI.Controllers
             {
                 return NotFound();
             }
-            var model = titles.Select(CreateTitlesViewModel);
+
+            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            foreach(var title in titles)
+                model.Add(CreateTitlesViewModel(nameof(GetAll), title));
             return Ok(model);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        [HttpGet("{id}", Name = nameof(GetTitle))]
+        public IActionResult GetTitle(string id)
         {
             var title = _titleService.Get(id);
             if (title == null)
             {
                 return NotFound();
             }
-            var model = CreateCastViewModel(title);
+            var model = CreateTitlesViewModel(nameof(GetTitle), title);
             return Ok(model);
         }
         
@@ -59,11 +71,11 @@ namespace WebServiceAPI.Controllers
             {
                 return NotFound();
             }
-            var model = CreateCastViewModel(cast);
+            var model = CreateCastViewModel(nameof(GetCast), cast);
             return Ok(model);
         }
 
-        [HttpGet("{id}/crew")]
+        [HttpGet("{id}/crew", Name = nameof(GetCrew))]
         public IActionResult GetCrew(string id)
         {
             var crew = _titleService.GetCrew(id);
@@ -72,11 +84,11 @@ namespace WebServiceAPI.Controllers
                 return NotFound();
             }
 
-            var model = CreateCrewViewModel(crew);
+            var model = CreateCrewViewModel(nameof(GetCrew), crew);
             return Ok(model);
         }
 
-        [HttpGet(("{id}/rating"))]
+        [HttpGet("{id}/rating", Name = nameof(GetRating))]
         public IActionResult GetRating(string id)
         {
             var rating = _titleService.GetRating(id);
@@ -84,12 +96,12 @@ namespace WebServiceAPI.Controllers
             {
                 return NotFound();
             }
-
-            var model = CreateRatingViewModel(rating);
+            
+            var model = CreateRatingViewModel(nameof(GetRating), rating);
             return Ok(model);
         }
 
-        [HttpGet("{id}/episodes")]
+        [HttpGet("{id}/episodes", Name = nameof(GetEpisodes))]
         public IActionResult GetEpisodes(string id)
         {
             var episodes = _titleService.GetEpisodes(id);
@@ -98,11 +110,12 @@ namespace WebServiceAPI.Controllers
                 return NotFound();
             }
 
-            var model = CreateEpisodeViewModel(episodes);
+            var model = CreateEpisodeViewModel(nameof(GetEpisodes), episodes);
             return Ok(model);
         }
 
-        [HttpGet("year/{year}")]
+        
+        [HttpGet("year/{year}", Name = nameof(GetTitlesByYear))]
         public IActionResult GetTitlesByYear(int year)
         {
             var titles = _titleService.GetTitlesByYear(year);
@@ -111,11 +124,13 @@ namespace WebServiceAPI.Controllers
                 return NotFound("No titles for this year available");
             }
 
-            var model = titles.Select(CreateTitlesViewModel);
+            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            foreach(var title in titles)
+                model.Add(CreateTitlesViewModel(nameof(GetTitlesByYear), title));
             return Ok(model);
         }
 
-        [HttpGet("between/{year1}/{year2}")]
+        [HttpGet("between/{year1}/{year2}", Name = nameof(GetTitlesBetween))]
         public IActionResult GetTitlesBetween(int year1, int year2)
         {
             var titles = _titleService.GetTitlesBetween(year1, year2);
@@ -123,12 +138,15 @@ namespace WebServiceAPI.Controllers
             {
                 return NotFound("No titles between these years available");
             }
-
-            var model = titles.Select(CreateTitlesViewModel);
+            
+            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            foreach(var title in titles)
+                model.Add(CreateTitlesViewModel(nameof(GetTitlesBetween), title));
             return Ok(model);
         }
-
-        [HttpGet("adult")]
+        
+        /*
+        [HttpGet("adult", Name = nameof(GetAdultMovies))]
         public IActionResult GetAdultMovies()
         {
             var movies = _titleService.GetAdultMovies();
@@ -137,11 +155,13 @@ namespace WebServiceAPI.Controllers
                 return NotFound();
             }
 
-            var model = movies.Select(CreateTitlesViewModel);
+            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            foreach(var title in movies)
+                model.Add(CreateTitlesViewModel(nameof(GetAdultMovies), title));
             return Ok(model);
-        }
-
-        [HttpGet("{id}/genre")]
+        }*/
+        
+        [HttpGet("{id}/genre", Name = nameof(GetMoviesByGenre))]
         public IActionResult GetMoviesByGenre(string id)
         {
             var movies = _titleService.GetMoviesByGenre(id);
@@ -150,57 +170,52 @@ namespace WebServiceAPI.Controllers
                 return NotFound();
             }
 
-            var model = movies.Select(CreateGenreViewModel);
+            Collection<GenreViewModel> model = new Collection<GenreViewModel>();
+            foreach(var title in movies)
+                model.Add(CreateGenreViewModel(nameof(GetMoviesByGenre), title));
             return Ok(model);
         }
         
-        public GenreViewModel CreateGenreViewModel(MoviesByGenre titles)
+        public GenreViewModel CreateGenreViewModel(string name, MoviesByGenre titles)
         {
             var model = _mapper.Map<GenreViewModel>(titles);
-            //model.Url = GetUrl(titles);
-
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
         
-        public TitlesViewModel CreateTitlesViewModel(ImdbTitleBasics titles)
+        public TitlesViewModel CreateTitlesViewModel(string name, ImdbTitleBasics titles)
         {
             var model = _mapper.Map<TitlesViewModel>(titles);
-            //model.Url = GetUrl(titles);
-
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
-
-
-        public EpisodeViewModel CreateEpisodeViewModel(ImdbTitleBasics title)
+        
+        public EpisodeViewModel CreateEpisodeViewModel(string name, ImdbTitleBasics title)
         {
             var model = _mapper.Map<EpisodeViewModel>(title);
-            //model.Url = GetUrl(title);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
-        public RatingViewModel CreateRatingViewModel(ImdbTitleRatings title)
+        
+        public RatingViewModel CreateRatingViewModel(string name, ImdbTitleRatings title)
         {
             var model = _mapper.Map<RatingViewModel>(title);
-            //model.Url = GetUrl(title);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
 
-        public CrewViewModel CreateCrewViewModel(ImdbTitleBasics title)
+        public CrewViewModel CreateCrewViewModel(string name, ImdbTitleBasics title)
         {
             var model = _mapper.Map<CrewViewModel>(title);
-            model.Url = GetUrl(title);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
 
-        public CastViewModel CreateCastViewModel(ImdbTitleBasics title)
+        public CastViewModel CreateCastViewModel(string name, ImdbTitleBasics title)
         {
             var model = _mapper.Map<CastViewModel>(title);
-            model.Url = GetUrl(title);
+            model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
-        }
-
-        private string GetUrl(ImdbTitleBasics title)
-        {
-           return _linkGenerator.GetUriByName(HttpContext, "cast", 1);
         }
     }
 }
