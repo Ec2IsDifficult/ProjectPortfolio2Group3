@@ -23,8 +23,11 @@ namespace WebServiceAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddSingleton<ITitleRepository, TitleRepository>();
             services.AddSingleton<IEpisodeRepository, EpisodeRepository>();
             services.AddSingleton<IPersonRepository, PersonRepository>();
@@ -32,6 +35,7 @@ namespace WebServiceAPI
             services.AddDbContext<ImdbContext>(ServiceLifetime.Singleton);
             //services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings
               //  .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddControllersWithViews();
             
         }
@@ -49,7 +53,15 @@ namespace WebServiceAPI
             }
             app.UseStaticFiles();
 
+            app.UseFileServer();
+
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseJwtAuthorization();
 

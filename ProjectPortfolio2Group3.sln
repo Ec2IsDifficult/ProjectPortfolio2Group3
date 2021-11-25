@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dataservices", "Dataservice
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectPortfolioTesting", "ProjectPortfolioTesting\ProjectPortfolioTesting.csproj", "{C537A235-24EC-471F-8024-7C5118877A41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServiceAPI", "WebServiceAPI\WebServiceAPI.csproj", "{5B8AB8DF-E14F-44E2-85FB-F359D4A4333E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService", "WebServiceAPI\WebService.csproj", "{5B8AB8DF-E14F-44E2-85FB-F359D4A4333E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
