@@ -2,6 +2,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Dataservices.Domain.FunctionObjects;
+using Dataservices.IRepositories;
 using Dataservices.Repository;
 using Microsoft.AspNetCore.Routing;
 using WebServiceAPI.Models;
@@ -14,11 +15,12 @@ namespace WebServiceAPI.Controllers
     [ApiController]
     public class TitleController : Controller
     {
-        private readonly TitleRepository _titleService;
+        //we need the IRepository here because of Dependency Injection
+        private readonly ITitleRepository _titleService;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
         
-        public TitleController(TitleRepository titleService, LinkGenerator linkGenerator, IMapper mapper)
+        public TitleController(ITitleRepository titleService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _titleService = titleService;
             _linkGenerator = linkGenerator;

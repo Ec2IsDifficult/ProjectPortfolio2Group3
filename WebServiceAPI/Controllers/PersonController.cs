@@ -14,11 +14,12 @@ namespace WebServiceAPI.Controllers
     [ApiController]
     public class PersonController : Controller
     {
-        private readonly PersonRepository _personService;
+        //we need the IRepository here for dependency injection
+        private readonly IPersonRepository _personService;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
         
-        public PersonController(PersonRepository personService, LinkGenerator linkGenerator, IMapper mapper)
+        public PersonController(IPersonRepository personService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _personService = personService;
             _linkGenerator = linkGenerator;

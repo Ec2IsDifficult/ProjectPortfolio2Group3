@@ -7,12 +7,14 @@ namespace ProjectPortfolioTesting
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
     using Xunit;
+    using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+
 
     public class TitleRepositoryTests
     {
         private TitleRepository _titleRepository;
         private ImdbContext _ctx; 
-        
+
         public TitleRepositoryTests()
         {
             _ctx = new ImdbContext();
@@ -54,8 +56,8 @@ namespace ProjectPortfolioTesting
         public void GetRating()
         {
             var titles = _titleRepository.GetRating("tt9025492");
-            Assert.Equal(5451, titles.SumRating);
-            Assert.Equal(640, titles.NumVotes);
+            Assert.Equal(5411, titles.SumRating);
+            Assert.Equal(635, titles.NumVotes);
         }
 
         [Fact]

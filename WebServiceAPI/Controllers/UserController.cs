@@ -13,11 +13,12 @@ namespace WebServiceAPI.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private readonly UserRepository _userService;
+        //we need the IRepository here for dependency injection
+        private readonly IUserRepository _userService;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
 
-        public UserController(UserRepository userService, LinkGenerator linkGenerator, IMapper mapper)
+        public UserController(IUserRepository userService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _userService = userService;
             _linkGenerator = linkGenerator;

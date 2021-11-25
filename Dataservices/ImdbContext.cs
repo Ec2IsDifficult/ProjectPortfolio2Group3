@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dataservices
 {
+    using System;
     using Domain.FunctionObjects;
     using Domain.Imdb;
     using Microsoft.Extensions.Configuration;
@@ -11,9 +12,10 @@ namespace Dataservices
     public class ImdbContext : DbContext
     {
         private IConfiguration _config;
+
         public ImdbContext()
         {
-
+            
         }
 
         public ImdbContext(IConfiguration config)
@@ -40,14 +42,22 @@ namespace Dataservices
         public DbSet<MoviesByGenre> MoviesByGenres { get; set; }
         public DbSet<CoActors> CoActors { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-
-            string host = _config["database:host"];
-            string port = _config["database:port"];
-            string db = _config["database:db"];
-            string uid = _config["database:uid"];
-            string pwd = _config["database:pwd"];
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseNpgsql($"host={host};port={port};db={db};uid={uid};pwd={pwd};Encoding=UTF-8;");
+            
+            if (_config == null)
+            {
+                Console.WriteLine("Hello");
+                optionsBuilder.UseNpgsql("host=rawdata.ruc.dk;port=5432;db=raw3;uid=raw3;pwd=UGiCUSoX;Encoding=UTF-8;");
+            }
+            else
+            {
+                string host = _config["database:host"];
+                string port = _config["database:port"];
+                string db = _config["database:db"];
+                string uid = _config["database:uid"];
+                string pwd = _config["database:pwd"];
+                optionsBuilder.UseNpgsql($"host={host};port={port};db={db};uid={uid};pwd={pwd};Encoding=UTF-8;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -244,27 +254,6 @@ namespace Dataservices
             modelBuilder.Entity<CoActors>().Property(x => x.CoActorName).HasColumnName("co_actor_name");
             modelBuilder.Entity<CoActors>().Property(x => x.ActCount).HasColumnName("act_count");
             modelBuilder.Entity<CoActors>().HasNoKey();
-            
-            /*modelBuilder.HasDbFunction(typeof(ImdbContext)
-                    .GetMethod(nameof(GetMoviesByGenre)
-                        , new[] {typeof(string)}) ?? throw new InvalidOperationException())
-                .HasName("similar_movies_genre");*/
-            
-            
-            /*modelBuilder.HasDbFunction(typeof(ImdbContext)
-                    .GetMethod(nameof(Rate)) ?? throw new InvalidOperationException())
-                .HasName("rate");*/
-        } 
-        
-        /*
-        DONE public IQueryable<MoviesByGenre> GetMoviesByGenre(string movie) => FromExpression(() => GetMoviesByGenre(movie));
-        DONE public void Rate(string genre) => throw new NotSupportedException();
-        DONE public void AddReview(string genre) => throw new NotSupportedException();
-        DONE public void AddToSearchHistory(string genre) => throw new NotSupportedException();
-        DONE public void BookmarkTitle(string genre) => throw new NotSupportedException();
-        DONE public void BookmarkPerson(string genre) => throw new NotSupportedException();
-        DONE public void GetTitleBookmarksByUser
-        DONE public void GetPersonBookmarksByUser
-        */
+        }
     }
 }

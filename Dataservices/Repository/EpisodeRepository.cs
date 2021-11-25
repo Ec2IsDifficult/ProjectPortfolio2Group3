@@ -27,9 +27,9 @@ namespace Dataservices.Repository
         public IEnumerable<ImdbTitleEpisode> GetEpisodeRating(string id)
         {
             return ImdbContext.ImdbTitleEpisode.Include(x => x.MainTitle).ThenInclude(x => x.Rating).Where(x => x.EpisodeTconst == id);
-            return null;
         }
         
+
         public ImdbContext ImdbContext{ get {return Context as ImdbContext;} }
     }
 }

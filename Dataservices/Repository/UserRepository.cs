@@ -18,7 +18,6 @@ namespace Dataservices.Repository
         //in user controller
         public CUser GetReviews(int id)
         {
-            //TODO: Should we make one more function for only getting one review based on TConst
             return ImdbContext.CUser.Include(x => x.Reviews).FirstOrDefault(x => x.UserId == id);
         }
     

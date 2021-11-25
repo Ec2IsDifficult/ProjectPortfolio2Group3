@@ -19,7 +19,8 @@ namespace WebServiceAPI
         }
 
         public IConfiguration Configuration { get; }
-
+        
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -32,6 +33,7 @@ namespace WebServiceAPI
             services.AddSingleton<IEpisodeRepository, EpisodeRepository>();
             services.AddSingleton<IPersonRepository, PersonRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
+            
             services.AddDbContext<ImdbContext>(ServiceLifetime.Singleton);
             //services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings
               //  .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
