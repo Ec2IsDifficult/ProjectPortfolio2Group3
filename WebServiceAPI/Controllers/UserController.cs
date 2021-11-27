@@ -1,11 +1,15 @@
+using System;
 using System.Linq;
 using AutoMapper;
 using Dataservices.Domain.User;
 using Dataservices.IRepositories;
 using Dataservices.Repository;
+using DataServices.Authentication;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
+using WebServiceAPI.Attributes;
 using WebServiceAPI.Models.UserViews;
 
 namespace WebServiceAPI.Controllers
@@ -16,12 +20,14 @@ namespace WebServiceAPI.Controllers
     {
         //we need the IRepository here for dependency injection
         private readonly IUserRepository _userService;
+        private readonly IConfiguration _configuration;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
 
-        public UserController(IUserRepository userService, LinkGenerator linkGenerator, IMapper mapper)
+        public UserController(IUserRepository userService, IConfiguration configuration, LinkGenerator linkGenerator, IMapper mapper)
         {
             _userService = userService;
+            _configuration = configuration;
             _linkGenerator = linkGenerator;
             _mapper = mapper;
         }
@@ -38,7 +44,7 @@ namespace WebServiceAPI.Controllers
             var model = CreateUserViewModel(user);
             return Ok(model);
         }
-            //object cycle
+        //object cycle
         [HttpGet("{id}/reviews")]
         public IActionResult GetReviews(int id)
         {
@@ -66,7 +72,7 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-            //object cycle
+        //object cycle
         [HttpGet("{id}/searchhistory")]
         public IActionResult GetSearchHistory(int id)
         {
@@ -107,14 +113,36 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        
+        [Authorization]
         [HttpPost("rate")]
         public IActionResult RateMovie([FromBody] CRatingHistory rating)
         {
-            
+
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
+
+            var auth = new AuthenticateResponse(_configuration);
+
+            string user_id = auth.AuthenticateJwtToken(token);
+
             //var rating = _mapper.Map<CRatingHistory>(model);
-            _userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
-            return Created("Success",rating);
+            //_userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
+            //return Created("Success", rating);
+
+            if (user_id.Length > 0 && user_id != "0")
+            {
+                try
+                {
+                    _userService.Rate(Int32.Parse(user_id), rating.Tconst, rating.Rating);
+                    return Created("Success", rating);
+
+                }
+                catch
+                {
+                    return BadRequest("Failed to update rating.");
+                }
+            }
+
+            return BadRequest("No user information found from the token.");
         }
 
         [HttpPost("review")]
@@ -145,14 +173,14 @@ namespace WebServiceAPI.Controllers
             _userService.BookmarkTitle(title.Tconst, title.UserId, false);
             return Created("Success", title);
         }
-        
+
         public BookmarkPersonViewModel CreateBookmarkPersonViewModel(CBookmarkPerson person)
         {
             var model = _mapper.Map<BookmarkPersonViewModel>(person);
             model.Url = HttpContext.Request.GetDisplayUrl();
             return model;
         }
-        
+
         public UserViewModel CreateUserViewModel(CUser user)
         {
             var model = _mapper.Map<UserViewModel>(user);
@@ -188,4 +216,3 @@ namespace WebServiceAPI.Controllers
         }
     }
 }
-    

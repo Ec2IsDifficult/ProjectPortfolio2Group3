@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>index</title>
+    <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="container-fluid">
+
+    <h1>User IMDB Rate a Title</h1>
+
+    <div class="col-6">
+        Title <input class="form-control" data-bind="value: tconst" />
+        Rate <input class="form-control" data-bind="value: rate" />
+        <button data-bind="click: rateTitle" class="btn btn-primary">Rate</button>
+    </div>
+
+    <script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+</body>
+</html>

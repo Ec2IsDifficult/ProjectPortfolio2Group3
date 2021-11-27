@@ -3,7 +3,10 @@
     paths: {
         jquery: "lib/jquery/dist/jquery.min",
         knockout: "lib/knockout/build/output/knockout-latest.debug",
-        dataservice: "services/dataservice"
+        dataservice: "services/dataservices",
+        authservice: "services/authservices",
+        userservice: "services/userservices",
+        ApiConfig: "config/ApiConfig"
     }
 });
 

@@ -1,5 +1,6 @@
-﻿define([], () => {
+﻿define(["ApiConfig"], (ApiConfig) => {
 
     return {
+
     }
 });

@@ -29,8 +29,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\js\services\" />
+    <Content Remove="wwwroot\js\config\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\js\services\" />
+    <Folder Include="wwwroot\js\config\" />
   </ItemGroup>
 </Project>
