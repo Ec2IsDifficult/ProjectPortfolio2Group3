@@ -14,7 +14,7 @@ using WebServiceAPI.Models.UserViews;
 
 namespace WebServiceAPI.Controllers
 {
-    [Route("api/user")]
+    [Route("api/v1/user")]
     [ApiController]
     public class UserController : Controller
     {
@@ -44,18 +44,48 @@ namespace WebServiceAPI.Controllers
             var model = CreateUserViewModel(user);
             return Ok(model);
         }
+
         //object cycle
-        [HttpGet("{id}/reviews")]
-        public IActionResult GetReviews(int id)
+        [Authorization]
+        [HttpGet("reviews")]
+        public IActionResult GetReviews()
         {
-            var reviews = _userService.GetReviews(id);
-            if (reviews == null)
+            //var reviews = _userService.GetReviews(id);
+            //if (reviews == null)
+            //{
+            //    return NotFound("No reviews available");
+            //}
+
+            //var model = CreateReviewViewModel(reviews);
+            //return Ok(model);
+
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
+
+            var auth = new AuthenticateResponse(_configuration);
+
+            string user_id = auth.AuthenticateJwtToken(token);
+
+            if (user_id.Length > 0 && user_id != "0")
             {
-                return NotFound("No reviews available");
+                try
+                {
+                    var reviews = _userService.GetReviews(Int32.Parse(user_id));
+                    if (reviews == null)
+                    {
+                        return NotFound("No reviews available.");
+                    }
+
+                    var model = CreateReviewViewModel(reviews);
+                    return Ok(model);
+
+                }
+                catch
+                {
+                    return BadRequest("Failed to get review.");
+                }
             }
 
-            var model = CreateReviewViewModel(reviews);
-            return Ok(model);
+            return NotFound("No reviews available.");
         }
 
         //SOMETHING WRONG WITH THE MAPPING
@@ -118,15 +148,15 @@ namespace WebServiceAPI.Controllers
         public IActionResult RateMovie([FromBody] CRatingHistory rating)
         {
 
+            //var rating = _mapper.Map<CRatingHistory>(model);
+            //_userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
+            //return Created("Success", rating);
+
             var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
 
             var auth = new AuthenticateResponse(_configuration);
 
             string user_id = auth.AuthenticateJwtToken(token);
-
-            //var rating = _mapper.Map<CRatingHistory>(model);
-            //_userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
-            //return Created("Success", rating);
 
             if (user_id.Length > 0 && user_id != "0")
             {
@@ -134,7 +164,6 @@ namespace WebServiceAPI.Controllers
                 {
                     _userService.Rate(Int32.Parse(user_id), rating.Tconst, rating.Rating);
                     return Created("Success", rating);
-
                 }
                 catch
                 {
@@ -145,12 +174,34 @@ namespace WebServiceAPI.Controllers
             return BadRequest("No user information found from the token.");
         }
 
+        [Authorization]
         [HttpPost("review")]
         public IActionResult AddReview([FromBody] CReviews review)
         {
             //var model = _mapper.Map<CReviews>(review);
-            _userService.AddReview(review.UserId, review.Tconst, review.Review);
-            return Created("Success", review);
+            //_userService.AddReview(review.UserId, review.Tconst, review.Review);
+            //return Created("Success", review);
+
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
+
+            var auth = new AuthenticateResponse(_configuration);
+
+            string user_id = auth.AuthenticateJwtToken(token);
+
+            if (user_id.Length > 0 && user_id != "0")
+            {
+                try
+                {
+                    _userService.AddReview(Int32.Parse(user_id), review.Tconst, review.Review);
+                    return Created("Success", review);
+                }
+                catch
+                {
+                    return BadRequest("Failed to add/update review.");
+                }
+            }
+
+            return BadRequest("No user information found from the token.");
         }
 
         [HttpPost("search")]

@@ -19,9 +19,9 @@
 
     let ApiUserLogout = ApiPath + "user/logout";
 
-    // api/user/rate
-    let ApiPath2 = API_server + "/" + "api/user/";
-    let ApiUserRate = ApiPath2 + "rate";
+    let ApiUserRate = ApiPath + "user/rate";
+
+    let ApiUserGetReviews = ApiPath + "user/reviews";
 
     return {
         ApiUserLogin,
@@ -30,6 +30,7 @@
         ApiUserUpdateEmail,
         ApiUserLogout,
 
-        ApiUserRate
+        ApiUserRate,
+        ApiUserGetReviews
     }
 });

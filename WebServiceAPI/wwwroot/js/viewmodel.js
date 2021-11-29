@@ -56,6 +56,8 @@
         let tconst = ko.observable("tt10850402");
         let rate = ko.observable("3");
 
+        let reviewTitle = ko.observable("Best movie ever!");
+
         /**
          * Connecting from model (Rating a title) to data service
          */
@@ -64,6 +66,82 @@
                 console.log(status);
             });
         }
+
+        /**
+         * Connecting from model (Rating a title) to data service
+         */
+        let getReviews = () => {
+            user.imdb_user.getReviews(function (status) {
+                console.log(status);
+            });
+        }
+
+        /*************************************************/
+        /**
+         * Janik
+         */
+
+        let person = ko.observable();
+
+        ds.getPerson(data => {
+            person(data);
+        });
+
+        let persons = ko.observable([]);
+
+        ds.getAllPersons(data => {
+            persons(data);
+        });
+
+
+        let knownfor = ko.observable([]);
+
+        ds.knownfor(data => {
+            knownfor(data);
+        });
+
+        let coactors = ko.observable([]);
+
+        ds.coactors(data => {
+            coactors(data);
+        });
+
+        let personsbyyear = ko.observable([]);
+
+        ds.year(data => {
+            personsbyyear(data);
+        });
+
+        let alltitles = ko.observable([]);
+        //titles viewmodels
+        ds.getAllTitles(data => {
+            alltitles(data);
+        });
+
+        let title = ko.observable();
+        ds.getTitle(data => {
+            title(data);
+        });
+
+        let cast = ko.observable([]);
+        ds.getCast(data => {
+            cast(data);
+        });
+
+        let crew = ko.observable([]);
+        ds.getCrew(data => {
+            crew(data);
+        });
+
+        let titleRating = ko.observable();
+        ds.getTitleRating(data => {
+            titleRating(data);
+        });
+
+        let titlesbyyear = ko.observable([]);
+        ds.getTitlesByYear(data => {
+            titlesbyyear(data);
+        });
 
         /*************************************************/
 
@@ -84,7 +162,9 @@
             /* User IMDB */
             tconst,
             rate,
-            rateTitle
+            rateTitle,
+            reviewTitle,
+            getReviews
 
         }
     });

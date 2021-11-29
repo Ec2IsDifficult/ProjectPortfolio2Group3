@@ -1,37 +1,40 @@
 ﻿<Properties StartupConfiguration="{5B8AB8DF-E14F-44E2-85FB-F359D4A4333E}|Default">
-  <MonoDevelop.Ide.ItemProperties.WebServiceAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="WebServiceAPI/Controllers/Authenticate.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="WebServiceAPI/wwwroot/js/services/dataservices.js">
     <Files>
-      <File FileName="ProjectPortfolioTesting/PersonRepositoryTest.cs" Line="1" Column="1" />
-      <File FileName="Dataservices/Authentication/AuthenticatedUser.cs" Line="5" Column="38" />
-      <File FileName="Dataservices/Authentication/Entities.cs" Line="6" Column="33" />
-      <File FileName="Dataservices/Authentication/LoginModel.cs" Line="2" Column="1" />
-      <File FileName="WebServiceAPI/Program.cs" Line="1" Column="1" />
-      <File FileName="WebServiceAPI/Startup.cs" Line="48" Column="16" />
-      <File FileName="WebServiceAPI/Controllers/Authenticate.cs" Line="9" Column="31" />
+      <File FileName="WebServiceAPI/wwwroot/js/main.js" Line="10" Column="6" />
+      <File FileName="WebServiceAPI/wwwroot/js/viewmodel.js" Line="59" Column="24" />
+      <File FileName="WebServiceAPI/wwwroot/js/config/ApiConfig.js" Line="24" Column="26" />
+      <File FileName="WebServiceAPI/wwwroot/js/services/userservices.js" Line="32" Column="19" />
+      <File FileName="WebServiceAPI/Controllers/UserController.cs" Line="177" Column="9" />
+      <File FileName="WebServiceAPI/wwwroot/user_imdb_review.html" Line="14" Column="52" />
+      <File FileName="WebServiceAPI/wwwroot/user_logout.html" Line="9" Column="20" />
+      <File FileName="WebServiceAPI/wwwroot/js/services/authservices.js" Line="36" Column="22" />
+      <File FileName="WebServiceAPI/wwwroot/js/services/dataservices.js" Line="1" Column="39" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ProjectPortfolio2Group3" expanded="True">
-            <Node name="Dataservices" expanded="True">
-              <Node name="Authentication" expanded="True" />
-              <Node name="Domain" expanded="True">
-                <Node name="User" expanded="True" />
+            <Node name="ProjectPortfolioTesting" expanded="True" />
+            <Node name="WebService" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="wwwroot" expanded="True">
+                <Node name="js" expanded="True">
+                  <Node name="config" expanded="True" />
+                  <Node name="services" expanded="True">
+                    <Node name="dataservices.js" selected="True" />
+                  </Node>
+                </Node>
               </Node>
-            </Node>
-            <Node name="WebServiceAPI" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="Authenticate.cs" selected="True" />
-              </Node>
-              <Node name="Models" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.WebService PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.ProjectPortfolioTesting PreferredExecutionTarget="net5.0" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
