@@ -10,6 +10,6 @@ namespace Dataservices.Domain.User
         public string SearchPhrase { get; set; }
         public DateTime SearchHistoryTimeStamp { get; set; }
 
-        public CUser User {get; set;}
+        public CUser User { get; set;}
     }
 }

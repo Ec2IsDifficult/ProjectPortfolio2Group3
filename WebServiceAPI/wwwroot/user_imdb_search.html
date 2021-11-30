@@ -6,12 +6,11 @@
 </head>
 <body class="container-fluid">
 
-    <h1>User IMDB Post Review</h1>
+    <h1>User IMDB Search</h1>
 
     <div class="col-6">
-        Title <input class="form-control" data-bind="value: tconst" />
-        <textarea class="form-control" data-bind="value: reviewTitle"></textarea>
-        <button data-bind="click: updateReviewTitle" class="btn btn-primary">Post Review</button>
+        Search Phrase <input class="form-control" data-bind="value: searchPhrase" />
+        <button data-bind="click: userSearchPhrase" class="btn btn-primary">Search</button>
     </div>
 
     <script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>

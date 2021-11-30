@@ -58,6 +58,8 @@
 
         let reviewTitle = ko.observable("Best movie ever!");
 
+        let searchPhrase = ko.observable("Harry Potter");
+
         /**
          * Connecting from model (Rating a title) to data service
          */
@@ -68,11 +70,39 @@
         }
 
         /**
-         * Connecting from model (Rating a title) to data service
+         * Connecting from model (Get all reviews made by this user) to data service
          */
         let getReviews = () => {
             user.imdb_user.getReviews(function (status) {
                 console.log(status);
+            });
+        }
+
+        /**
+         * Connecting from model (Review a title) to data service
+         */
+        let updateReviewTitle = () => {
+            user.imdb_user.updateReviewTitle(tconst(), reviewTitle(), function (status) {
+                console.log(status);
+            });
+        }
+
+        /**
+         * Connecting from model (User search phrase) to data service
+         */
+        let userSearchPhrase = () => {
+            user.imdb_user.userSearchPhrase(searchPhrase(), function (status) {
+                console.log(status);
+            });
+        }
+
+        /**
+         * Connecting from model (User load search phrase) to data service
+         */
+        let userLoadSearchHistory = () => {
+            user.imdb_user.userLoadSearchHistory(function (status) {
+                console.log(status);
+                console.log(status[0]);
             });
         }
 
@@ -81,6 +111,7 @@
          * Janik
          */
 
+        /*
         let person = ko.observable();
 
         ds.getPerson(data => {
@@ -142,6 +173,7 @@
         ds.getTitlesByYear(data => {
             titlesbyyear(data);
         });
+        */
 
         /*************************************************/
 
@@ -164,7 +196,13 @@
             rate,
             rateTitle,
             reviewTitle,
-            getReviews
+            getReviews,
+            updateReviewTitle,
+
+            /* User search */
+            searchPhrase,
+            userSearchPhrase,
+            userLoadSearchHistory
 
         }
     });

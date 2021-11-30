@@ -50,14 +50,6 @@ namespace WebServiceAPI.Controllers
         [HttpGet("reviews")]
         public IActionResult GetReviews()
         {
-            //var reviews = _userService.GetReviews(id);
-            //if (reviews == null)
-            //{
-            //    return NotFound("No reviews available");
-            //}
-
-            //var model = CreateReviewViewModel(reviews);
-            //return Ok(model);
 
             var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
 
@@ -103,17 +95,45 @@ namespace WebServiceAPI.Controllers
         }
 
         //object cycle
-        [HttpGet("{id}/searchhistory")]
-        public IActionResult GetSearchHistory(int id)
+        [Authorization]
+        [HttpGet("searchhistory")]
+        public IActionResult GetSearchHistory()
         {
-            var history = _userService.GetSearchHistory(id);
-            if (history == null)
+            //var history = _userService.GetSearchHistory(id);
+            //if (history == null)
+            //{
+            //    return NotFound("no previous searches");
+            //}
+
+            //var model = CreateSearchHistoryViewModel(history);
+            //return Ok(model);
+
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
+
+            var auth = new AuthenticateResponse(_configuration);
+
+            string user_id = auth.AuthenticateJwtToken(token);
+
+            if (user_id.Length > 0 && user_id != "0")
             {
-                return NotFound("no previous searches");
+                try
+                {
+                    var history = _userService.GetSearchHistory(Int32.Parse(user_id));
+                    if (history == null)
+                    {
+                        return NotFound("no previous searches");
+                    }
+
+                    var model = CreateSearchHistoryViewModel(history);
+                    return Ok(model);
+                }
+                catch
+                {
+                    return BadRequest("Failed to update rating.");
+                }
             }
 
-            var model = CreateSearchHistoryViewModel(history);
-            return Ok(model);
+            return BadRequest("No user information found from the token.");
         }
 
         [HttpGet("{id}/bookmarks/titles")]
@@ -147,10 +167,6 @@ namespace WebServiceAPI.Controllers
         [HttpPost("rate")]
         public IActionResult RateMovie([FromBody] CRatingHistory rating)
         {
-
-            //var rating = _mapper.Map<CRatingHistory>(model);
-            //_userService.Rate(rating.UserId, rating.Tconst, rating.Rating);
-            //return Created("Success", rating);
 
             var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
 
@@ -204,11 +220,33 @@ namespace WebServiceAPI.Controllers
             return BadRequest("No user information found from the token.");
         }
 
+        [Authorization]
         [HttpPost("search")]
         public IActionResult AddToSearchHistory([FromBody] CSearchHistory search)
         {
-            _userService.AddToSearchHistory(search.UserId, search.SearchPhrase);
-            return Created("success", search);
+            //_userService.AddToSearchHistory(search.UserId, search.SearchPhrase);
+            //return Created("success", search);
+
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
+
+            var auth = new AuthenticateResponse(_configuration);
+
+            string user_id = auth.AuthenticateJwtToken(token);
+
+            if (user_id.Length > 0 && user_id != "0")
+            {
+                try
+                {
+                    _userService.AddToSearchHistory(Int32.Parse(user_id), search.SearchPhrase);
+                    return Created("Success", search);
+                }
+                catch
+                {
+                    return BadRequest("Failed to update search.");
+                }
+            }
+
+            return BadRequest("No user information found from the token.");
         }
 
         [HttpPost("bookmark/person")]

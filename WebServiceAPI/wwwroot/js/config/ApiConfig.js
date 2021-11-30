@@ -23,6 +23,12 @@
 
     let ApiUserGetReviews = ApiPath + "user/reviews";
 
+    let ApiUserReviewTitle = ApiPath + "user/review";
+
+    let ApiUserSearch = ApiPath + "user/search";
+
+    let ApiUserSearchHistory = ApiPath + "user/searchhistory";
+
     return {
         ApiUserLogin,
         ApiUserRegister,
@@ -31,6 +37,9 @@
         ApiUserLogout,
 
         ApiUserRate,
-        ApiUserGetReviews
+        ApiUserGetReviews,
+        ApiUserReviewTitle,
+        ApiUserSearch,
+        ApiUserSearchHistory
     }
 });
