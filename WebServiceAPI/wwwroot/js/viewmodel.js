@@ -1,10 +1,13 @@
 ﻿define(["knockout", "dataservice", "authservice", "userservice"],
     function (ko, ds, auth, user) {
-
+    
         let username = ko.observable("ruc1");
         let email = ko.observable("test@ruc.dk");
         let password = ko.observable("ruc");
-
+        
+        let mainView = ko.observable(/*just the one component ie. front page (the front page will contain the smaller
+        components)*/);
+        
         /**
          * Connecting from model (Register button) to data service
          */

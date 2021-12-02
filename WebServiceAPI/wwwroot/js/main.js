@@ -11,6 +11,9 @@
 });
 
 
+
+
+
 require(["knockout", "viewmodel"], function (ko, vm) {
 
     ko.applyBindings(vm);
