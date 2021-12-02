@@ -32,6 +32,7 @@
     <Content Remove="wwwroot\js\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="wwwroot\js\Components\review-component" />
     <Folder Include="wwwroot\js\services\" />
     <Folder Include="wwwroot\js\config\" />
   </ItemGroup>
