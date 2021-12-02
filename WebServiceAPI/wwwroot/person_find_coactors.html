@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find the co-actors of an actor</title>
+    <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+</head>
+<body>
+
+<button data-bind="click: getCoActors" class="btn btn-primary">Find</button>
+Find Co-Actors <input class="form-control" data-bind="value: selectedPerson" />
+
+<table class="table">
+    <thead>
+    <tr><th>coActorName</th><th>coActorNconst</th><th>url</th></tr>
+    </thead>
+    <tbody data-bind="foreach: coactors">
+    <tr>
+        <td data-bind="text: coActorName"></td>
+        <td data-bind="text: coActorNconst"></td>
+        <td data-bind="text: url"></td>
+    </tr>
+    </tbody>
+</table>
+
+<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+</body>
+</html>

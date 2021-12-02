@@ -80,7 +80,7 @@
         /**
          * Janik
          */
-
+        
         let person = ko.observable();
 
         ds.getPerson(data => {
@@ -89,59 +89,91 @@
 
         let persons = ko.observable([]);
 
-        ds.getAllPersons(data => {
-            persons(data);
-        });
+        /*let persons = ko.observableArray([]);
 
+
+        ds.getAllPersons(data => {
+            console.log(data.$values[0]);
+            persons(data.$values[11]);
+        });*/
+
+        let selectedPerson = ko.observable();
+        let personData = ko.observable();
+        
+        let getPerson = () => {
+            ds.getPerson(selectedPerson(), function(data) {
+            console.log(data);
+            personData(data);
+        })};
 
         let knownfor = ko.observable([]);
 
-        ds.knownfor(data => {
-            knownfor(data);
-        });
+        let getKnownFor = () => {
+        ds.knownFor(selectedPerson(), function(data) {
+            console.log(data.$values);
+            knownfor(data.$values);
+        })};
 
+        
         let coactors = ko.observable([]);
 
-        ds.coactors(data => {
-            coactors(data);
-        });
+        let getCoActors = () => {
+        ds.coactors(selectedPerson(), function(data) {
+            console.log(data.$values);
+            coactors(data.$values);
+        })};
 
+        
         let personsbyyear = ko.observable([]);
 
-        ds.year(data => {
-            personsbyyear(data);
-        });
+        let getPersonByYear = () => {
+        ds.personYear(selectedPerson(), function(data) {
+            console.log(data.$values);
+            personsbyyear(data.$values);
+        })};
 
-        let alltitles = ko.observable([]);
-        //titles viewmodels
-        ds.getAllTitles(data => {
-            alltitles(data);
-        });
-
+        
         let title = ko.observable();
-        ds.getTitle(data => {
+        //titles viewmodels
+        let getSingleTitle = () => {
+        ds.getTitle(selectedPerson(), function(data) {
+            console.log(data);
             title(data);
-        });
-
+        })};
+        
+        /*
         let cast = ko.observable([]);
         ds.getCast(data => {
             cast(data);
         });
-
+           */
+        
         let crew = ko.observable([]);
-        ds.getCrew(data => {
-            crew(data);
-        });
+        let getTitleCrew = () => {
+        ds.getCrew(selectedPerson(), function(data) {
+            console.log(data.crew.$values)
+            crew(data.crew.$values);
+        })};
 
         let titleRating = ko.observable();
-        ds.getTitleRating(data => {
+        
+        let getTitleRating = () => {
+        ds.getTitleRating(selectedPerson(), function(data) {
+            console.log(data);
             titleRating(data);
-        });
+        })};
 
         let titlesbyyear = ko.observable([]);
         ds.getTitlesByYear(data => {
             titlesbyyear(data);
         });
+        
+        let getTitlesByYear = () => {
+        ds.getTitlesByYear(selectedPerson(), function(data) {
+            console.log(data.$values);
+            titlesbyyear(data.$values);
+        })};
+        
 
         /*************************************************/
 
@@ -149,6 +181,28 @@
         * Public functions.
         */
         return {
+            /*persons*/
+            selectedPerson,
+            getPerson,
+            personData,
+            getKnownFor,
+            knownfor,
+            getCoActors,
+            coactors,
+            getPersonByYear,
+            personsbyyear,
+            
+            
+            /*titles*/
+            title,
+            getSingleTitle,
+            crew,
+            getTitleCrew,
+            titleRating,
+            getTitleRating,
+            titlesbyyear,
+            getTitlesByYear,
+            
             /* User Auth */
             username,
             email,

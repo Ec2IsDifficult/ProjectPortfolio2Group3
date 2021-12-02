@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<h1>Get information about a person</h1>
+<div class="col-6">
+    <button data-bind="click: getPerson" class="btn btn-primary">Find</button>
+    Find Person <input class="form-control" data-bind="value: selectedPerson" />
+
+    <table class="table">
+        <thead>
+        <tr><th>birthYear</th><th>deathYear</th><th>name</th><th>nconst</th><th>url</th></tr>
+        </thead>
+        <tbody data-bind="foreach: person">
+        <tr>
+            <td data-bind="text: birthYear"></td>
+            <td data-bind="text: deathYear"></td>
+            <td data-bind="text: name"></td>
+            <td data-bind="text: nconst"></td>
+            <td data-bind="text: url"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find the crew for a title </title>
+    <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<button data-bind="click: getTitleCrew" class="btn btn-primary">Find</button>
+Find Crew <input class="form-control" data-bind="value: selectedPerson" />
+
+<table class="table">
+    <thead>
+    <tr><th>category</th><th>job</th><th>name</th><th>nconst</th><th>tconst</th></tr>
+    </thead>
+    <tbody data-bind="foreach: crew">
+    <tr>
+        <td data-bind="text: category"></td>
+        <td data-bind="text: job"></td>
+        <td data-bind="text: name"></td>
+        <td data-bind="text: nconst"></td>
+        <td data-bind="text: tconst"></td>
+    </tr>
+    </tbody>
+</table>
+
+<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+</body>
+</html>

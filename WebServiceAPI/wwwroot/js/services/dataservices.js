@@ -89,59 +89,76 @@
     fetch("api/person")
      .then(response => response.json())
      .then(json => callback(json));
+    };*/
+    
+    
+    function getPerson(nconst, callback) {
+            fetch("api/person/" + nconst)
+                .then(response => response.json())
+                .then(json => callback(json))
     };
-    let getPerson = (callback) => {
-    fetch("api/person/nm0000003")
+    
+    function knownFor(nconst, callback) {
+    fetch("api/person/"+nconst+"/knownfor")
+     .then(response => response.json())
+     .then(json => callback(json))
+        console.log("api/person/"+nconst+"/knownfor");
+    };
+    
+    
+    function coactors(name, callback) {
+    fetch("api/person/"+name+"/coactors")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let knownfor = (callback) => {
-    fetch("api/person/nm0000003/knownfor")
+    
+    
+    function personYear (year, callback) {
+    fetch("api/person/year/"+year)
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let coactors = (callback) => {
-    fetch("api/person/Jennifer Aniston/coactors")
-     .then(response => response.json())
-     .then(json => callback(json))
-    };
-    let year = (callback) => {
-    fetch("api/person/year/2002")
-     .then(response => response.json())
-     .then(json => callback(json))
-    };
-    let getAllTitles = (callback) => {
+    
+    
+    function getAllTitles (callback)  {
     fetch("api/titles")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let getTitle = (callback) => {
-    fetch("api/titles/tt0088634")
+    
+    function getTitle (tconst,  callback) {
+    fetch("api/titles/"+tconst)
      .then(response => response.json())
      .then(json => callback(json))
     };
+    /*
     //object cycle
     let getCast = (callback) => {
     fetch("api/titles/tt0088634/cast")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let getCrew = (callback) => {
-    fetch("api/titles/tt0088634/crew")
-     .then(response => response.json())
-     .then(json => callback(json))
-    };
-    let getTitleRating = (callback) => {
-    fetch("api/titles/tt0088634/rating")
-     .then(response => response.json())
-     .then(json => callback(json))
-    };
-    let getTitlesByYear = (callback) => {
-    fetch("api/titles/year/2002")
-     .then(response => response.json())
-     .then(json => callback(json))
-    };
     */
+    function getCrew(tconst, callback) {
+    fetch("api/titles/"+tconst+"/crew")
+     .then(response => response.json())
+     .then(json => callback(json))
+    };
+    
+    
+    function getTitleRating (tconst, callback) {
+    fetch("api/titles/"+tconst+"/rating")
+     .then(response => response.json())
+     .then(json => callback(json))
+    };
+    
+    
+    function getTitlesByYear (year, callback) {
+    fetch("api/titles/year/"+year)
+     .then(response => response.json())
+     .then(json => callback(json))
+    };
+    
 
 
     return {
@@ -156,13 +173,16 @@
         getAllGenres: getAllGenres,
         getUser: getUser,
         getAllUsers: getAllUsers,
-
-        /* from Janik
-        getPerson,
-        getAllPersons,
-        knownfor,
-        coactors,
-        year,
+        //getAllPersons: getAllPersons,
+        getPerson: getPerson,
+        knownFor: knownFor,
+        coactors: coactors,
+        personYear: personYear,
+        getTitle: getTitle,
+        getCrew: getCrew,
+        getTitleRating: getTitleRating,
+        getTitlesByYear: getTitlesByYear
+        /*
         getAllTitles,
         getTitle,
         getCast,
