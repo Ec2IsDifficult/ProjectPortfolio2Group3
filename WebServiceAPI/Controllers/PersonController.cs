@@ -92,6 +92,14 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
+        [HttpGet("random/{amount}")]
+        public IActionResult GetRandomPeople(int amount)
+        {
+            var actors = _personService.GetRandomPeople(amount);
+            var model = actors.Select(CreateNameBasicsViewModel);
+            return Ok(model);
+        }
+
         public NameBasicsViewModel CreateNameBasicsViewModel(ImdbNameBasics actors)
         {
             var model = _mapper.Map<NameBasicsViewModel>(actors);
