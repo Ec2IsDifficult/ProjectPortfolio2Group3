@@ -145,6 +145,16 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
         
+        [HttpGet("random/{amount}/{lowestRating}", Name = nameof(GetRandomTitles))]
+        public IActionResult GetRandomTitles(int amount, float lowestRating)
+        {
+            var titles = _titleService.GetRandomTitles(amount, lowestRating);
+            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            foreach(var title in titles)
+                model.Add(CreateTitlesViewModel(nameof(GetTitlesBetween), title));
+            return Ok(model);
+        }
+        
         /*
         [HttpGet("adult", Name = nameof(GetAdultMovies))]
         public IActionResult GetAdultMovies()

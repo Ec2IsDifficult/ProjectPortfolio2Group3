@@ -66,6 +66,13 @@ namespace Dataservices.Repository
             return ImdbContext.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({name})");
         }
 
+        //
+        public IQueryable<ImdbTitleBasics> GetRandomTitles(int amount, float lowestRating)
+        {
+            return ImdbContext.ImdbTitleBasics.FromSqlInterpolated(
+                $"select * from getRandomTitles({amount},{lowestRating})");
+        }
+
         public ImdbContext ImdbContext
         {
             get { return Context as ImdbContext; }

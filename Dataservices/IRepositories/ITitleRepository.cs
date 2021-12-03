@@ -19,6 +19,8 @@ namespace Dataservices.IRepositories
     ImdbTitleBasics GetEpisodes(string id);
     IEnumerable<ImdbTitleBasics> GetAdultMovies();
     IQueryable<MoviesByGenre> GetMoviesByGenre(string name);
+
+    IQueryable<ImdbTitleBasics> GetRandomTitles(int amount, float lowestRating);
     //IEnumerable<ImdbTitleBasics> GetTitleSeasons(string id);
     }
 }
