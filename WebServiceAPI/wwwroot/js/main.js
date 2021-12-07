@@ -1,6 +1,4 @@
-﻿
-
-require.config({
+﻿require.config({
     baseUrl: 'js',
     paths: {
         jquery: "lib/jquery/dist/jquery.min",
@@ -21,12 +19,19 @@ require.config({
  */
 require(['knockout'], (ko) => {
 
-    let component_name = ["user-login", "user-recover", "user-register", "user-update-email"];
-    component_name.forEach(registerComponent);
+    let component_auth = ["user-login", "user-recover", "user-register", "user-update-email"];
+
+    let component_front_page = ["front-page", "title-card-list", "person-card-list"];
+
+    let components = component_auth.concat(component_front_page);
+
+    components.forEach(registerComponent);
 
     function registerComponent(component_name) {
         ko.components.register(component_name, {
-            viewModel: { require: "components/" + component_name + "/" + component_name },
+            viewModel: {
+                require: "components/" + component_name + "/" + component_name
+            },
             template: {
                 require: "text!components/" + component_name + "/" + component_name + ".html"
             }
@@ -34,9 +39,6 @@ require(['knockout'], (ko) => {
     }
 
 });
-
-
-
 
 require(["knockout", "viewmodel"], function (ko, vm) {
 

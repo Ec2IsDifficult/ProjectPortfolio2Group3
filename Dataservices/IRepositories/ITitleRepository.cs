@@ -2,6 +2,7 @@ namespace Dataservices.IRepositories
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using CRUDRepository;
     using Domain;
     using Domain.FunctionObjects;
@@ -20,7 +21,7 @@ namespace Dataservices.IRepositories
     IEnumerable<ImdbTitleBasics> GetAdultMovies();
     IQueryable<MoviesByGenre> GetMoviesByGenre(string name);
 
-    IQueryable<ImdbTitleBasics> GetRandomTitles(int amount, float lowestRating);
+    IEnumerable<ImdbTitleBasics> GetRandomTitles(int amount, float lowestRating);
     //IEnumerable<ImdbTitleBasics> GetTitleSeasons(string id);
 
     IQueryable<BestMatchSearch> SearchBestMatch(string[] keyWords);

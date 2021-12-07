@@ -1,4 +1,4 @@
-﻿define([], () => {
+﻿define(["ApiConfig"], (ApiConfig) => {
 
     /**
      * From Rasmus
@@ -81,14 +81,14 @@
             .then(json => callback(json));
     }
     
-    let getRandomTitles = (callback, amount, lowestRating) => {
-        fetch(`${titlesUrl}/random/${amount}/${lowestRating}`)
+    let getRandomTitles = async function(callback, amount, lowestRating) {
+        await fetch(`${ApiConfig.ApiRandomTitles}${amount}/${lowestRating}`)
             .then(response => response.json())
             .then(json => callback(json));
     }
 
-    let getRandomPeople = (callback, amount) => {
-        fetch(`${peopleUrl}/random/${amount}`)
+    let getRandomPeople = async function(callback, amount) {
+        await fetch(`${ApiConfig.ApiRandomPeople}${amount}`)
             .then(response => response.json())
             .then(json => callback(json));
     }

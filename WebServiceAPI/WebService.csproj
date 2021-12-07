@@ -35,4 +35,8 @@
     <Folder Include="wwwroot\js\services\" />
     <Folder Include="wwwroot\js\config\" />
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\Components\navbar\navbar.html" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Components\navbar\navbar.js" />
+  </ItemGroup>
 </Project>
