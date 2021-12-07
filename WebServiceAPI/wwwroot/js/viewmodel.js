@@ -12,6 +12,7 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
          */
 
         let componentItems = [
+
             {
                 title: "Login",
                 component: "user-login",
@@ -27,11 +28,26 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 component: "user-register",
                 hash: "#register",
             }
+
         ];
 
-        let currentView = ko.observable(componentItems[0].component);
+        let currentView = ko.observable(componentItems[2].component);
         let currentParams = ko.observable({});
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         /**
          * Connecting from model (Recover password: change) to data service
          */
