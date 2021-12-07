@@ -1,9 +1,23 @@
-﻿define(["knockout", "dataservice", "authservice", "userservice"],
-    function (ko, ds, auth, user) {
+﻿define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
+    function (ko, ds, auth, user, AppConfig) {
 
-        let username = ko.observable("ruc1");
-        let email = ko.observable("test@ruc.dk");
-        let password = ko.observable("ruc");
+        /**
+         * Application configuration
+         */
+
+        let appName = AppConfig.appName;
+
+        /**
+         * Initialization
+         */
+
+        let componentItems = [
+            { title: "Login", component: "user-login" },
+            { title: "Add", component: "add-category" }
+        ];
+
+        let currentView = ko.observable(componentItems[0].component);
+        let currentParams = ko.observable({});
 
         /**
          * Connecting from model (Register button) to data service
@@ -11,16 +25,6 @@
         let register = () => {
             auth.imdb_auth.register(username(), email(), password(), function (status) {
                 console.log(status);
-            });
-        }
-
-        /**
-         * Connecting from model (Login button) to data service
-         */
-        let login = () => {
-            auth.imdb_auth.login(username(), password(), function (status, token) {
-                console.log(status);
-                console.log(token);
             });
         }
 
@@ -175,18 +179,25 @@
         });
         */
 
-        /*************************************************/
+    /*************************************************/
+
+
 
         /**
         * Public functions.
         */
         return {
+            appName,
+            componentItems,
+
+            currentView,
+            currentParams,
+
             /* User Auth */
-            username,
-            email,
-            password,
+            //username,
+            //email,
+            //password,
             register,
-            login,
             recover,
             updateEmail,
             logout,
