@@ -1,9 +1,12 @@
-﻿require.config({
+﻿
+
+require.config({
     baseUrl: 'js',
     paths: {
         jquery: "lib/jquery/dist/jquery.min",
         knockout: "lib/knockout/build/output/knockout-latest.debug",
         text: "lib/requirejs/text",
+        Sammy: "lib/sammy/lib/min/sammy-0.7.6.min",
         bootstrap: "../css/lib/bootstrap/dist/js/bootstrap.bundle.min",
         dataservice: "services/dataservices",
         authservice: "services/authservices",
@@ -21,6 +24,18 @@ require(['knockout'], (ko) => {
         viewModel: { require: "components/user-login/user-login" },
         template: { require: "text!components/user-login/user-login.html" }
     });
+
+    let component_name = ["user-recover", "user-register"];
+    component_name.forEach(registerComponent);
+
+    function registerComponent(component_name) {
+        ko.components.register(component_name, {
+            viewModel: { require: "components/" + component_name + "/" + component_name },
+            template: {
+                require: "text!components/" + component_name + "/" + component_name + ".html"
+            }
+        });
+    }
 });
 
 
