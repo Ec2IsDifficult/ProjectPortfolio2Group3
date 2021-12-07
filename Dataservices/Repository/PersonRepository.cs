@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dataservices.Repository
 {
+    using System.Threading.Tasks;
     using Domain.FunctionObjects;
 
     //Will inherit all functionality from the Repository class and a functionality contract from its specific interface
@@ -20,23 +21,27 @@ namespace Dataservices.Repository
         //in person controller
         public IEnumerable<ImdbKnownFor> GetKnowFor(string id)
         {
-            return ImdbContext.ImdbKnownFor.Where(x => x.Nconst == id);
+            var ctx = new ImdbContext();
+            return ctx.ImdbKnownFor.Where(x => x.Nconst == id);
         }
         // in person controller
         public IEnumerable<CoActors> CoActors(string name)
         {
-            return ImdbContext.CoActors.FromSqlInterpolated($"select * from find_co_actors({name})");
+            var ctx = new ImdbContext();
+            return ctx.CoActors.FromSqlInterpolated($"select * from find_co_actors({name})");
         }   
         
         //in person controller
         public IEnumerable<ImdbNameBasics> GetPersonsByYear(int year)
         {
-            return ImdbContext.ImdbNameBasics.Where(x => x.BirthYear == year);
+            var ctx = new ImdbContext();
+            return ctx.ImdbNameBasics.Where(x => x.BirthYear == year);
         }
 
         public IEnumerable<ImdbNameBasics> GetRandomPeople(int amount)
         {
-            return ImdbContext.ImdbNameBasics.FromSqlInterpolated($"select * from getRandomPeople({amount})");
+            var ctx = new ImdbContext();
+            return ctx.ImdbNameBasics.FromSqlInterpolated($"select * from getRandomPeople({amount})");
         }
 
         //To cast the generic DbContext inherited from the parent class into an ImdbContext

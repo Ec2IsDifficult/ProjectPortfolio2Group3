@@ -28,6 +28,10 @@
     let ApiUserSearch = ApiPath + "user/search";
 
     let ApiUserSearchHistory = ApiPath + "user/searchhistory";
+    
+    let ApiRandomTitles = ApiPath + "titles/random/"
+    
+    let ApiRandomPeople = ApiPath + "person/random/"
 
     return {
         ApiUserLogin,
@@ -40,6 +44,9 @@
         ApiUserGetReviews,
         ApiUserReviewTitle,
         ApiUserSearch,
-        ApiUserSearchHistory
+        ApiUserSearchHistory,
+        
+        ApiRandomTitles,
+        ApiRandomPeople
     }
 });

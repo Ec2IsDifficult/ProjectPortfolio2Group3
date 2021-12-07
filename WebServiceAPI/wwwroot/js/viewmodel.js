@@ -13,12 +13,27 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
 
         let componentItems = [
             { title: "Login", component: "user-login" },
-            { title: "Add", component: "add-category" }
+            { title: "Add", component: "add-category" },
+            { title: "FrontPage", component: "front-page"}
         ];
 
-        let currentView = ko.observable(componentItems[0].component);
+        let currentView = ko.observable(componentItems[2].component);
         let currentParams = ko.observable({});
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         /**
          * Connecting from model (Register button) to data service
          */

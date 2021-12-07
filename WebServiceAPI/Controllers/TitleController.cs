@@ -18,9 +18,10 @@ using WebServiceAPI.Models;
 namespace WebServiceAPI.Controllers
 {
     using System.Net;
+    using System.Threading.Tasks;
     using Dataservices.Domain.Imdb;
 
-    [Route("api/titles")]
+    [Route("api/v1/titles")]
     [ApiController]
     public class TitleController : Controller
     {
