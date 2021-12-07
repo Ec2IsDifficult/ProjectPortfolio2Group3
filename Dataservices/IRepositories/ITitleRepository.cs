@@ -22,5 +22,7 @@ namespace Dataservices.IRepositories
 
     IQueryable<ImdbTitleBasics> GetRandomTitles(int amount, float lowestRating);
     //IEnumerable<ImdbTitleBasics> GetTitleSeasons(string id);
+
+    IQueryable<BestMatchSearch> SearchBestMatch(string[] keyWords);
     }
 }

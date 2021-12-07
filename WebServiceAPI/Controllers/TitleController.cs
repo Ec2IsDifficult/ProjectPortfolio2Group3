@@ -17,6 +17,7 @@ using WebServiceAPI.Models;
 
 namespace WebServiceAPI.Controllers
 {
+    using System.Net;
     using Dataservices.Domain.Imdb;
 
     [Route("api/titles")]
@@ -184,6 +185,26 @@ namespace WebServiceAPI.Controllers
             foreach(var title in movies)
                 model.Add(CreateGenreViewModel(nameof(GetMoviesByGenre), title));
             return Ok(model);
+        }
+        
+        [HttpGet("searchPhrase={searchPhrase}")]
+        public IActionResult SearchBestMatch(string searchPhrase)
+        {
+            var searchResults = _titleService.SearchBestMatch(searchPhrase.Split());
+            if (searchResults == null) 
+                return NotFound();
+
+            Collection<SearchResultViewModel> model = new Collection<SearchResultViewModel>();
+            foreach(var result in searchResults)
+                model.Add(CreateSearchResultViewModel(nameof(SearchBestMatch), result));
+            return Ok(model);
+        }
+
+        public SearchResultViewModel CreateSearchResultViewModel(string name, BestMatchSearch search)
+        {
+            var model = _mapper.Map<SearchResultViewModel>(search);
+            model.Url = HttpContext.Request.GetDisplayUrl();
+            return model;
         }
         
         public GenreViewModel CreateGenreViewModel(string name, MoviesByGenre titles)

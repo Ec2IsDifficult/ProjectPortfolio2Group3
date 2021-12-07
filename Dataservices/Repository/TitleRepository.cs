@@ -73,6 +73,11 @@ namespace Dataservices.Repository
                 $"select * from getRandomTitles({amount},{lowestRating})");
         }
 
+        public IQueryable<BestMatchSearch> SearchBestMatch(string[] keyWords)
+        {
+            return ImdbContext.BestMatchSearches.FromSqlInterpolated($"select * from best_match_querying({keyWords})");
+        }
+
         public ImdbContext ImdbContext
         {
             get { return Context as ImdbContext; }
