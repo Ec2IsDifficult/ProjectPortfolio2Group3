@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WebServiceAPI.Middleware;
+//install Micsrosoft.AspNetCore.Mvc.NewtonsoftJson version 5.0.12
 
 namespace WebServiceAPI
 {
@@ -35,8 +36,8 @@ namespace WebServiceAPI
             services.AddSingleton<IUserRepository, UserRepository>();
             
             services.AddDbContext<ImdbContext>(ServiceLifetime.Singleton);
-            //services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings
-              //  .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings
+               .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddControllersWithViews();
             

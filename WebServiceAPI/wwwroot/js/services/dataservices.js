@@ -119,14 +119,26 @@
      .then(json => callback(json))
     };
     
+    async function getPoster(url){
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const _url = URL.createObjectURL(blob);
+        let image = document.createElement("img");
+        image.setAttribute("src", _url);
+        image.setAttribute("class", "img-responsive");
+        image.width = 100;
+        return image;
+    };
     
+    /*
     function getAllTitles (callback)  {
     fetch("api/titles")
      .then(response => response.json())
      .then(json => callback(json))
     };
+     */
     
-    function getTitle (tconst,  callback) {
+    async function getTitle (tconst,  callback) {
     fetch("api/titles/"+tconst)
      .then(response => response.json())
      .then(json => callback(json))
@@ -139,21 +151,21 @@
      .then(json => callback(json))
     };
     */
-    function getCrew(tconst, callback) {
+    async function getCrew(tconst, callback) {
     fetch("api/titles/"+tconst+"/crew")
      .then(response => response.json())
      .then(json => callback(json))
     };
     
     
-    function getTitleRating (tconst, callback) {
+    async function getTitleRating (tconst, callback) {
     fetch("api/titles/"+tconst+"/rating")
      .then(response => response.json())
      .then(json => callback(json))
     };
     
     
-    function getTitlesByYear (year, callback) {
+    async function getTitlesByYear (year, callback) {
     fetch("api/titles/year/"+year)
      .then(response => response.json())
      .then(json => callback(json))
@@ -181,7 +193,8 @@
         getTitle: getTitle,
         getCrew: getCrew,
         getTitleRating: getTitleRating,
-        getTitlesByYear: getTitlesByYear
+        getTitlesByYear: getTitlesByYear,
+        getPoster: getPoster
         /*
         getAllTitles,
         getTitle,

@@ -24,7 +24,7 @@ namespace Dataservices.Repository
         //in titles controller
         public ImdbTitleBasics GetCast(string id)
         {
-            return ImdbContext.ImdbTitleBasics.Include(x => x.Cast).FirstOrDefault(x => x.Tconst == id);
+            return ImdbContext.ImdbTitleBasics.Include(x => x.Cast).ThenInclude(x=>x.Name).FirstOrDefault(x => x.Tconst == id);
         }
         //in titles controller
         public ImdbTitleBasics GetCrew(string id)
@@ -61,9 +61,9 @@ namespace Dataservices.Repository
         }
 
         //in titles controller
-        public IQueryable<MoviesByGenre> GetMoviesByGenre(string name)
+        public IQueryable<MoviesByGenre> GetMoviesSimilarGenre(string moviename)
         {
-            return ImdbContext.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({name})");
+            return ImdbContext.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre('{moviename}')");
         }
 
         public ImdbContext ImdbContext

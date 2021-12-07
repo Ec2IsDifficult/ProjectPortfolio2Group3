@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Find information about one specific Title</title>
+    <title>index</title>
     <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
-<body>
+<h1>Overview of title information</h1>
 
+<div class="col-6">
 <button data-bind="click: getSingleTitle" class="btn btn-primary">Find</button>
 Find Title <input class="form-control" data-bind="value: selectedPerson" />
 
@@ -27,6 +27,8 @@ Find Title <input class="form-control" data-bind="value: selectedPerson" />
     </tbody>
 </table>
 
+</div>
+
 <script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
-</body>
+
 </html>
