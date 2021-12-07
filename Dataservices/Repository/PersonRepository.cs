@@ -33,7 +33,12 @@ namespace Dataservices.Repository
         {
             return ImdbContext.ImdbNameBasics.Where(x => x.BirthYear == year);
         }
-        
+
+        public IEnumerable<ImdbNameBasics> GetRandomPeople(int amount)
+        {
+            return ImdbContext.ImdbNameBasics.FromSqlInterpolated($"select * from getRandomPeople({amount})");
+        }
+
         //To cast the generic DbContext inherited from the parent class into an ImdbContext
         public ImdbContext ImdbContext
         {

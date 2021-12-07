@@ -1,4 +1,4 @@
-﻿define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
+define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
     function (ko, ds, auth, user, AppConfig) {
 
         /**
