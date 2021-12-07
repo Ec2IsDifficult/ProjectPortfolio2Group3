@@ -13,6 +13,11 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
 
         let componentItems = [
             {
+                title: "Register",
+                component: "user-register",
+                hash: "#register",
+            },
+            {
                 title: "Login",
                 component: "user-login",
                 hash: "#login"
@@ -23,23 +28,14 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 hash: "#recover",
             },
             {
-                title: "Register",
-                component: "user-register",
-                hash: "#register",
+                title: "Update Email",
+                component: "user-update-email",
+                hash: "#email",
             }
         ];
 
         let currentView = ko.observable(componentItems[0].component);
         let currentParams = ko.observable({});
-
-        /**
-         * Connecting from model (Recover password: change) to data service
-         */
-        let updateEmail = () => {
-            auth.imdb_auth.updateEmail(email(), function (status) {
-                console.log(status);
-            });
-        }
 
         /**
          * Connecting from model (Recover password: change) to data service
@@ -201,7 +197,6 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             //username,
             //email,
             //password,
-            updateEmail,
             logout,
 
             /* User IMDB */

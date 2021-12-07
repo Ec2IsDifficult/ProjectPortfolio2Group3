@@ -20,12 +20,8 @@ require.config({
  * Component registration
  */
 require(['knockout'], (ko) => {
-    ko.components.register("user-login", {
-        viewModel: { require: "components/user-login/user-login" },
-        template: { require: "text!components/user-login/user-login.html" }
-    });
 
-    let component_name = ["user-recover", "user-register"];
+    let component_name = ["user-login", "user-recover", "user-register", "user-update-email"];
     component_name.forEach(registerComponent);
 
     function registerComponent(component_name) {
@@ -36,6 +32,7 @@ require(['knockout'], (ko) => {
             }
         });
     }
+
 });
 
 
