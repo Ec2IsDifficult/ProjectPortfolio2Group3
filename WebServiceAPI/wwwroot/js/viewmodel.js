@@ -1,5 +1,5 @@
-define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
-    function (ko, ds, auth, user, AppConfig) {
+define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "Sammy"],
+    function (ko, ds, auth, user, AppConfig, Sammy) {
 
         /**
          * Application configuration
@@ -12,9 +12,23 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
          */
 
         let componentItems = [
-            { title: "Login", component: "user-login" },
-            { title: "Add", component: "add-category" },
-            { title: "FrontPage", component: "front-page"}
+
+            {
+                title: "Login",
+                component: "user-login",
+                hash: "#login"
+            },
+            {
+                title: "Recover",
+                component: "user-recover",
+                hash: "#recover",
+            },
+            {
+                title: "Register",
+                component: "user-register",
+                hash: "#register",
+            }
+
         ];
 
         let currentView = ko.observable(componentItems[2].component);
@@ -34,24 +48,6 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
         
         
         
-        /**
-         * Connecting from model (Register button) to data service
-         */
-        let register = () => {
-            auth.imdb_auth.register(username(), email(), password(), function (status) {
-                console.log(status);
-            });
-        }
-
-        /**
-         * Connecting from model (Recover password: change) to data service
-         */
-        let recover = () => {
-            auth.imdb_auth.recover(password(), function (status) {
-                console.log(status);
-            });
-        }
-
         /**
          * Connecting from model (Recover password: change) to data service
          */
@@ -194,9 +190,18 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
         });
         */
 
-    /*************************************************/
+        /*************************************************/
 
+        let singleItem = componentItems.find(item => item.hash == "#login");
 
+        Sammy(function () {
+            this.get('#:view', function () {
+                singleItem = componentItems.find(item => item.hash == "#" + this.params.view)
+                if (singleItem !== undefined || singleItem.length != 0) {
+                    currentView(singleItem.component);
+                }
+            });
+        }).run(singleItem.hash);
 
         /**
         * Public functions.
@@ -212,8 +217,6 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig"],
             //username,
             //email,
             //password,
-            register,
-            recover,
             updateEmail,
             logout,
 
