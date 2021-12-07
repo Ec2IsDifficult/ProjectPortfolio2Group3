@@ -1,10 +1,12 @@
 <h1>title card list</h1>
 <div>
-    <table>
-        <tbody data-bind="foreach: randomTitles">
-            <tr>
-                <td data-bind="text: primaryTitle"></td>
-            </tr>
-        </tbody>
-    </table>    
+        <div class="row" data-bind="foreach: randomTitles">
+                <div class="col-sm-3">
+                        <div class="card" style="height: 300px; margin: 20px">
+                                <img class="card-img-top" alt="Card image cap" data-bind="attr: {src: awards}">
+                                <h5 class="card-title"  data-bind="text: primaryTitle"></h5>
+                                <p class="card-body" data-bind="text: primaryTitle"></p>
+                        </div>
+                </div>
+        </div>
 </div>

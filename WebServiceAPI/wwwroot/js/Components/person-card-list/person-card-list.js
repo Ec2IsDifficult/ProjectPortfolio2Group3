@@ -3,7 +3,7 @@ define(["knockout", "dataservice"], function(ko, ds) {
         
         let randPeople = ko.observableArray([]);
         
-        ds.getRandomPeople(data => randPeople(data.$values), 4)
+        ds.getRandomPeople(data => randPeople(data.$values), 8)
         
         return {
             randPeople: randPeople
