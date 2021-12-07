@@ -3,10 +3,11 @@
     /**
      * From Rasmus
      */
-    let titlesUrl = "localhost:5001/titles/"
-    let episodesUrl = "localhost:5001/episodes/"
-    let genreUrl = "localhost:5001/genres/"
-    let userUrl = "localhost:5001/url/"
+    let titlesUrl = "localhost:5001/api/titles/"
+    let episodesUrl = "localhost:5001/api/episodes/"
+    let genreUrl = "localhost:5001/api/genres/"
+    let userUrl = "localhost:5001/api/url/"
+    let peopleUrl = "localhost:5001/api/person/"
 
     let getMoviesBetween = (callback, startYear, endYear) => {
         fetch(titlesUrl + "between/" + startYear + "/" + endYear)
@@ -76,6 +77,18 @@
 
     let getUserRatings = (callback, id) => {
         fetch(userUrl + id + "/ratings")
+            .then(response => response.json())
+            .then(json => callback(json));
+    }
+    
+    let getRandomTitles = (callback, amount, lowestRating) => {
+        fetch(`${titlesUrl}/random/${amount}/${lowestRating}`)
+            .then(response => response.json())
+            .then(json => callback(json));
+    }
+
+    let getRandomPeople = (callback, amount) => {
+        fetch(`${peopleUrl}/random/${amount}`)
             .then(response => response.json())
             .then(json => callback(json));
     }
@@ -156,6 +169,9 @@
         getAllGenres: getAllGenres,
         getUser: getUser,
         getAllUsers: getAllUsers,
+        getUserRating: getUserRatings,
+        getRandomTitles: getRandomTitles,
+        getRandomPeople: getRandomPeople,
 
         /* from Janik
         getPerson,
