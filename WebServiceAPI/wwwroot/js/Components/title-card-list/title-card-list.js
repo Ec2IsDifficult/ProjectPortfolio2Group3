@@ -4,7 +4,7 @@ define(["knockout", "dataservice"], function (ko, ds) {
        let randomTitles = ko.observableArray([]);
        
        ds.getRandomTitles(data => randomTitles(data.$values),
-           8, 8);
+           6, 8);
        return {
            randomTitles: randomTitles
        }
