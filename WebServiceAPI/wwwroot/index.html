@@ -1,13 +1,20 @@
 ﻿<!DOCTYPE html>
-
+<!-- #2c3034 -->
 <html>
 <head>
     <title>index</title>
     <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #212529;
+        }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
         <a class="navbar-brand" href="#" data-bind="text: appName"></a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,12 +41,12 @@
         <div class="text-end" role="button" data-bs-toggle="modal" data-bs-target="#myModal">
             Login
         </div>
-        
+        </div>
     </nav>
+</div>
 
-    <div data-bind="component: {name: currentView, params: currentParams}"></div>
-
-    <script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+<div data-bind="component: {name: currentView, params: currentParams}"></div>
+<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
 
 </body>
 </html>

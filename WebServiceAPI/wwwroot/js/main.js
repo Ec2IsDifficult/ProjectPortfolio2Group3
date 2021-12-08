@@ -22,7 +22,7 @@ require(['knockout'], (ko) => {
 
     let component_auth = ["user-login", "user-recover", "user-register", "user-update-email"];
 
-    let component_front_page = ["front-page", "title-card-list", "person-card-list"];
+    let component_front_page = ["front-page", "title-card-list", "person-card-list", "navbar", "right-arrow", "left-arrow"];
 
     let components = component_auth.concat(component_front_page);
 
@@ -31,10 +31,10 @@ require(['knockout'], (ko) => {
     function registerComponent(component_name) {
         ko.components.register(component_name, {
             viewModel: {
-                require: "components/" + component_name + "/" + component_name
+                require: "Components/" + component_name + "/" + component_name
             },
             template: {
-                require: "text!components/" + component_name + "/" + component_name + ".html"
+                require: "text!Components/" + component_name + "/" + component_name + ".html"
             }
         });
     }
