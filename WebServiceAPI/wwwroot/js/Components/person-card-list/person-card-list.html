@@ -1,10 +1,18 @@
-<h1>Person card list</h1>
+<h1>Selection of people</h1>
 <div>
-    <table>
-        <tbody data-bind="foreach: randPeople">
-        <tr>
-            <td data-bind="text: name"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="row" data-bind="foreach: randPeople">
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+            <div class="card" style="margin: 20px; width: 100%;">
+                <div class="card-body d-flex flex-column">
+                    <div style="margin-top: auto">
+                        <h5 class="card-title align-self-center"  data-bind="text: name"></h5>
+                        <p class="card-text align-self-center" data-bind="text: name"></p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Bookmarked</small>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
