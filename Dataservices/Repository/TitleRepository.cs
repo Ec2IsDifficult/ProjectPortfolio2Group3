@@ -29,7 +29,7 @@ namespace Dataservices.Repository
         //in titles controller
         public ImdbTitleBasics GetCrew(string id)
         {
-            return ImdbContext.ImdbTitleBasics.Include(x => x.Crew).FirstOrDefault(x => x.Tconst == id);
+            return ImdbContext.ImdbTitleBasics.Include(x => x.Crew).ThenInclude(x=> x.Name).FirstOrDefault(x => x.Tconst == id);
         }
         //in titles controller
         public ImdbTitleRatings GetRating(string id)

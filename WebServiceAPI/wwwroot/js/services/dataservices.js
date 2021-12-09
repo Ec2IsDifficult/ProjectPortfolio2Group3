@@ -143,14 +143,13 @@
      .then(response => response.json())
      .then(json => callback(json))
     };
-    /*
-    //object cycle
-    let getCast = (callback) => {
-    fetch("api/titles/tt0088634/cast")
+    
+    function getCast(tconst, callback) {
+    fetch("api/titles/"+tconst+"/cast")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    */
+    
     async function getCrew(tconst, callback) {
     fetch("api/titles/"+tconst+"/crew")
      .then(response => response.json())
@@ -194,7 +193,8 @@
         getCrew: getCrew,
         getTitleRating: getTitleRating,
         getTitlesByYear: getTitlesByYear,
-        getPoster: getPoster
+        getPoster: getPoster,
+        getCast: getCast
         /*
         getAllTitles,
         getTitle,

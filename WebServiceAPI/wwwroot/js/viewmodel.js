@@ -130,16 +130,51 @@
         
         
         
-        /*
+        
         let cast = ko.observable([]);
-        ds.getCast(data => {
+        let getCast = () => {
+        ds.getCast(selectedPerson(),function(data) {
+            console.log(data);
             cast(data);
-        });
-           */
-        
-        
+        })};
+           
 
-       
+
+        let selectedTitle = ko.observable('tt1954874');
+
+        let titleRating = ko.observable();
+
+        let getTitleRating = () => {
+            ds.getTitleRating(selectedPerson(), function (data) {
+                console.log(data);
+                titleRating(data);
+            })
+        };
+
+        let crew = ko.observable([]);
+        let getTitleCrew = async () => {
+            await ds.getCrew(selectedPerson(), function (data) {
+                console.log(data.crew)
+                crew(data.crew);
+            })
+        };
+
+        let title = ko.observable();
+        //titles viewmodels
+        let getSingleTitle = async () => {
+            await ds.getTitle(selectedPerson(), async function (data) {
+                console.log(data);
+                title(data);
+                if (data.awards !== null) {
+                    await getTitlePoster(data.awards);
+                }
+            })};
+
+        let getTitlePoster = async (_url) => {
+            await ds.getPoster(_url);
+        };
+
+
 
         let titlesbyyear = ko.observable([]);
         
@@ -175,6 +210,11 @@
             getTitleCrew,
             titlesbyyear,
             getTitlesByYear,
+            titleRating,
+            getTitleRating,
+            cast,
+            getCast,
+            
             
             /* User Auth */
             username,
