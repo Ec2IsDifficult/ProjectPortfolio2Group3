@@ -1,52 +1,11 @@
 <div class="flex-row d-flex">
-<div class="arrow">
-    <div class="arrow-left"></div>
-</div>
-<div class="flex-column d-flex ">
+    <div data-bind="component: leftArrow"></div>
+    <div class="flex-column d-flex ">
     <div data-bind="component: titleCardList"></div>
     <div data-bind="component: personCardList"></div>
+    </div>
+    <div data-bind="component: rightArrow"></div>
 </div>
-<div class="arrow">
-    <div class="arrow-right"></div>
-</div>
-</div>
-<style>
-    html,body { height:100%; }
-    .arrow {
 
-        width: 8vw;
-    }
-    .arrow-left {
-        width: 30px;
-        height: 30px;
-        border-top: 30px solid transparent;
-        border-bottom: 30px solid transparent;
-        border-right:30px solid #b6d4fe;
-        border-radius: 5px;
-        position: fixed;
-        top: 50%;
-        opacity: 0;
-        transition: 0.2s;
-        
-    }
-    .arrow-right {
-        width: 30px;
-        height: 30px;
-        border-top: 30px solid transparent;
-        border-bottom: 30px solid transparent;
-        border-left:30px solid #b6d4fe;
-        border-radius: 5px;
-        position: fixed; /* or absolute */
-        top: 50%;
-        left:98%;
-        opacity: 0;
-        transition: 0.2s;
-    }
-    .arrow:hover > .arrow-left {
-        opacity: 1;
-    }
-    .arrow:hover > .arrow-right {
-        opacity: 1;
-    }
-</style>
+
 

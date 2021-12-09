@@ -22,9 +22,15 @@ require(['knockout'], (ko) => {
 
     let component_auth = ["user-login", "user-recover", "user-register", "user-update-email"];
 
-    let component_front_page = ["front-page", "title-card-list", "person-card-list", "navbar", "right-arrow", "left-arrow"];
+    let component_front_page = [
+        "front-page", "title-card-list", "person-card-list", "navbar", "right-arrow", "left-arrow"
+    ];
 
-    let components = component_auth.concat(component_front_page);
+    let component_title_logic_page = [
+        "title-logic-page"
+    ]
+    
+    let components = component_auth.concat(component_front_page, component_title_logic_page);
 
     components.forEach(registerComponent);
 
