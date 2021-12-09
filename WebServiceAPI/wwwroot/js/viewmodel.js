@@ -4,7 +4,8 @@
         let username = ko.observable("ruc1");
         let email = ko.observable("test@ruc.dk");
         let password = ko.observable("ruc");
-
+        
+        
         /**
          * Connecting from model (Register button) to data service
          */
@@ -80,12 +81,6 @@
         /**
          * Janik
          */
-        
-        let person = ko.observable();
-
-        ds.getPerson(data => {
-            person(data);
-        });
 
         let persons = ko.observable([]);
 
@@ -97,7 +92,7 @@
             persons(data.$values[11]);
         });*/
 
-        let selectedPerson = ko.observable();
+        let selectedPerson = ko.observable('tt1954874');
         let personData = ko.observable();
         
         let getPerson = () => {
@@ -133,13 +128,7 @@
         })};
 
         
-        let title = ko.observable();
-        //titles viewmodels
-        let getSingleTitle = () => {
-        ds.getTitle(selectedPerson(), function(data) {
-            console.log(data);
-            title(data);
-        })};
+        
         
         /*
         let cast = ko.observable([]);
@@ -148,25 +137,11 @@
         });
            */
         
-        let crew = ko.observable([]);
-        let getTitleCrew = () => {
-        ds.getCrew(selectedPerson(), function(data) {
-            console.log(data.crew.$values)
-            crew(data.crew.$values);
-        })};
-
-        let titleRating = ko.observable();
         
-        let getTitleRating = () => {
-        ds.getTitleRating(selectedPerson(), function(data) {
-            console.log(data);
-            titleRating(data);
-        })};
+
+       
 
         let titlesbyyear = ko.observable([]);
-        ds.getTitlesByYear(data => {
-            titlesbyyear(data);
-        });
         
         let getTitlesByYear = () => {
         ds.getTitlesByYear(selectedPerson(), function(data) {
@@ -198,8 +173,6 @@
             getSingleTitle,
             crew,
             getTitleCrew,
-            titleRating,
-            getTitleRating,
             titlesbyyear,
             getTitlesByYear,
             

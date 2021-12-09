@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Only titles - please subscribe</title>
+    <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<h1>Titles</h1>
+
+<div>
+<button data-bind="click: function(){getSingleTitle(); getTitleCrew();}" class="btn btn-primary">Find</button>
+Find <input class="form-control" data-bind="value: selectedPerson" />
+</div>
+
+<div class="container">
+    <div class="row mt-5" data-bind="foreach: title">
+        <div class="col-auto d-flex justify-content-center">
+            <figure>
+                <img src="" id="Poster" alt="No Poster available for this Title"/>
+                <figcaption class="text-center">
+                    Primarytitle: <span data-bind="text: primaryTitle"></span>
+                </figcaption>
+            </figure>
+        </div> <!--- this is the div for the poster of a movie --->
+        <div class="col">
+            <div class="row">
+                <span class="col d-flex justify-content-center flex-column" data-bind="text:titleType"></span>
+                Start: <span class="col" data-bind="text: startYear"></span>
+                End: <span class="col" data-bind="text: endYear"></span>
+            </div>
+            <div class="row mt-5">
+                <div class="col overflow-auto" style="max-height: 370px" data-bind="text: plot"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!--- new row    
+     longest plot: tt1954874--->
+    <div class="row mt-5">
+        <!--- add rating here --->
+        <div class="col">
+            <table class="table" style="width: 200px; border: 1px solid black">
+                <thead>
+                <tr><th>Rating</th><th>Votes</th></tr>
+                </thead>
+                <tbody data-bind="foreach: titleRating">
+                <tr>
+                    <td data-bind="text: rating"></td>
+                    <td data-bind="text: numVotes"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    <div class="col">
+        <table class="table" >
+            <thead>
+            <tr><th>nconst</th><th>name</th><th>category</th><th>job</th></tr>
+            </thead>
+            <tbody data-bind="foreach: crew">
+            <tr>
+                <td data-bind="text: nconst"></td>
+                <td data-bind="text: name"></td>
+                <td data-bind="text: category"></td>
+                <td data-bind="text: job"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+
+<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+</body>
+</html>

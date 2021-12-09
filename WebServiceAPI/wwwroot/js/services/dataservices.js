@@ -123,10 +123,10 @@
         const response = await fetch(url);
         const blob = await response.blob();
         const _url = URL.createObjectURL(blob);
-        let image = document.createElement("img");
+        let image = document.getElementById("Poster");
         image.setAttribute("src", _url);
-        image.setAttribute("class", "img-responsive");
-        image.width = 100;
+        image.setAttribute('class', 'img-fluid');
+        image.setAttribute('alt','Responsive image');
         return image;
     };
     
