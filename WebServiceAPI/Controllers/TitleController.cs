@@ -47,7 +47,7 @@ namespace WebServiceAPI.Controllers
                 return NotFound();
             }
 
-            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            var model = new Collection<TitlesViewModel>();
             foreach(var title in titles)
                 model.Add(CreateTitlesViewModel(nameof(GetAll), title));
             return Ok(model);
@@ -126,7 +126,7 @@ namespace WebServiceAPI.Controllers
                 return NotFound("No titles for this year available");
             }
 
-            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            var model = new Collection<TitlesViewModel>();
             foreach(var title in titles)
                 model.Add(CreateTitlesViewModel(nameof(GetTitlesByYear), title));
             return Ok(model);
@@ -141,7 +141,7 @@ namespace WebServiceAPI.Controllers
                 return NotFound("No titles between these years available");
             }
             
-            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            var model = new Collection<TitlesViewModel>();
             foreach(var title in titles)
                 model.Add(CreateTitlesViewModel(nameof(GetTitlesBetween), title));
             return Ok(model);
@@ -167,27 +167,28 @@ namespace WebServiceAPI.Controllers
                 return NotFound();
             }
 
-            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            var model = new Collection<TitlesViewModel>();
             foreach(var title in movies)
                 model.Add(CreateTitlesViewModel(nameof(GetAdultMovies), title));
             return Ok(model);
         }*/
         
         [HttpGet("{id}/genre", Name = nameof(GetMoviesByGenre))]
-        public IActionResult GetMoviesByGenre(string id)
+        public IActionResult GetMoviesByGenre(string name)
         {
-            var movies = _titleService.GetMoviesByGenre(id);
+            var movies = _titleService.GetMoviesSimilarGenre(name);
             if (movies == null)
             {
                 return NotFound();
             }
 
-            Collection<GenreViewModel> model = new Collection<GenreViewModel>();
+            var model = new Collection<GenreViewModel>();
             foreach(var title in movies)
-                model.Add(CreateGenreViewModel(nameof(GetMoviesByGenre), title));
+                model.Add(CreateGenreViewModel(title));
             return Ok(model);
         }
         
+
         [HttpGet("searchPhrase={searchPhrase}")]
         public IActionResult SearchBestMatch(string searchPhrase)
         {

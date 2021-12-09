@@ -26,14 +26,16 @@ namespace Dataservices.Repository
         //in titles controller
         public ImdbTitleBasics GetCast(string id)
         {
+
             var ctx = new ImdbContext();
-            return ctx.ImdbTitleBasics.Include(x => x.Cast).FirstOrDefault(x => x.Tconst == id);
+            return ctx.ImdbTitleBasics.Include(x => x.Cast).ThenInclude(x=>x.Name).FirstOrDefault(x => x.Tconst == id);
         }
         //in titles controller
         public ImdbTitleBasics GetCrew(string id)
         {
+
             var ctx = new ImdbContext();
-            return ctx.ImdbTitleBasics.Include(x => x.Crew).FirstOrDefault(x => x.Tconst == id);
+            return ctx.ImdbTitleBasics.Include(x => x.Crew).ThenInclude(x=> x.Name).FirstOrDefault(x => x.Tconst == id);
         }
         //in titles controller
         public ImdbTitleRatings GetRating(string id)
@@ -70,8 +72,9 @@ namespace Dataservices.Repository
         }
 
         //in titles controller
-        public IQueryable<MoviesByGenre> GetMoviesByGenre(string name)
+        public IQueryable<MoviesByGenre> GetMoviesSimilarGenre(string moviename)
         {
+
             var ctx = new ImdbContext();
             return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({name})");
         }
@@ -88,6 +91,7 @@ namespace Dataservices.Repository
         {
             var ctx = new ImdbContext();
             return ctx.BestMatchSearches.FromSqlInterpolated($"select * from best_match_querying({keyWords})");
+
         }
 
         public ImdbContext ImdbContext

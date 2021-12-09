@@ -11,7 +11,8 @@ namespace WebServiceAPI.Models
 
         public int NumVotes { get; set; }
         
-        public ImdbTitleBasics Title { get; set; }
+        //public ImdbTitleBasics Title { get; set; }
+        public float Rating { get; set; }
     }
 
     public class CreateRatingViewModel
@@ -20,6 +21,7 @@ namespace WebServiceAPI.Models
 
         public int NumVotes { get; set; }
         
-        public ImdbTitleBasics Title { get; set; }
+        //public ImdbTitleBasics Title { get; set; }
+        public float Rating { get; set; }
     }
 }

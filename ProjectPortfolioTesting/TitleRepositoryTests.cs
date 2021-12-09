@@ -64,7 +64,7 @@ namespace ProjectPortfolioTesting
         public void TestMoviesByGenre()
         {
             string movieName = "The Twilight Zone";
-            var otherMovies = _titleRepository.GetMoviesByGenre("The Twilight Zone");
+            var otherMovies = _titleRepository.GetMoviesSimilarGenre("The Twilight Zone");
             //var otherMovies = _ctx.GetMoviesByGenre("The Twilight Zone");
             Assert.Contains(otherMovies, x => x.Tconst == "tt10220588");
             Assert.Contains(otherMovies, x => x.Tconst == "tt12624348");

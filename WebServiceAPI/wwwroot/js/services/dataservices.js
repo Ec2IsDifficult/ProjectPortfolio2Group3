@@ -102,59 +102,87 @@
     fetch("api/person")
      .then(response => response.json())
      .then(json => callback(json));
+    };*/
+    
+    
+    function getPerson(nconst, callback) {
+            fetch("api/person/" + nconst)
+                .then(response => response.json())
+                .then(json => callback(json))
     };
-    let getPerson = (callback) => {
-    fetch("api/person/nm0000003")
+    
+    function knownFor(nconst, callback) {
+    fetch("api/person/"+nconst+"/knownfor")
+     .then(response => response.json())
+     .then(json => callback(json))
+        console.log("api/person/"+nconst+"/knownfor");
+    };
+    
+    
+    function coactors(name, callback) {
+    fetch("api/person/"+name+"/coactors")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let knownfor = (callback) => {
-    fetch("api/person/nm0000003/knownfor")
+    
+    
+    function personYear (year, callback) {
+    fetch("api/person/year/"+year)
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let coactors = (callback) => {
-    fetch("api/person/Jennifer Aniston/coactors")
-     .then(response => response.json())
-     .then(json => callback(json))
+    
+    async function getPoster(url){
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const _url = URL.createObjectURL(blob);
+        let image = document.getElementById("Poster");
+        image.setAttribute("src", _url);
+        image.setAttribute('class', 'img-fluid');
+        image.setAttribute('alt','Responsive image');
+        return image;
     };
-    let year = (callback) => {
-    fetch("api/person/year/2002")
-     .then(response => response.json())
-     .then(json => callback(json))
-    };
-    let getAllTitles = (callback) => {
+    
+    /*
+    function getAllTitles (callback)  {
     fetch("api/titles")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let getTitle = (callback) => {
-    fetch("api/titles/tt0088634")
+     */
+    
+    async function getTitle (tconst,  callback) {
+    fetch("api/titles/"+tconst)
      .then(response => response.json())
      .then(json => callback(json))
     };
-    //object cycle
-    let getCast = (callback) => {
-    fetch("api/titles/tt0088634/cast")
+    
+    function getCast(tconst, callback) {
+    fetch("api/titles/"+tconst+"/cast")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let getCrew = (callback) => {
-    fetch("api/titles/tt0088634/crew")
+    
+    async function getCrew(tconst, callback) {
+    fetch("api/titles/"+tconst+"/crew")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let getTitleRating = (callback) => {
-    fetch("api/titles/tt0088634/rating")
+    
+    
+    async function getTitleRating (tconst, callback) {
+    fetch("api/titles/"+tconst+"/rating")
      .then(response => response.json())
      .then(json => callback(json))
     };
-    let getTitlesByYear = (callback) => {
-    fetch("api/titles/year/2002")
+    
+    
+    async function getTitlesByYear (year, callback) {
+    fetch("api/titles/year/"+year)
      .then(response => response.json())
      .then(json => callback(json))
     };
-    */
+    
 
 
     return {
@@ -169,6 +197,20 @@
         getAllGenres: getAllGenres,
         getUser: getUser,
         getAllUsers: getAllUsers,
+
+        //getAllPersons: getAllPersons,
+        getPerson: getPerson,
+        knownFor: knownFor,
+        coactors: coactors,
+        personYear: personYear,
+        getTitle: getTitle,
+        getCrew: getCrew,
+        getTitleRating: getTitleRating,
+        getTitlesByYear: getTitlesByYear,
+        getPoster: getPoster,
+        getCast: getCast
+        /*
+
         getUserRating: getUserRatings,
         getRandomTitles: getRandomTitles,
         getRandomPeople: getRandomPeople,

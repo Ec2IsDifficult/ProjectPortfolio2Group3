@@ -1,6 +1,7 @@
 define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "Sammy"],
     function (ko, ds, auth, user, AppConfig, Sammy) {
 
+
         /**
          * Application configuration
          */
@@ -131,70 +132,110 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         /**
          * Janik
          */
-
         /*
         let person = ko.observable();
 
-        ds.getPerson(data => {
-            person(data);
-        });
 
-        let persons = ko.observable([]);
+        /*let persons = ko.observableArray([]);
+
 
         ds.getAllPersons(data => {
-            persons(data);
-        });
+            console.log(data.$values[0]);
+            persons(data.$values[11]);
+        });*/
 
+        let selectedPerson = ko.observable('tt1954874');
+        let personData = ko.observable();
+        
+        let getPerson = () => {
+            ds.getPerson(selectedPerson(), function(data) {
+            console.log(data);
+            personData(data);
+        })};
 
         let knownfor = ko.observable([]);
 
-        ds.knownfor(data => {
-            knownfor(data);
-        });
+        let getKnownFor = () => {
+        ds.knownFor(selectedPerson(), function(data) {
+            console.log(data.$values);
+            knownfor(data.$values);
+        })};
 
+        
         let coactors = ko.observable([]);
 
-        ds.coactors(data => {
-            coactors(data);
-        });
+        let getCoActors = () => {
+        ds.coactors(selectedPerson(), function(data) {
+            console.log(data.$values);
+            coactors(data.$values);
+        })};
 
+        
         let personsbyyear = ko.observable([]);
 
-        ds.year(data => {
-            personsbyyear(data);
-        });
+        let getPersonByYear = () => {
+        ds.personYear(selectedPerson(), function(data) {
+            console.log(data.$values);
+            personsbyyear(data.$values);
+        })};
 
-        let alltitles = ko.observable([]);
-        //titles viewmodels
-        ds.getAllTitles(data => {
-            alltitles(data);
-        });
-
-        let title = ko.observable();
-        ds.getTitle(data => {
-            title(data);
-        });
-
+        
+        
+        
+        
         let cast = ko.observable([]);
-        ds.getCast(data => {
+        let getCast = () => {
+        ds.getCast(selectedPerson(),function(data) {
+            console.log(data);
             cast(data);
-        });
+        })};
+           
 
-        let crew = ko.observable([]);
-        ds.getCrew(data => {
-            crew(data);
-        });
+
+        let selectedTitle = ko.observable('tt1954874');
 
         let titleRating = ko.observable();
-        ds.getTitleRating(data => {
-            titleRating(data);
-        });
+
+        let getTitleRating = () => {
+            ds.getTitleRating(selectedPerson(), function (data) {
+                console.log(data);
+                titleRating(data);
+            })
+        };
+
+        let crew = ko.observable([]);
+        let getTitleCrew = async () => {
+            await ds.getCrew(selectedPerson(), function (data) {
+                console.log(data.crew)
+                crew(data.crew);
+            })
+        };
+
+        let title = ko.observable();
+        //titles viewmodels
+        let getSingleTitle = async () => {
+            await ds.getTitle(selectedPerson(), async function (data) {
+                console.log(data);
+                title(data);
+                if (data.awards !== null) {
+                    await getTitlePoster(data.awards);
+                }
+            })};
+
+        let getTitlePoster = async (_url) => {
+            await ds.getPoster(_url);
+        };
+
+
 
         let titlesbyyear = ko.observable([]);
-        ds.getTitlesByYear(data => {
-            titlesbyyear(data);
-        });
-        */
+        
+        let getTitlesByYear = () => {
+        ds.getTitlesByYear(selectedPerson(), function(data) {
+            console.log(data.$values);
+            titlesbyyear(data.$values);
+        })};
+        
 
         /*************************************************/
 
@@ -213,11 +254,38 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         * Public functions.
         */
         return {
+
+            /*persons*/
+            selectedPerson,
+            getPerson,
+            personData,
+            getKnownFor,
+            knownfor,
+            getCoActors,
+            coactors,
+            getPersonByYear,
+            personsbyyear,
+            
+            
+            /*titles*/
+            title,
+            getSingleTitle,
+            crew,
+            getTitleCrew,
+            titlesbyyear,
+            getTitlesByYear,
+            titleRating,
+            getTitleRating,
+            cast,
+            getCast,
+            
+            
             appName,
             componentItems,
 
             currentView,
             currentParams,
+
 
             /* User Auth */
             //username,

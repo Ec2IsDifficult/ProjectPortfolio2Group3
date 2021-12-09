@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find all titles released in chosen year</title>
+    <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<button data-bind="click: getTitlesByYear" class="btn btn-primary">Find</button>
+Find Titles <input class="form-control" data-bind="value: selectedPerson" />
+
+<table class="table">
+    <thead>
+    <tr><th>primaryTitle</th><th>plot</th><th>awards</th></tr>
+    </thead>
+    <tbody data-bind="foreach: titlesbyyear">
+    <tr>
+        <td data-bind="text: primaryTitle"></td>
+        <td data-bind="text: plot"></td>
+        <td data-bind="text: awards"></td>
+    </tr>
+    </tbody>
+</table>
+<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+
+</body>
+</html>
