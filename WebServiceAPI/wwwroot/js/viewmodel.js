@@ -32,11 +32,21 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 title: "Update Email",
                 component: "user-update-email",
                 hash: "#email",
+            },
+            {
+                title: "Front page",
+                component: "front-page",
+                hash: "#FrontPage",
+            },
+            {
+                title: "Title logic page",
+                component: "title-logic-page",
+                hash: "#Titles",
             }
 
         ];
 
-        let currentView = ko.observable(componentItems[2].component);
+        let currentView = ko.observable(componentItems[0].component);
         let currentParams = ko.observable({});
 
         
