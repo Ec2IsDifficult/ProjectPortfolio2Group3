@@ -11,7 +11,9 @@ using WebServiceAPI.Models.PersonViews;
 
 namespace WebServiceAPI.Controllers
 {
-    [Route("api/person")]
+    using System.Threading.Tasks;
+
+    [Route("api/v1/person")]
     [ApiController]
     public class PersonController : Controller
     {
@@ -88,6 +90,14 @@ namespace WebServiceAPI.Controllers
                 return NotFound("No Actors from this year");
             }
 
+            var model = actors.Select(CreateNameBasicsViewModel);
+            return Ok(model);
+        }
+
+        [HttpGet("random/{amount}")]
+        public IActionResult GetRandomPeople(int amount)
+        {
+            var actors =  _personService.GetRandomPeople(amount);
             var model = actors.Select(CreateNameBasicsViewModel);
             return Ok(model);
         }

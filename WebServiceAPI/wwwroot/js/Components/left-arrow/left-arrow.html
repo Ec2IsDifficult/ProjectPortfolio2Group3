@@ -1,0 +1,26 @@
+<div class="arrow" >
+    <div class="arrow-left" data-bind="click: goToTitleLogicView"></div>
+</div>
+
+<style>
+    html,body { height:100%; }
+    .arrow {
+        width: 8vw;
+    }
+    .arrow-left {
+        width: 30px;
+        height: 30px;
+        border-top: 30px solid transparent;
+        border-bottom: 30px solid transparent;
+        border-right:30px solid #b6d4fe;
+        border-radius: 5px;
+        position: fixed;
+        top: 50%;
+        opacity: 0;
+        transition: 0.2s;
+
+    }
+    .arrow:hover > .arrow-left {
+        opacity: 1;
+    }
+</style>

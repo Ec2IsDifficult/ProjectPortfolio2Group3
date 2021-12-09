@@ -1,48 +1,69 @@
-﻿define(["knockout", "dataservice", "authservice", "userservice"],
-    function (ko, ds, auth, user) {
+define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "Sammy"],
+    function (ko, ds, auth, user, AppConfig, Sammy) {
 
-        let username = ko.observable("ruc1");
-        let email = ko.observable("test@ruc.dk");
-        let password = ko.observable("ruc");
+
+        /**
+         * Application configuration
+         */
+
+        let appName = AppConfig.appName;
+
+        /**
+         * Initialization
+         */
+
+        let componentItems = [
+
+            {
+                title: "Register",
+                component: "user-register",
+                hash: "#register",
+            },
+            {
+                title: "Login",
+                component: "user-login",
+                hash: "#login"
+            },
+            {
+                title: "Recover",
+                component: "user-recover",
+                hash: "#recover",
+            },
+            {
+                title: "Update Email",
+                component: "user-update-email",
+                hash: "#email",
+            },
+            {
+                title: "Front page",
+                component: "front-page",
+                hash: "#FrontPage",
+            },
+            {
+                title: "Title logic page",
+                component: "title-logic-page",
+                hash: "#Titles",
+            }
+
+        ];
+
+        let currentView = ko.observable(componentItems[0].component);
+        let currentParams = ko.observable({});
+
         
         
-        /**
-         * Connecting from model (Register button) to data service
-         */
-        let register = () => {
-            auth.imdb_auth.register(username(), email(), password(), function (status) {
-                console.log(status);
-            });
-        }
-
-        /**
-         * Connecting from model (Login button) to data service
-         */
-        let login = () => {
-            auth.imdb_auth.login(username(), password(), function (status, token) {
-                console.log(status);
-                console.log(token);
-            });
-        }
-
-        /**
-         * Connecting from model (Recover password: change) to data service
-         */
-        let recover = () => {
-            auth.imdb_auth.recover(password(), function (status) {
-                console.log(status);
-            });
-        }
-
-        /**
-         * Connecting from model (Recover password: change) to data service
-         */
-        let updateEmail = () => {
-            auth.imdb_auth.updateEmail(email(), function (status) {
-                console.log(status);
-            });
-        }
-
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         /**
          * Connecting from model (Recover password: change) to data service
          */
@@ -59,6 +80,8 @@
 
         let reviewTitle = ko.observable("Best movie ever!");
 
+        let searchPhrase = ko.observable("Harry Potter");
+
         /**
          * Connecting from model (Rating a title) to data service
          */
@@ -69,7 +92,7 @@
         }
 
         /**
-         * Connecting from model (Rating a title) to data service
+         * Connecting from model (Get all reviews made by this user) to data service
          */
         let getReviews = () => {
             user.imdb_user.getReviews(function (status) {
@@ -77,12 +100,41 @@
             });
         }
 
+        /**
+         * Connecting from model (Review a title) to data service
+         */
+        let updateReviewTitle = () => {
+            user.imdb_user.updateReviewTitle(tconst(), reviewTitle(), function (status) {
+                console.log(status);
+            });
+        }
+
+        /**
+         * Connecting from model (User search phrase) to data service
+         */
+        let userSearchPhrase = () => {
+            user.imdb_user.userSearchPhrase(searchPhrase(), function (status) {
+                console.log(status);
+            });
+        }
+
+        /**
+         * Connecting from model (User load search phrase) to data service
+         */
+        let userLoadSearchHistory = () => {
+            user.imdb_user.userLoadSearchHistory(function (status) {
+                console.log(status);
+                console.log(status[0]);
+            });
+        }
+
         /*************************************************/
         /**
          * Janik
          */
+        /*
+        let person = ko.observable();
 
-        let persons = ko.observable([]);
 
         /*let persons = ko.observableArray([]);
 
@@ -187,10 +239,22 @@
 
         /*************************************************/
 
+        let singleItem = componentItems.find(item => item.hash == "#login");
+
+        Sammy(function () {
+            this.get('#:view', function () {
+                singleItem = componentItems.find(item => item.hash == "#" + this.params.view)
+                if (singleItem !== undefined || singleItem.length != 0) {
+                    currentView(singleItem.component);
+                }
+            });
+        }).run(singleItem.hash);
+
         /**
         * Public functions.
         */
         return {
+
             /*persons*/
             selectedPerson,
             getPerson,
@@ -216,14 +280,17 @@
             getCast,
             
             
+            appName,
+            componentItems,
+
+            currentView,
+            currentParams,
+
+
             /* User Auth */
-            username,
-            email,
-            password,
-            register,
-            login,
-            recover,
-            updateEmail,
+            //username,
+            //email,
+            //password,
             logout,
 
             /* User IMDB */
@@ -231,7 +298,13 @@
             rate,
             rateTitle,
             reviewTitle,
-            getReviews
+            getReviews,
+            updateReviewTitle,
+
+            /* User search */
+            searchPhrase,
+            userSearchPhrase,
+            userLoadSearchHistory
 
         }
     });

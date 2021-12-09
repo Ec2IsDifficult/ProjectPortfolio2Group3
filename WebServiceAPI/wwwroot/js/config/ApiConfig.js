@@ -23,6 +23,16 @@
 
     let ApiUserGetReviews = ApiPath + "user/reviews";
 
+    let ApiUserReviewTitle = ApiPath + "user/review";
+
+    let ApiUserSearch = ApiPath + "user/search";
+
+    let ApiUserSearchHistory = ApiPath + "user/searchhistory";
+    
+    let ApiRandomTitles = ApiPath + "titles/random/"
+    
+    let ApiRandomPeople = ApiPath + "person/random/"
+
     return {
         ApiUserLogin,
         ApiUserRegister,
@@ -31,6 +41,12 @@
         ApiUserLogout,
 
         ApiUserRate,
-        ApiUserGetReviews
+        ApiUserGetReviews,
+        ApiUserReviewTitle,
+        ApiUserSearch,
+        ApiUserSearchHistory,
+        
+        ApiRandomTitles,
+        ApiRandomPeople
     }
 });

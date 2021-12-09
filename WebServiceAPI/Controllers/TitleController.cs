@@ -17,9 +17,11 @@ using WebServiceAPI.Models;
 
 namespace WebServiceAPI.Controllers
 {
+    using System.Net;
+    using System.Threading.Tasks;
     using Dataservices.Domain.Imdb;
 
-    [Route("api/titles")]
+    [Route("api/v1/titles")]
     [ApiController]
     public class TitleController : Controller
     {
@@ -145,6 +147,16 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
         
+        [HttpGet("random/{amount}/{lowestRating}", Name = nameof(GetRandomTitles))]
+        public IActionResult GetRandomTitles(int amount, float lowestRating)
+        {
+            var titles = _titleService.GetRandomTitles(amount, lowestRating);
+            Collection<TitlesViewModel> model = new Collection<TitlesViewModel>();
+            foreach(var title in titles)
+                model.Add(CreateTitlesViewModel(nameof(GetTitlesBetween), title));
+            return Ok(model);
+        }
+        
         /*
         [HttpGet("adult", Name = nameof(GetAdultMovies))]
         public IActionResult GetAdultMovies()
@@ -176,7 +188,28 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
         
-        public GenreViewModel CreateGenreViewModel(MoviesByGenre titles)
+
+        [HttpGet("searchPhrase={searchPhrase}")]
+        public IActionResult SearchBestMatch(string searchPhrase)
+        {
+            var searchResults = _titleService.SearchBestMatch(searchPhrase.Split());
+            if (searchResults == null) 
+                return NotFound();
+
+            Collection<SearchResultViewModel> model = new Collection<SearchResultViewModel>();
+            foreach(var result in searchResults)
+                model.Add(CreateSearchResultViewModel(nameof(SearchBestMatch), result));
+            return Ok(model);
+        }
+
+        public SearchResultViewModel CreateSearchResultViewModel(string name, BestMatchSearch search)
+        {
+            var model = _mapper.Map<SearchResultViewModel>(search);
+            model.Url = HttpContext.Request.GetDisplayUrl();
+            return model;
+        }
+        
+        public GenreViewModel CreateGenreViewModel(string name, MoviesByGenre titles)
         {
             var model = _mapper.Map<GenreViewModel>(titles);
             model.Url = HttpContext.Request.GetDisplayUrl();

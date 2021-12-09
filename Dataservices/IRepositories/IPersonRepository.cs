@@ -4,6 +4,8 @@ using Dataservices.Domain;
 
 namespace Dataservices.IRepositories
 {
+    using System.Linq;
+    using System.Threading.Tasks;
     using Domain.FunctionObjects;
 
     public interface IPersonRepository : IIMutableRepository<ImdbNameBasics>
@@ -11,5 +13,7 @@ namespace Dataservices.IRepositories
         IEnumerable<ImdbKnownFor> GetKnowFor(string id);
         IEnumerable<CoActors> CoActors(string id);
         IEnumerable<ImdbNameBasics> GetPersonsByYear(int year);
+
+        IEnumerable<ImdbNameBasics> GetRandomPeople(int amount);
     }
 }
