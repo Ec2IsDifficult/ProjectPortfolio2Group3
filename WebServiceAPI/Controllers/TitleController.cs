@@ -176,7 +176,7 @@ namespace WebServiceAPI.Controllers
         [HttpGet("{id}/genre", Name = nameof(GetMoviesByGenre))]
         public IActionResult GetMoviesByGenre(string name)
         {
-            var movies = _titleService.GetMoviesSimilarGenre(name);
+            var movies = _titleService.GetMoviesByGenre(name);
             if (movies == null)
             {
                 return NotFound();
@@ -184,7 +184,7 @@ namespace WebServiceAPI.Controllers
 
             var model = new Collection<GenreViewModel>();
             foreach(var title in movies)
-                model.Add(CreateGenreViewModel(title));
+                model.Add(CreateGenreViewModel(nameof(GetMoviesByGenre), title));
             return Ok(model);
         }
         

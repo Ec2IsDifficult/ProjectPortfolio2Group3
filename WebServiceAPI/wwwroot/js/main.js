@@ -28,10 +28,13 @@ require(['knockout'], (ko) => {
 
     let component_title_logic_page = [
         "title-logic-page"
+    ];
+    
+    let component_person_logic_page = [
+        "person-logic-page"
     ]
     
-    let components = component_auth.concat(component_front_page, component_title_logic_page);
-
+    let components = component_auth.concat(component_front_page, component_title_logic_page, component_person_logic_page);
     components.forEach(registerComponent);
 
     function registerComponent(component_name) {

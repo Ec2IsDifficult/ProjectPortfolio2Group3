@@ -32,6 +32,8 @@
     let ApiRandomTitles = ApiPath + "titles/random/"
     
     let ApiRandomPeople = ApiPath + "person/random/"
+    
+    let ApiTitles = ApiPath + "titles/"
 
     return {
         ApiUserLogin,
@@ -47,6 +49,7 @@
         ApiUserSearchHistory,
         
         ApiRandomTitles,
-        ApiRandomPeople
+        ApiRandomPeople,
+        ApiTitles
     }
 });

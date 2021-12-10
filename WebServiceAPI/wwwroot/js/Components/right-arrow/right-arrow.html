@@ -1,26 +1,30 @@
-<div class="arrow">
+<div class="arrow-body-right " data-bind="click: goToPersonLogicPage">
     <div class="arrow-right"></div>
 </div>
     <style>
-    html,body { height:100%; }
-    .arrow {
+    html,body { height:100%; width: 100%;  min-height: 100vh; }
+    .arrow-body-right {
+        float: right;
+        height: 100%; min-height: 100vh;
+        width: 8vw;      
+        cursor: pointer;
 
-        width: 8vw;
     }
     .arrow-right {
         width: 30px;
         height: 30px;
         border-top: 30px solid transparent;
         border-bottom: 30px solid transparent;
-        border-left:30px solid #b6d4fe;
+        border-left:30px solid #a3cbff;
         border-radius: 5px;
-        position: fixed; /* or absolute */
+        position: fixed;
         top: 50%;
-        left:98%;
-        opacity: 0;
-        transition: 0.2s;
+        right: -30px;
+        transition: 0.4s;
     }
-    .arrow:hover > .arrow-right {
-        opacity: 1;
+    .arrow-body-right:hover > .arrow-right {
+        right: 5px;
     }
+
+
 </style>

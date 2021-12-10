@@ -1,3 +1,7 @@
-<div>
-    <h1>Hello world</h1>
+<div class="flex-row d-flex">
+    <div class="col-11" data-bind="click: getClassics"> Get classics </div>
+        <div data-bind="foreach: classicMovies">
+            <span data-bind="text: primaryTitle"></span>
+        </div>
+    <div class="col-1" data-bind="component: {name: rightArrow, params: 'front-page'}"></div>
 </div>

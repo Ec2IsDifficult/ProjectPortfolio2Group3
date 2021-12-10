@@ -7,41 +7,44 @@
     <style>
         body {
             background-color: #212529;
+            color: white;
         }
     </style>
 </head>
 <body>
 
 <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-dark bg-primary sticky-lg-top sticky-md-top">
         <div class="container-fluid">
-        <a class="navbar-brand" href="#" data-bind="text: appName"></a>
+        <a class="navbar-brand" href="#FrontPage" data-bind="text: appName"></a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+        <div class="collapse navbar-collapse position-relative" id="navbarSupportedContent">
+            <ul class="navbar-nav  mr-auto m-2">
                 <li class="nav-item">
                     <a class="nav-link" href="#recover">
                         Recover
                     </a>
                 </li>
             </ul>
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto m-2">
                 <li class="nav-item">
                     <a class="nav-link" href="#register">
                         Register
                     </a>
                 </li>
             </ul>
+            <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-secondary m-2" type="submit">Search</button>
         </div>
-
-        <div class="text-end" role="button" data-bs-toggle="modal" data-bs-target="#myModal">
+        <div class="text-end m-2" role="button" data-bs-toggle="modal" data-bs-target="#myModal">
             Login
         </div>
         </div>
+        
     </nav>
 </div>
 

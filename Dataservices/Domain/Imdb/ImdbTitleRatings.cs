@@ -11,7 +11,7 @@ namespace Dataservices.Domain.Imdb
         public int NumVotes { get; set; }
         
         //object cycle
-        //public ImdbTitleBasics Title { get; set; }
+        public ImdbTitleBasics Title { get; set; }
 
         public double Rating => Math.Round((float)SumRating /NumVotes, 1);
 

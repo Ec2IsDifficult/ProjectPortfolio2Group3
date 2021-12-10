@@ -70,13 +70,14 @@ namespace Dataservices.Repository
             var ctx = new ImdbContext();
             return ctx.ImdbTitleBasics.Where(x => x.IsAdult == true);
         }
+        
 
         //in titles controller
-        public IQueryable<MoviesByGenre> GetMoviesSimilarGenre(string moviename)
+        public IQueryable<MoviesByGenre> GetMoviesByGenre(string moviename)
         {
 
             var ctx = new ImdbContext();
-            return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({name})");
+            return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({moviename})");
         }
 
         //
