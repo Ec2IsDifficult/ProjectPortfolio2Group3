@@ -1,7 +1,37 @@
 <div class="flex-row d-flex">
-    <div class="col-11" data-bind="click: getClassics"> Get classics </div>
-        <div data-bind="foreach: classicMovies">
-            <span data-bind="text: primaryTitle"></span>
-        </div>
+    <div class="col-1"> </div>
+    <div class="col-10 border-primary">
+        <ul class="list-group rounded-0 bg-dark">
+            <li class="list-group-item border-0 border-bottom-light" style="background-color: #212529; color: white" data-bind="click: goToClassicsPage">
+                <h3>Classic Titles</h3>
+                <div data-bind="component: {name: titleCardList, params: {func: getMoviesBetween, year1: 1959, year2: 1959}}"></div>
+            </li>
+            <li class="list-group-item border-0 border-bottom-light " style="background-color: #212529; color: white">
+                <h3>Find titles by year</h3>
+                <div class="row" data-bind="foreach: yearlySections" >
+                    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+                        <div class="card" >
+                            <div class="card-title" data-bind="text: year" style="color: black"></div>
+                            <div class="card-body" style="color: black">Movies from the awesom era of <span data-bind="text: year"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item border-0 border-bottom-light" style="background-color: #212529; color: white">
+                <h3>Find titles by genre</h3>
+            </li>
+        </ul>
+    </div>
     <div class="col-1" data-bind="component: {name: rightArrow, params: 'front-page'}"></div>
 </div>
+
+
+<!--
+ get from year -> devolve into between years (one function)
+ - When clicking div go to component and display result from function 
+ present five genres -> devolve into search for custom genre (one function)
+ 
+ let getClassics = () => {
+            ds.getMoviesBetween(data => {classicMovies(data)}, 1959, 1959);
+        }
+ -->

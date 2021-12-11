@@ -27,7 +27,7 @@ require(['knockout'], (ko) => {
     ];
 
     let component_title_logic_page = [
-        "title-logic-page"
+        "title-logic-page", "by-year-pages", "classics-page"
     ];
     
     let component_person_logic_page = [

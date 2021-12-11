@@ -33,6 +33,7 @@
     <Content Remove="wwwroot\js\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="wwwroot\js\Components\title-carousel-list" />
     <Folder Include="wwwroot\js\services\" />
     <Folder Include="wwwroot\js\config\" />
   </ItemGroup>
