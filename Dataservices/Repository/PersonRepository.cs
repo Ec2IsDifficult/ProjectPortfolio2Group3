@@ -22,13 +22,13 @@ namespace Dataservices.Repository
         public IEnumerable<ImdbKnownFor> GetKnowFor(string id)
         {
             var ctx = new ImdbContext();
-            return ctx.ImdbKnownFor.Where(x => x.Nconst == id);
+            return ctx.ImdbKnownFor.Where(x => x.Nconst == id).Include(x => x.Name).Include(x=>x.Title);
         }
         // in person controller
-        public IEnumerable<CoActors> CoActors(string name)
+        public IEnumerable<CoActors> CoActors(string id)
         {
             var ctx = new ImdbContext();
-            return ctx.CoActors.FromSqlInterpolated($"select * from find_co_actors({name})");
+            return ctx.CoActors.FromSqlInterpolated($"select * from find_co_actors({id})");
         }   
         
         //in person controller
