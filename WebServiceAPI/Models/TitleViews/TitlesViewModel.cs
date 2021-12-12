@@ -10,7 +10,7 @@ namespace WebServiceAPI.Models
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
         //runtime column is null
-        //public int RunTime { get; set; }
+        public int RunTime { get; set; }
         public string Poster { get; set; }
         public string Plot { get; set; }
         public string Awards { get; set; }
@@ -25,7 +25,7 @@ namespace WebServiceAPI.Models
         public int? StartYear { get; set; }
         public int? EndYear { get; set; }
         //column runtime is null error
-        //public int RunTime { get; set; }
+        public int RunTime { get; set; }
         public string Poster { get; set; }
         public string Plot { get; set; }
         public string Awards { get; set; }

@@ -74,9 +74,18 @@ namespace Dataservices
             modelBuilder.Entity<ImdbNameBasics>().Property(x => x.BirthYear).HasColumnName("birthyear");
             modelBuilder.Entity<ImdbNameBasics>().Property(x => x.DeathYear).HasColumnName("deathyear");
             modelBuilder.Entity<ImdbNameBasics>().HasKey(x => x.Nconst);
+            modelBuilder.Entity<ImdbNameBasics>().
+                HasMany(x => x.ImdbCasts)
+                .WithOne(x => x.Name)
+                .HasForeignKey(x => x.Nconst);
+            modelBuilder.Entity<ImdbNameBasics>().
+                HasMany(x => x.ImdbCrews)
+                .WithOne(x => x.Name)
+                .HasForeignKey(x => x.Nconst);
             modelBuilder.Entity<ImdbNameBasics>()
                 .HasMany(x => x.BookmarkPersons)
                 .WithOne(x => x.Name).HasForeignKey(x => x.Nconst);
+                
 
             //ImdbGenre
             modelBuilder.Entity<ImdbGenre>().ToTable("imdb_genre");
@@ -91,7 +100,7 @@ namespace Dataservices
             modelBuilder.Entity<ImdbCrew>().Property(x => x.Category).HasColumnName("category");
             modelBuilder.Entity<ImdbCrew>().Property(x => x.Job).HasColumnName("job");
             modelBuilder.Entity<ImdbCrew>().HasKey(x => new {x.Nconst, x.Tconst, x.Job});
-            
+
             //ImdbCast
             modelBuilder.Entity<ImdbCast>().ToTable("imdb_cast");
             modelBuilder.Entity<ImdbCast>().Property(x => x.Nconst).HasColumnName("nconst");
@@ -127,7 +136,7 @@ namespace Dataservices
             modelBuilder.Entity<ImdbTitleBasics>().HasKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>().
                 HasOne(x => x.Rating)
-                .WithOne(x => x.Title)
+                .WithOne(/*x => x.Title*/)
                 .HasForeignKey<ImdbTitleRatings>(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.Cast)
@@ -147,7 +156,7 @@ namespace Dataservices
                 .HasForeignKey(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasOne(x => x.Rating)
-                .WithOne(x => x.Title);
+                .WithOne(/*x => x.Title*/);
             modelBuilder.Entity<ImdbTitleBasics>()
                 .HasMany(x => x.BeenBookmarkedBy)
                 .WithOne(x => x.Title).HasForeignKey(x => x.Tconst);
