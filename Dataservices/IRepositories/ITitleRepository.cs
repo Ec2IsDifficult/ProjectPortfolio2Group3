@@ -25,5 +25,8 @@ namespace Dataservices.IRepositories
     //IEnumerable<ImdbTitleBasics> GetTitleSeasons(string id);
 
     IQueryable<BestMatchSearch> SearchBestMatch(string[] keyWords);
+
+    IEnumerable<Genres> GetAllGenres(PaginationFilter paginationFilter = null);
+    public int NumberOfGenres();
     }
 }

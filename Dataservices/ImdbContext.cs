@@ -42,6 +42,8 @@ namespace Dataservices
         public DbSet<MoviesByGenre> MoviesByGenres { get; set; }
         public DbSet<CoActors> CoActors { get; set; }
         
+        public DbSet<Genres> Genres { get; set; }
+
         public DbSet<BestMatchSearch> BestMatchSearches { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
@@ -270,6 +272,9 @@ namespace Dataservices
             modelBuilder.Entity<BestMatchSearch>().Property(x => x.Rank).HasColumnName("rank");
             modelBuilder.Entity<BestMatchSearch>().Property(x => x.BestTitle).HasColumnName("best_title");
             modelBuilder.Entity<BestMatchSearch>().HasNoKey();
+
+            modelBuilder.Entity<Genres>().Property(x => x.Genre).HasColumnName("genre");
+            modelBuilder.Entity<Genres>().HasNoKey();
         }
     }
 }

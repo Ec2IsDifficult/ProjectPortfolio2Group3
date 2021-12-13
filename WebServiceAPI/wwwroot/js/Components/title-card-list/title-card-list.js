@@ -2,9 +2,9 @@ define(["knockout", "dataservice"], function (ko, ds) {
    return function(params) {
        
        let randomTitles = ko.observableArray([]);
+       let args = Object.values(params).splice(1)
+       params.func(data => randomTitles(data), ...args);
        
-       ds.getRandomTitles(data => randomTitles(data.$values),
-           6, 8);
        return {
            randomTitles: randomTitles
        }

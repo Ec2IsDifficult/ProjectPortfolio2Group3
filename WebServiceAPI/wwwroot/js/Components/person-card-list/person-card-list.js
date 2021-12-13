@@ -2,8 +2,8 @@ define(["knockout", "dataservice"], function(ko, ds) {
     return function(params) {
         
         let randPeople = ko.observableArray([]);
-        
-        ds.getRandomPeople(data => randPeople(data.$values), 6)
+        let args = Object.values(params).splice(1)
+        params.func(data => randPeople(data), ...args);        
         
         return {
             randPeople: randPeople

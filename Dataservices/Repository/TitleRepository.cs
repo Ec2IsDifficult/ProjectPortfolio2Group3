@@ -70,13 +70,14 @@ namespace Dataservices.Repository
             var ctx = new ImdbContext();
             return ctx.ImdbTitleBasics.Where(x => x.IsAdult == true);
         }
+        
 
         //in titles controller
-        public IQueryable<MoviesByGenre> GetMoviesSimilarGenre(string moviename)
+        public IQueryable<MoviesByGenre> GetMoviesByGenre(string moviename)
         {
 
             var ctx = new ImdbContext();
-            return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({name})");
+            return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({moviename})");
         }
 
         //
@@ -92,6 +93,23 @@ namespace Dataservices.Repository
             var ctx = new ImdbContext();
             return ctx.BestMatchSearches.FromSqlInterpolated($"select * from best_match_querying({keyWords})");
 
+        }
+
+        public IEnumerable<Genres> GetAllGenres(PaginationFilter paginationFilter)
+        {
+            var ctx = new ImdbContext();
+
+            if (paginationFilter == null)
+                return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()");
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()").Skip(skip).Take(paginationFilter.PageSize);
+        }
+
+        public int NumberOfGenres()
+        {
+            var ctx = new ImdbContext();
+            return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()").Count();
         }
 
         public ImdbContext ImdbContext

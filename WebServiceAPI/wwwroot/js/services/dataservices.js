@@ -10,7 +10,8 @@
     let peopleUrl = "localhost:5001/api/person/"
 
     let getMoviesBetween = (callback, startYear, endYear) => {
-        fetch(titlesUrl + "between/" + startYear + "/" + endYear)
+        console.log(ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear)
+        fetch(ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear)
             .then(response => response.json())
             .then(json => callback(json));
     }
@@ -57,12 +58,6 @@
             .then(json => callback(json));
     }
 
-    let getAllGenres = (callback) => {
-        fetch(genreUrl)
-            .then(response => response.json())
-            .then(json => callback(json));
-    }
-
     let getUser = (callback, id) => {
         fetch(userUrl + id)
             .then(response => response.json())
@@ -91,6 +86,12 @@
         await fetch(`${ApiConfig.ApiRandomPeople}${amount}`)
             .then(response => response.json())
             .then(json => callback(json));
+    }
+    
+    let getAllGenres = function(callback) {
+        fetch(`${ApiConfig.ApiGenres}`)
+            .then(response => response.json())
+            .then(json => callback(json))
     }
 
     /**
@@ -208,8 +209,8 @@
         getTitleRating: getTitleRating,
         getTitlesByYear: getTitlesByYear,
         getPoster: getPoster,
-        getCast: getCast
-        /*
+        getCast: getCast,
+        
 
         getUserRating: getUserRatings,
         getRandomTitles: getRandomTitles,

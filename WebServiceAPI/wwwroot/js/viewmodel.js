@@ -43,6 +43,11 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 title: "Title logic page",
                 component: "title-logic-page",
                 hash: "#Titles",
+            },
+            {
+                title: "Person logic page",
+                component: "person-logic-page",
+                hash: "#People",
             }
 
         ];
