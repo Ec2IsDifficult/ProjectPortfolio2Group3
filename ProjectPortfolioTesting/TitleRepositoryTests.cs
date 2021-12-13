@@ -13,12 +13,15 @@ namespace ProjectPortfolioTesting
     public class TitleRepositoryTests
     {
         private TitleRepository _titleRepository;
-        private ImdbContext _ctx; 
 
         public TitleRepositoryTests()
         {
-            _ctx = new ImdbContext();
-            _titleRepository = new TitleRepository(_ctx);
+            _titleRepository = new TitleRepository(DbcontextFactory);
+        }
+        
+        public ImdbContext DbcontextFactory() 
+        {
+            return new ImdbContext();
         }
         
         [Fact]

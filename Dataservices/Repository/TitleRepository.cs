@@ -1,5 +1,6 @@
 namespace Dataservices.Repository
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Linq;
@@ -13,7 +14,8 @@ namespace Dataservices.Repository
 
     public class TitleRepository : ImmutableRepository<ImdbTitleBasics>, ITitleRepository
     {
-        public TitleRepository(ImdbContext context) :base(context)
+        
+        public TitleRepository(Func<DbContext> contextFactory) : base(contextFactory)
         {
             
         }
@@ -119,11 +121,6 @@ namespace Dataservices.Repository
         {
             var ctx = new ImdbContext();
             return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()").Count();
-        }
-
-        public ImdbContext ImdbContext
-        {
-            get { return Context as ImdbContext; }
         }
     }
 }

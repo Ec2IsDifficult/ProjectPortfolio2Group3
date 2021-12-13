@@ -95,6 +95,7 @@ namespace WebServiceAPI.Controllers
         public IActionResult GetRating(string id)
         {
             var rating = _titleService.GetRating(id);
+            Console.WriteLine(rating);
             if (rating == null)
             {
                 return NotFound();

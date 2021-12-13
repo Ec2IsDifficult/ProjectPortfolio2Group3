@@ -136,8 +136,8 @@ namespace Dataservices
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Plot).HasColumnName("plot");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Awards).HasColumnName("awards");
             modelBuilder.Entity<ImdbTitleBasics>().HasKey(x => x.Tconst);
-            modelBuilder.Entity<ImdbTitleBasics>().
-                HasOne(x => x.Rating)
+            modelBuilder.Entity<ImdbTitleBasics>()
+                .HasOne(x => x.Rating)
                 .WithOne(/*x => x.Title*/)
                 .HasForeignKey<ImdbTitleRatings>(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()

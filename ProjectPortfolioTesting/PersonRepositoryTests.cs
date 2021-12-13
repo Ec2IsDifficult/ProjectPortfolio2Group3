@@ -10,14 +10,17 @@ namespace ProjectPortfolioTesting
 
     public class PersonRepositoryTests
     {
-        private ImdbContext _ctx;
         private PersonRepository _personRepository;
 
 
         public PersonRepositoryTests()
         {
-            _ctx = new ImdbContext();
-            _personRepository = new PersonRepository(_ctx);
+            _personRepository = new PersonRepository(DbcontextFactory);
+        }
+        
+        public ImdbContext DbcontextFactory() 
+        {
+            return new ImdbContext();
         }
 
         [Fact]

@@ -13,6 +13,5 @@ namespace Dataservices.CRUDRepository
         void Update(TEntity entity);
         void UpdateAll(IEnumerable<TEntity> entities);
         void Delete(TEntity entity);
-        void DeleteAll(IEnumerable<TEntity> entities);
     }
 }
