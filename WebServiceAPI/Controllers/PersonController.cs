@@ -29,7 +29,7 @@ namespace WebServiceAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public IActionResult GetAll()
         {
             var actors = _personService.GetAll();

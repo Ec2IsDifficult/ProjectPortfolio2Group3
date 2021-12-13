@@ -13,6 +13,9 @@ using WebServiceAPI.Middleware;
 
 namespace WebServiceAPI
 {
+    using Microsoft.AspNetCore.Http;
+    using WebServiceToken.Services;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -50,6 +53,13 @@ namespace WebServiceAPI
              */
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
+            services.AddSingleton<IUriService>(provider =>
+            {
+                var accessor = provider.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var absoluteUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent(), "/");
+                return new UriService(absoluteUri);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

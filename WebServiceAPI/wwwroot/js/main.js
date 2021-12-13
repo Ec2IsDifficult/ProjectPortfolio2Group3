@@ -23,7 +23,7 @@ require(['knockout'], (ko) => {
     let component_auth = ["user-login", "user-recover", "user-register", "user-update-email"];
 
     let component_front_page = [
-        "front-page", "title-card-list", "person-card-list", "navbar", "right-arrow", "left-arrow"
+        "front-page", "title-card-list", "person-card-list", "navbar", "right-arrow", "left-arrow", "title-carousel"
     ];
 
     let component_title_logic_page = [

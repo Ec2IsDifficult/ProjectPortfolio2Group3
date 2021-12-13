@@ -10,8 +10,8 @@
                 <h3>Find titles by year</h3>
                 <div class="row" data-bind="foreach: yearlySections" >
                     <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
-                        <div class="card" >
-                            <div class="card-title" data-bind="text: year" style="color: black"></div>
+                        <div class="card bg-danger mb-2" >
+                            <div class="card-title " data-bind="text: year" style="color: black"></div>
                             <div class="card-body" style="color: black">Movies from the awesom era of <span data-bind="text: year"></span></div>
                         </div>
                     </div>
@@ -19,6 +19,14 @@
             </li>
             <li class="list-group-item border-0 border-bottom-light" style="background-color: #212529; color: white">
                 <h3>Find titles by genre</h3>
+                <div class="" data-bind="foreach: genres" >
+                    <div class="">
+                        <div class="bg-secondary mb-2">
+                            <div class="card-title " data-bind="text: genre" style="color: black"></div>
+                            <div class="card-body" style="color: black">The juice genre called <span data-bind="text: genre"></span></div>
+                        </div>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>

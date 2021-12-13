@@ -19,17 +19,18 @@ namespace WebServiceAPI.Controllers
 {
     using System.Net;
     using System.Threading.Tasks;
+    using Dataservices.Domain;
     using Dataservices.Domain.Imdb;
+    using WebServiceToken.Services;
 
     [Route("api/v1/titles")]
     [ApiController]
     public class TitleController : Controller
     {
-        //we need the IRepository here because of Dependency Injection
         private readonly ITitleRepository _titleService;
         private readonly LinkGenerator _linkGenerator;
         private readonly IMapper _mapper;
-        
+
         public TitleController(ITitleRepository titleService, LinkGenerator linkGenerator, IMapper mapper)
         {
             _titleService = titleService;
@@ -201,6 +202,38 @@ namespace WebServiceAPI.Controllers
                 model.Add(CreateSearchResultViewModel(nameof(SearchBestMatch), result));
             return Ok(model);
         }
+        
+        [HttpGet("genres")]
+        public IActionResult GetAllGenres([FromQuery] PaginationQuery paginationQuery)
+        {
+            //Mapping the the object from the GET query to a pagination-filter object with page-number and page-size
+            //If the object has no page-number or size the default constructor will give it values
+            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery) ;
+            
+            //getting all the objects from the database
+            var allGenres = _titleService.GetAllGenres(paginationFilter);
+
+            //Mapping the all-genres enumerable to a list of view models
+            var data = _mapper.Map<List<AllGenresViewModel>>(allGenres);
+            
+            //Creating the specific base url for the path, and setting it to the created object below
+            var url = "http://localhost:5000/api/v1/titles/genres";
+            UriService uriService = new UriService(url);
+            
+            //
+            var paginationResponse = PaginationHelper.CreatePagenatedResponse(uriService, paginationFilter, data, _titleService.NumberOfGenres());
+            return Ok(paginationResponse);
+        }
+        
+        /*public PagedResponse<AllGenresViewModel> CreateAllGenresViewModel(string name, IEnumerable<Genres> genre)
+        {
+            var model = new PagedResponse<AllGenresViewModel>(_mapper.Map<List<AllGenresViewModel>>(genre));
+            foreach (var mod in model.Data)
+            {
+                mod.Url = HttpContext.Request.GetDisplayUrl();
+            }
+            return model;
+        }*/
 
         public SearchResultViewModel CreateSearchResultViewModel(string name, BestMatchSearch search)
         {
@@ -252,3 +285,11 @@ namespace WebServiceAPI.Controllers
         }
     }
 }
+
+
+/*if (paginationFilter == null || paginationFilter.PageNumber < 1 || paginationFilter.PageSize < 1)
+{           
+    Collection<PagedResponse<AllGenresViewModel>> model = new Collection<PagedResponse<AllGenresViewModel>>();
+    model.Add(CreateAllGenresViewModel(nameof(GetAllGenres), allGenres));
+    return Ok(model);
+}*/

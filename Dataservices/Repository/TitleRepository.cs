@@ -95,6 +95,23 @@ namespace Dataservices.Repository
 
         }
 
+        public IEnumerable<Genres> GetAllGenres(PaginationFilter paginationFilter)
+        {
+            var ctx = new ImdbContext();
+
+            if (paginationFilter == null)
+                return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()");
+
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()").Skip(skip).Take(paginationFilter.PageSize);
+        }
+
+        public int NumberOfGenres()
+        {
+            var ctx = new ImdbContext();
+            return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()").Count();
+        }
+
         public ImdbContext ImdbContext
         {
             get { return Context as ImdbContext; }

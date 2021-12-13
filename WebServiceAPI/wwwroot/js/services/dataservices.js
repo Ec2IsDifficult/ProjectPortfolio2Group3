@@ -58,12 +58,6 @@
             .then(json => callback(json));
     }
 
-    let getAllGenres = (callback) => {
-        fetch(genreUrl)
-            .then(response => response.json())
-            .then(json => callback(json));
-    }
-
     let getUser = (callback, id) => {
         fetch(userUrl + id)
             .then(response => response.json())
@@ -92,6 +86,12 @@
         await fetch(`${ApiConfig.ApiRandomPeople}${amount}`)
             .then(response => response.json())
             .then(json => callback(json));
+    }
+    
+    let getAllGenres = function(callback) {
+        fetch(`${ApiConfig.ApiGenres}`)
+            .then(response => response.json())
+            .then(json => callback(json))
     }
 
     /**

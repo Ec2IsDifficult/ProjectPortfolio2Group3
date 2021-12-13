@@ -14,9 +14,13 @@ define(["knockout", "dataservice"], function(ko, ds) {
         //making a for loop 
         //check particular year to extend it into the future  
         //fill array until 1959
-        let yearlySections = [{year: 1950}, {year: 1960}, {year: 1970}, {year: 1980}, {year: 1990}, {year: 2000}, {year: 2010}, {year: 2020}];
+        let yearlySections = [
+            {year: 1950}, {year: 1960}, {year: 1970}, {year: 1980}, {year: 1990}, {year: 2000}, {year: 2010}, {year: 2020}
+        ];
         
         //Should contain function go to by genre
+        let genres = ko.observableArray([]);
+        ds.getAllGenres(data => genres(data));
         
         return {
             leftArrow:leftArrow,
@@ -29,6 +33,7 @@ define(["knockout", "dataservice"], function(ko, ds) {
             
             
             yearlySections: yearlySections,
+            genres:genres
         }
     }
 })
