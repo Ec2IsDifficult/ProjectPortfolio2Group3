@@ -11,7 +11,7 @@ namespace Dataservices.IRepositories
     public interface ITitleRepository : IIMutableRepository<ImdbTitleBasics>
 
     {
-    IEnumerable<ImdbTitleBasics> GetTitlesByYear(int year);
+    IEnumerable<ImdbTitleBasics> GetTitlesByYear(int year, PaginationFilter paginationFilter);
     ImdbTitleBasics GetCast(string id);
     ImdbTitleBasics GetCrew(string id);
     ImdbTitleRatings GetRating(string id);
@@ -19,7 +19,7 @@ namespace Dataservices.IRepositories
     IEnumerable<ImdbTitleBasics> GetTitlesBetween(int startYear, int endYear);
     ImdbTitleBasics GetEpisodes(string id);
     IEnumerable<ImdbTitleBasics> GetAdultMovies();
-    IQueryable<MoviesByGenre> GetMoviesByGenre(string name);
+    IQueryable<MoviesByGenre> GetMoviesByGenre(string name, PaginationFilter paginationFilter);
 
     IEnumerable<ImdbTitleBasics> GetRandomTitles(int amount, float lowestRating);
     //IEnumerable<ImdbTitleBasics> GetTitleSeasons(string id);

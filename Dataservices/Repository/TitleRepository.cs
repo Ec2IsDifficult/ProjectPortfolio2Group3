@@ -18,10 +18,15 @@ namespace Dataservices.Repository
             
         }
         //in titles controller
-        public IEnumerable<ImdbTitleBasics> GetTitlesByYear(int year)
-        {            
+        public IEnumerable<ImdbTitleBasics> GetTitlesByYear(int year, PaginationFilter paginationFilter)
+        {        
             var ctx = new ImdbContext();
-            return ctx.ImdbTitleBasics.Where(x => x.StartYear == year);
+            if(paginationFilter == null)
+                return ctx.ImdbTitleBasics.Where(x => x.StartYear == year);
+            
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return ctx.ImdbTitleBasics.Where(x => x.StartYear == year).Skip(skip).Take(paginationFilter.PageSize);
+
         }
         //in titles controller
         public ImdbTitleBasics GetCast(string id)
@@ -73,11 +78,15 @@ namespace Dataservices.Repository
         
 
         //in titles controller
-        public IQueryable<MoviesByGenre> GetMoviesByGenre(string moviename)
+        public IQueryable<MoviesByGenre> GetMoviesByGenre(string moviename, PaginationFilter paginationFilter)
         {
 
             var ctx = new ImdbContext();
-            return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({moviename})");
+            if (paginationFilter == null)
+                return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({moviename})");
+            
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({moviename})").Skip(skip).Take(paginationFilter.PageSize);
         }
 
         //

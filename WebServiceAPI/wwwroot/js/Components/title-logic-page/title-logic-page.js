@@ -20,7 +20,7 @@ define(["knockout", "dataservice"], function(ko, ds) {
         
         //Should contain function go to by genre
         let genres = ko.observableArray([]);
-        ds.getAllGenres(data => genres(data));
+        ds.getAllGenres(data => genres(data.data));
         
         return {
             leftArrow:leftArrow,
