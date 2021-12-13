@@ -10,7 +10,7 @@
     let peopleUrl = "localhost:5001/api/person/"
 
     let getMoviesBetween = (callback, startYear, endYear) => {
-        console.log(ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear)
+        console.log(ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear);
         fetch(ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear)
             .then(response => response.json())
             .then(json => callback(json));
@@ -178,8 +178,8 @@
     };
     
     
-    async function getTitlesByYear (year, callback) {
-    fetch("api/titles/year/"+year)
+    async function getTitlesByYear (callback, year) {
+    fetch(`${ApiConfig.ApiTitleByYear}${year}`)
      .then(response => response.json())
      .then(json => callback(json))
     };

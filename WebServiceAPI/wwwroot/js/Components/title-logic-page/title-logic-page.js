@@ -1,14 +1,13 @@
-define(["knockout", "dataservice"], function(ko, ds) {
+define(["knockout", "dataservice", "viewmodel"], function(ko, ds, vm) {
     return function(params) {
         let leftArrow = ko.observable("left-arrow");
         let rightArrow = ko.observable("right-arrow");
         let titleCardList = ko.observable("title-card-list")
         
         //Should contain function go to classics
-        /*let goToClassicsPage = () => {
+        let goToClassicsPage = () => {
             vm.changeContent(vm.componentItems.find(item => item.component === "classics-page"));
-        }*/
-        let goToClassicsPage = undefined;
+        }
         
         //Should contain function go to function by year
         //making a for loop 
@@ -28,6 +27,7 @@ define(["knockout", "dataservice"], function(ko, ds) {
             
             
             getMoviesBetween: ds.getMoviesBetween,
+            getTitlesByYear: ds.getTitlesByYear,
             titleCardList: titleCardList,
             goToClassicsPage:goToClassicsPage,
             

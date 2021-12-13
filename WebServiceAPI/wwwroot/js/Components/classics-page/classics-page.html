@@ -1,6 +1,4 @@
 <div>
     <h1>hello world</h1>
-    <div data-bind="foreach: classicMovies">
-        <span data-bind="text: title"></span>
-    </div>
+    <div data-bind="component: {name: titleCardList, params: {func: getMoviesBetween, year1: 1959, year2: 1970}}"></div>
 </div>

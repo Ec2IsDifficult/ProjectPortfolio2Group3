@@ -37,7 +37,6 @@ namespace WebServiceAPI.Controllers
             _linkGenerator = linkGenerator;
             _mapper = mapper;
         }
-
         
         [HttpGet(Name = nameof(GetAll))]
         public IActionResult GetAll()
@@ -135,6 +134,7 @@ namespace WebServiceAPI.Controllers
             var url = $"http://localhost:5000/api/v1/titles/year/{year}";
             UriService uriService = new UriService(url);
             
+            //Should not be done this way
             var totalLength = _titleService.GetTitlesByYear(year, null);
             
             var paginationResponse = PaginationHelper.CreatePagenatedResponse(uriService, paginationFilter, data, totalLength.Count());
@@ -142,18 +142,26 @@ namespace WebServiceAPI.Controllers
         }
 
         [HttpGet("between/{year1}/{year2}", Name = nameof(GetTitlesBetween))]
-        public IActionResult GetTitlesBetween(int year1, int year2)
+        public IActionResult GetTitlesBetween(int year1, int year2, [FromQuery] PaginationQuery paginationQuery)
         {
-            var titles = _titleService.GetTitlesBetween(year1, year2);
+            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
+            Console.WriteLine(paginationFilter.PageNumber + " " + paginationFilter.PageSize);
+            var titles = _titleService.GetTitlesBetween(year1, year2, paginationFilter);
+            
             if (titles == null)
             {
                 return NotFound("No titles between these years available");
             }
+
+            var data = _mapper.Map<List<TitlesViewModel>>(titles);
+            foreach(var title in data)
+                title.Url = HttpContext.Request.GetDisplayUrl();
             
-            var model = new Collection<TitlesViewModel>();
-            foreach(var title in titles)
-                model.Add(CreateTitlesViewModel(nameof(GetTitlesBetween), title));
-            return Ok(model);
+            var url = $"http://localhost:5000/api/v1/titles/between/{year1}/{year2}";
+            UriService uriService = new UriService(url);
+            
+            var paginationResponse = PaginationHelper.CreatePagenatedResponse(uriService, paginationFilter, data, _titleService.NumberOfMoviesBetween(year1,year2));
+            return Ok(paginationResponse);
         }
         
         [HttpGet("random/{amount}/{lowestRating}", Name = nameof(GetRandomTitles))]
@@ -169,7 +177,7 @@ namespace WebServiceAPI.Controllers
         [HttpGet("{name}/genre", Name = nameof(GetMoviesByGenre))]
         public IActionResult GetMoviesByGenre(string name, [FromQuery] PaginationQuery paginationQuery)
         {
-            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery) ;
+            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
             var movies = _titleService.GetMoviesByGenre(name, paginationFilter);
             if (movies == null)
             {
