@@ -6,7 +6,11 @@ define(["knockout", "dataservice"], function (ko, ds) {
         let nextPageUrl = "";
         let prevPage = ko.observable();
         let prevPageUrl = ko.observable();
+        let showButtonDiv = ko.observable(true);
 
+        if(params.show === "dontShow")
+            showButtonDiv(false)
+        delete params.show
         let args = Object.values(params).splice(1)
         let execute = function (url) {
             params.func(data => {
@@ -87,7 +91,8 @@ define(["knockout", "dataservice"], function (ko, ds) {
             nextPage: nextPage,
             prevPage: prevPage,
             goToNextPage: goToNextPage,
-            goToPrevPage: goToPrevPage
+            goToPrevPage: goToPrevPage,
+            showButtonDiv:showButtonDiv
         }
     }
 });
