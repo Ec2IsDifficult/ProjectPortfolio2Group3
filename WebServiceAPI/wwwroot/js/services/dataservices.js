@@ -106,40 +106,44 @@
     
     
     function getPerson(nconst, callback) {
-            fetch("api/person/" + nconst)
+            fetch("api/v1/person/" + nconst)
                 .then(response => response.json())
                 .then(json => callback(json))
     };
     
     function knownFor(nconst, callback) {
-    fetch("api/person/"+nconst+"/knownfor")
+    fetch("api/v1/person/"+nconst+"/knownfor")
      .then(response => response.json())
      .then(json => callback(json))
-        console.log("api/person/"+nconst+"/knownfor");
+    };
+    
+    function primeProfessions(nconst, callback) {
+        fetch("api/v1/person/"+nconst+"/primeProfessions")
+            .then(response => response.json())
+            .then(json => callback(json))
     };
     
     
-    function coactors(name, callback) {
-    fetch("api/person/"+name+"/coactors")
+    function coactors(nconst, callback) {
+    fetch("api/v1/person/"+nconst+"/coactors")
      .then(response => response.json())
      .then(json => callback(json))
     };
     
     
     function personYear (year, callback) {
-    fetch("api/person/year/"+year)
+    fetch("api/v1/person/year/"+year)
      .then(response => response.json())
      .then(json => callback(json))
     };
     
     async function getPoster(url){
+        console.log(await fetch(url));
         const response = await fetch(url);
         const blob = await response.blob();
         const _url = URL.createObjectURL(blob);
         let image = document.getElementById("Poster");
         image.setAttribute("src", _url);
-        image.setAttribute('class', 'img-fluid');
-        image.setAttribute('alt','Responsive image');
         return image;
     };
     
@@ -152,33 +156,33 @@
      */
     
     async function getTitle (tconst,  callback) {
-    fetch("api/titles/"+tconst)
+    fetch("api/v1/titles/"+tconst)
      .then(response => response.json())
      .then(json => callback(json))
     };
     
     function getCast(tconst, callback) {
-    fetch("api/titles/"+tconst+"/cast")
+    fetch("api/v1/titles/"+tconst+"/cast")
      .then(response => response.json())
      .then(json => callback(json))
     };
     
     async function getCrew(tconst, callback) {
-    fetch("api/titles/"+tconst+"/crew")
+    fetch("api/v1/titles/"+tconst+"/crew")
      .then(response => response.json())
      .then(json => callback(json))
     };
     
     
     async function getTitleRating (tconst, callback) {
-    fetch("api/titles/"+tconst+"/rating")
+    fetch("api/v1/titles/"+tconst+"/rating")
      .then(response => response.json())
      .then(json => callback(json))
     };
     
     
     async function getTitlesByYear (year, callback) {
-    fetch("api/titles/year/"+year)
+    fetch("api/v1/titles/year/"+year)
      .then(response => response.json())
      .then(json => callback(json))
     };
@@ -208,7 +212,8 @@
         getTitleRating: getTitleRating,
         getTitlesByYear: getTitlesByYear,
         getPoster: getPoster,
-        getCast: getCast
+        getCast: getCast,
+        primeProfessions: primeProfessions
         /*
 
         getUserRating: getUserRatings,

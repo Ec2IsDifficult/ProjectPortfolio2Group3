@@ -143,8 +143,9 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             console.log(data.$values[0]);
             persons(data.$values[11]);
         });*/
-
+        
         let selectedPerson = ko.observable('tt1954874');
+        //'tt1954874'
         let personData = ko.observable();
         
         let getPerson = () => {
@@ -154,22 +155,50 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         })};
 
         let knownfor = ko.observable([]);
+        let availableKnownFor = ko.observable();
 
         let getKnownFor = () => {
         ds.knownFor(selectedPerson(), function(data) {
-            console.log(data.$values);
-            knownfor(data.$values);
+            console.log(data);
+            if(data.length > 0){
+                availableKnownFor('True');
+            }else{
+                availableKnownFor('False');
+            }
+            knownfor(data);
         })};
 
         
         let coactors = ko.observable([]);
+        let availableCoActors = ko.observable();
 
         let getCoActors = () => {
         ds.coactors(selectedPerson(), function(data) {
-            console.log(data.$values);
-            coactors(data.$values);
+            console.log(data);
+            if(data.length > 0){
+                availableCoActors('True');
+            }else{
+                availableCoActors('False');
+            }
+            coactors(data);
         })};
-
+        
+        let professions = ko.observable();
+        let getPrimeProfessions = () => {
+            ds.primeProfessions(selectedPerson(), function(data) {
+                console.log(data);
+                let jobs = '';
+                let i = 0;
+                data.forEach( function(job) {
+                    if(i === (data.length - 1)){
+                        jobs += job.profession;
+                    }else{
+                    jobs += job.profession+', ';
+                    i++;
+                }});
+                professions(jobs);
+            })
+        }
         
         let personsbyyear = ko.observable([]);
 
@@ -184,10 +213,11 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         
         
         let cast = ko.observable([]);
+        
         let getCast = () => {
         ds.getCast(selectedPerson(),function(data) {
-            console.log(data);
-            cast(data);
+            console.log(data.cast);
+            cast(data.cast);
         })};
            
 
@@ -195,15 +225,20 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         let selectedTitle = ko.observable('tt1954874');
 
         let titleRating = ko.observable();
+        let checkVotes = ko.observable('False');
 
         let getTitleRating = () => {
             ds.getTitleRating(selectedPerson(), function (data) {
+                if(data.numVotes > 0){
+                    checkVotes('True');
+                }
                 console.log(data);
                 titleRating(data);
             })
         };
 
         let crew = ko.observable([]);
+        
         let getTitleCrew = async () => {
             await ds.getCrew(selectedPerson(), function (data) {
                 console.log(data.crew)
@@ -226,8 +261,7 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             await ds.getPoster(_url);
         };
 
-
-
+        //let posterHeight = ko.observable(document.getElementById("PosterDiv").clientHeight);
         let titlesbyyear = ko.observable([]);
         
         let getTitlesByYear = () => {
@@ -256,6 +290,8 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         return {
 
             /*persons*/
+            availableKnownFor,
+            availableCoActors,
             selectedPerson,
             getPerson,
             personData,
@@ -265,9 +301,12 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             coactors,
             getPersonByYear,
             personsbyyear,
+            getPrimeProfessions,
+            professions,
             
             
             /*titles*/
+           // posterHeight,
             title,
             getSingleTitle,
             crew,
@@ -278,6 +317,7 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             getTitleRating,
             cast,
             getCast,
+            checkVotes,
             
             
             appName,

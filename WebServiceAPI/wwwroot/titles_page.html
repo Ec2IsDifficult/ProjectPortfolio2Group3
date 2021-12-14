@@ -9,58 +9,67 @@
 <h1>Titles</h1>
 
 <div>
-<button data-bind="click: function(){getSingleTitle(); getCast();}" class="btn btn-primary">Find</button>
+<button data-bind="click: function(){getSingleTitle(); getTitleCrew(); getTitleRating(); getCast();}" class="btn btn-primary">Find</button>
 Find <input class="form-control" data-bind="value: selectedPerson" />
 </div>
 
 <div class="container">
     <div class="row mt-5" data-bind="foreach: title">
-        <div class="col-auto d-flex justify-content-center">
+        <div class="col d-flex justify-content-center" id="PosterDiv">
             <figure>
-                <img src="" id="Poster" alt="No Poster available for this Title"/>
-                <figcaption class="text-center">
-                    Primarytitle: <span data-bind="text: primaryTitle"></span>
+                <img src="" class="img-fluid align-items-center" id="Poster" alt="No Poster available for this Title"/>
+                <figcaption>
+                    <span>Primarytitle: <span data-bind="text: primaryTitle"></span></span>
                 </figcaption>
             </figure>
         </div> <!--- this is the div for the poster of a movie --->
-        <div class="col">
-            <div class="row">
-                <span class="col d-flex justify-content-center flex-column" data-bind="text:titleType"></span>
-                Start: <span class="col" data-bind="text: startYear"></span>
-                End: <span class="col" data-bind="text: endYear"></span>
+        <div class="col-6"> <!---data-bind=" style: { 'max-height': $parent.posterHeight()}"--->
+            <div class="row align-self-start">
+                <span class="col-auto">Type: <span data-bind="visible: titleType, text: titleType"></span></span>
+                <span class="col-auto">Start: <span data-bind="visible: startYear, text: startYear"></span></span>
+                <span class="col-auto">End: <span data-bind="visible: endYear, text: endYear"></span></span>
             </div>
-            <div class="row mt-5">
-                <div class="col overflow-auto" style="max-height: 370px" data-bind="text: plot"></div>
+            <div class="row mt-2 align-self-start" data-bind="foreach: $parent.titleRating">
+                <span class="col-auto">Runtime(min): <span data-bind="text: $parent.runTime"></span></span>
+                <span class="col-auto">Rating: <span data-bind="text: rating"></span></span>
+                <span class="col-auto">Votes: <span data-bind=" text: numVotes"></span></span>
+            </div>       
+            <div class="row mt-2 align-self-start">
+                <div data-bind="visible: poster, text: poster"></div>
+            </div>
+            <div class="row mt-4 align-self-start overflow-auto">
+                <div class="col overflow-auto" data-bind="text: plot "></div>
             </div>
         </div>
     </div>
+
     
     <!--- new row    
      longest plot: tt1954874--->
     <div class="row mt-5">
         <!--- add rating here --->
-        <div class="col">
+        <div class="col text-center" data-bind="visible: cast().length > 0">
+            <span>Cast of the Movie</span>
             <table class="table" >
                 <thead>
-                <tr><th>nconst</th><th>name</th><th>category</th><th>job</th></tr>
+                <tr><th>name</th><th>Character</th></tr>
                 </thead>
                 <tbody data-bind="foreach: cast">
                 <tr>
-                    <td data-bind="text: Nconst"></td>
-                    <td data-bind="text: Name"></td>
-                    <td data-bind="text: CharacterName"></td>
+                    <td data-bind="text: name.name"></td>
+                    <td data-bind="text: characterName"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-    <div class="col">
+    <div class="col text-center" data-bind="visible: crew().length > 0">
+        <span>Crew of the Movie</span>
         <table class="table" >
             <thead>
-            <tr><th>nconst</th><th>name</th><th>category</th><th>job</th></tr>
+            <tr><th>name</th><th>category</th><th>job</th></tr>
             </thead>
             <tbody data-bind="foreach: crew">
             <tr>
-                <td data-bind="text: nconst"></td>
                 <td data-bind="text: name.name"></td>
                 <td data-bind="text: category"></td>
                 <td data-bind="text: job"></td>
@@ -68,18 +77,7 @@ Find <input class="form-control" data-bind="value: selectedPerson" />
             </tbody>
         </table>
     </div>
-</div>
-    <table class="table" style="width: 200px; border: 1px solid black">
-        <thead>
-        <tr><th>Rating</th><th>Votes</th></tr>
-        </thead>
-        <tbody data-bind="foreach: titleRating">
-        <tr>
-            <td data-bind="text: rating"></td>
-            <td data-bind="text: numVotes"></td>
-        </tr>
-        </tbody>
-    </table>
+    </div>
 </div>
 
 
