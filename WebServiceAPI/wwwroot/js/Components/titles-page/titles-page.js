@@ -1,46 +1,47 @@
 define(["knockout", "dataservice", "viewmodel"],
     function (ko, ds, vm) {
-return function(params) {
-    let selectedTitle = ko.observable(params);
-    
-    let cast = ko.observable([]);
- 
+        return function (params) {
+            //let selectedTitle = ko.observable(params);
+            let selectedTitle = ko.observable('tt1954874');
 
-    ds.getCast(selectedTitle(),function(data) {
-        cast(data.cast);
-    })
-    let titleRating = ko.observable();
-    let checkVotes = ko.observable('False');
-    
-    
-    ds.getTitleRating(selectedTitle(), function (data) {
-        if(data.numVotes > 0){
-            checkVotes('True');
-        }
-        console.log(data);
-        titleRating(data);
-    })
+            let cast = ko.observable([]);
 
-    let crew = ko.observable([]);
-    
-    ds.getCrew(selectedTitle(), function (data) {
-        console.log(data.crew)
-        crew(data.crew);
-    })
 
-    ds.getTitle(selectedTitle(), async function (data) {
-        console.log(data);
-        title(data);
-        if (data.awards !== null) {
-            await getTitlePoster(data.awards);
-        }
-    })
+            ds.getCast(selectedTitle(), function (data) {
+                cast(data.cast);
+            })
+            let titleRating = ko.observable();
+            let checkVotes = ko.observable('False');
 
-    let title = ko.observable();
 
-    
+            ds.getTitleRating(selectedTitle(), function (data) {
+                if (data.numVotes > 0) {
+                    checkVotes('True');
+                }
+                console.log(data);
+                titleRating(data);
+            })
 
-      let getTitlePoster = async (_url) => {
+            let crew = ko.observable([]);
+
+            ds.getCrew(selectedTitle(), function (data) {
+                console.log(data.crew)
+                crew(data.crew);
+            })
+
+            ds.getTitle(selectedTitle(), async function (data) {
+                console.log(data);
+                title(data);
+                if (data.awards !== null) {
+                    await getTitlePoster(data.awards);
+                }
+            })
+
+            let title = ko.observable();
+
+
+
+            let getTitlePoster = async (_url) => {
                 await ds.getPoster(_url);
                 getImgSize(_url);
             };
@@ -62,14 +63,15 @@ return function(params) {
                 newImg.src = imgSrc;
             };
 
-    
-    return {
-        selectedTitle,
-        titleRating,
-        crew,
-        title,
-        cast,
-        checkVotes,
-      posterHeight
-    }
-    }})
+
+            return {
+                selectedTitle,
+                titleRating,
+                crew,
+                title,
+                cast,
+                checkVotes,
+                posterHeight
+            }
+        }
+    })
