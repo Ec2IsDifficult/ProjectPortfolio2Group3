@@ -35,13 +35,12 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse position-relative" id="navbarSupportedContent">
-                                <span data-bind="component: {name: searchResult}"></span>
-
+                <div class="collapse navbar-collapse position-relative"
+                     id="navbarSupportedContent"
+                     data-bind="component: {name: searchResult}">
                 </div>
 
                 <ul class="navbar-nav">
-
 
                     <li class="nav-item" data-bind="visible: loginOK()">
                         <div class="text-end m-2" role="button"

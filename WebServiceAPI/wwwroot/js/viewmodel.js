@@ -92,16 +92,13 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         // Main parameters
         let currentParams = ko.observable({});
         
-        let searchResult = ko.observable("search-result")
+        let searchResult = ko.observable("search-result");
         
-        //let searchPhrase = document.getElementById("searchField");
         let search = () => {
             changeContent(componentItems.find(item => item.component === "search-result"));
             //Ps.publish("search_result_publish", searchPhrase.value);
         }
         
-        
-
         // Component: Login
         c = componentItems.find(item => item.component == "user-login");
         let loginPage = ko.observable(c.component);

@@ -227,7 +227,7 @@
         getTitlesByYear: getTitlesByYear,
         getPoster: getPoster,
         getCast: getCast,
-        primeProfessions: primeProfessions
+        primeProfessions: primeProfessions,
 
 
         getUserRating: getUserRatings,
