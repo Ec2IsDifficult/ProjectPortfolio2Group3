@@ -36,20 +36,14 @@
                     // Success
                     if (result.status == "200") {
                         console.log(result.statusText);
-                        result.text().then(function (text) {
-                            console.log(text);
-                            callback(result.statusText);
-                        });
+                        callback(result);
                     }
 
                     // Bad request
                     // Username already exist
                     if (result.status == "400") {
                         console.log(result.statusText);
-                        result.text().then(function (text) {
-                            console.log(text);
-                            callback(text);
-                        });
+                        callback(result);
                     }
                 });
         };

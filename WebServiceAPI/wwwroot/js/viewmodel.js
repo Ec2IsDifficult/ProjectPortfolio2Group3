@@ -11,6 +11,12 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         let appName = AppConfig.appName;
 
         /**
+         * Toggling the login/logout navbar
+         */
+
+        let loginOK = ko.observable(true);
+
+        /**
          * Initialization
          */
 
@@ -35,6 +41,11 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 title: "Update Email",
                 component: "user-update-email",
                 hash: "#email",
+            },
+            {
+                title: "Update Password",
+                component: "user-update-password",
+                hash: "#UpdatePassword",
             },
             {
                 title: "Front page",
@@ -74,7 +85,11 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             }
         ];
 
-        let currentView = ko.observable(componentItems[0].component);
+        // Main view
+        c = componentItems.find(item => item.component == "user-update-email");
+        let currentView = ko.observable(c.component);
+
+        // Main parameters
         let currentParams = ko.observable({});
         
         let searchResult = ko.observable("search-result")
@@ -87,26 +102,28 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         
         
 
+        // Component: Login
+        c = componentItems.find(item => item.component == "user-login");
+        let loginPage = ko.observable(c.component);
+
+        // Component: Update email
+        c = componentItems.find(item => item.component == "user-update-email");
+        let updateEmailComponent = ko.observable(c.component);
         
+        // Component: Update password
+        c = componentItems.find(item => item.component == "user-update-password");
+        let updatePasswordComponent = ko.observable(c.component);
+
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         /**
-         * Connecting from model (Recover password: change) to data service
-         */
+        * Connecting from model (logout) to data service
+        */
         let logout = () => {
+            console.log("Logging out");
             auth.imdb_auth.logout(function (status) {
                 console.log(status);
+                loginOK(true);
             });
         }
 
@@ -183,17 +200,19 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         let selectedPerson = ko.observable('tt1954874');
         //'tt1954874'
         let personData = ko.observable();
-        
+
         let getPerson = () => {
-            ds.getPerson(selectedPerson(), function(data) {
-            console.log(data);
-            personData(data);
-        })};
+            ds.getPerson(selectedPerson(), function (data) {
+                console.log(data);
+                personData(data);
+            })
+        };
 
         let knownfor = ko.observable([]);
         let availableKnownFor = ko.observable();
 
         let getKnownFor = () => {
+
         ds.knownFor(selectedPerson(), function(data) {
             console.log(data);
             if(data.length > 0){
@@ -204,12 +223,13 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             knownfor(data);
         })};
 
-        
+
         let coactors = ko.observable([]);
         let availableCoActors = ko.observable();
 
         let getCoActors = () => {
-        ds.coactors(selectedPerson(), function(data) {
+
+          ds.coactors(selectedPerson(), function(data) {
             console.log(data);
             if(data.length > 0){
                 availableCoActors('True');
@@ -239,18 +259,20 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         let personsbyyear = ko.observable([]);
 
         let getPersonByYear = () => {
-        ds.personYear(selectedPerson(), function(data) {
-            console.log(data.$values);
-            personsbyyear(data.$values);
-        })};
+            ds.personYear(selectedPerson(), function (data) {
+                console.log(data.$values);
+                personsbyyear(data.$values);
+            })
+        };
 
-        
-        
-        
-        
+
+
+
+
         let cast = ko.observable([]);
         
         let getCast = () => {
+
         ds.getCast(selectedPerson(),function(data) {
             console.log(data.cast);
             cast(data.cast);
@@ -291,7 +313,8 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 if (data.awards !== null) {
                     await getTitlePoster(data.awards);
                 }
-            })};
+            })
+        };
 
         let getTitlePoster = async (_url) => {
             await ds.getPoster(_url);
@@ -299,13 +322,13 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
 
         //let posterHeight = ko.observable(document.getElementById("PosterDiv").clientHeight);
         let titlesbyyear = ko.observable([]);
-        
+
         let getTitlesByYear = () => {
-        ds.getTitlesByYear(selectedPerson(), function(data) {
-            console.log(data.$values);
-            titlesbyyear(data.$values);
-        })};
-        
+            ds.getTitlesByYear(selectedPerson(), function (data) {
+                console.log(data.$values);
+                titlesbyyear(data.$values);
+            })
+        };
 
         /*************************************************/
 
@@ -329,7 +352,7 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             });
 
             this.get('', function () {
-                this.app.runRoute('get', '/#login')
+                this.app.runRoute('get', '/#Frontpage')
             });
 
         }).run();
@@ -361,10 +384,12 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             coactors,
             getPersonByYear,
             personsbyyear,
+
             getPrimeProfessions,
             professions,
             
             
+
             /*titles*/
            // posterHeight,
             title,
@@ -378,14 +403,19 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             cast,
             getCast,
             checkVotes,
-            
-            
+
             appName,
             componentItems,
 
             changeContent,
             currentView,
             currentParams,
+
+            loginPage,
+            loginOK,
+
+            updateEmailComponent,
+            updatePasswordComponent,
 
 
             /* User Auth */
