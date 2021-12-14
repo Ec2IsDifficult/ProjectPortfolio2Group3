@@ -99,7 +99,7 @@ define(["knockout", "dataservice", "viewmodel"], function (ko, ds, vm) {
             goToNextPage: goToNextPage,
             goToPrevPage: goToPrevPage,
             showButtonDiv:showButtonDiv,
-            goToSpecificTitle:goToSpecificTitle
+            goToSpecificTitle:goToSpecificTitle,
         }
     }
 });
