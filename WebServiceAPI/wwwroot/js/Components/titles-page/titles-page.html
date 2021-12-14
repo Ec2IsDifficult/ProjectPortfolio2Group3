@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Only titles - please subscribe</title>
-    <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
 <h1>Titles</h1>
 
 <div>
 <button data-bind="click: function(){getSingleTitle(); getTitleCrew(); getTitleRating(); getCast();}" class="btn btn-primary">Find</button>
-Find <input class="form-control" data-bind="value: selectedPerson" />
+Find <input class="form-control" data-bind="value: selectedTitle" />
 </div>
 
 <div class="container">
@@ -79,8 +71,3 @@ Find <input class="form-control" data-bind="value: selectedPerson" />
     </div>
     </div>
 </div>
-
-
-<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
-</body>
-</html>

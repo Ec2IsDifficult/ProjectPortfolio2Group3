@@ -53,7 +53,12 @@ require(['knockout'], (ko) => {
         "search-result", "search-result-list"
     ]
     
-    let components = component_auth.concat(component_front_page, component_title_logic_page, component_person_logic_page, component_search_result);
+    let titles_person_result = [
+        "titles-page",
+        "person-page"
+    ]
+    
+    let components = component_auth.concat(component_front_page, component_title_logic_page, component_person_logic_page, component_search_result, titles_person_result);
     components.forEach(registerComponent);
 
     function registerComponent(component_name) {
