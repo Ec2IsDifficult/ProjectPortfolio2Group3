@@ -20,16 +20,31 @@
  */
 require(['knockout'], (ko) => {
 
-    let component_auth = ["user-login", "user-recover", "user-register", "user-update-email"];
+    let component_auth = [
+        "user-login",
+        "user-recover",
+        "user-register",
+        "user-update-email",
+        "user-update-password"
+    ];
 
     let component_front_page = [
-        "front-page", "title-card-list", "person-card-list", "right-arrow", "left-arrow", "title-carousel"
+        "front-page",
+        "title-card-list",
+        "person-card-list",
+        "navbar",
+        "right-arrow",
+        "left-arrow",
+        "title-carousel"
+
     ];
 
     let component_title_logic_page = [
-        "title-logic-page", "by-year-pages", "classics-page"
+        "title-logic-page",
+        "by-year-pages",
+        "classics-page"
     ];
-    // , "by-genre-pages"
+
     let component_person_logic_page = [
         "person-logic-page"
     ]

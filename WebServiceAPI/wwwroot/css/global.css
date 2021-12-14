@@ -1,0 +1,21 @@
+/* 
+ * Import LATO font, the standard font used by QAMPO.
+ */
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700");
+
+:root {
+  --background: #ebedf0;
+  --black: #000000;
+  --blue: #009fe1;
+  --form-button-bg: #9e9999;
+  --form-button-bg-hover: #b5b5b5;
+  --form-button-text: #f9f9f9;
+  --form-input-border: #b5b5b5;
+  --grey: #fdfbf2;
+  --grey-background: #8c8c8c;
+  --grey-shadow: #bfbfbf;
+  --maintenance-gray: #efefef;
+  --red: #ff5153;
+  --warning-red: #db4a48;
+  --white: #ffffff;
+}

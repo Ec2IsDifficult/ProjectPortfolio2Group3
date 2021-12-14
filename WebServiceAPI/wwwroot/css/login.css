@@ -1,0 +1,242 @@
+.login-main {
+    font-family: lato;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    font-size: 14px;
+    font-family: "Lato", sans-serif;
+    height: 100vh;
+    min-height: 550px;
+    position: relative;
+    overflow-y: hidden;
+    background-color: var(--background);
+}
+
+.login-main-2 {
+    font-family: lato;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    font-size: 14px;
+    font-family: "Lato", sans-serif;
+    position: relative;
+    overflow-y: hidden;
+}
+
+/*
+ * Styling for the whole panel (base panel)
+ */
+
+.login-form-panel {
+    position: relative;
+    text-align: center;
+    width: 70%;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    left: 0;
+    margin: auto;
+    height: 400px;
+    opacity: 0.9;
+    background-color: var(--blue);
+    color: var(--white);
+    /* border: 5px solid var(--white); */
+    border-radius: 6px;
+}
+
+
+/*
+ * Styling for the login panel
+ */
+
+.login-panel {
+    height: 500px;
+    position: absolute;
+    top: -50px;
+    width: 400px;
+    right: calc(50% - 50px);
+    transition: 0.3s ease-in-out;
+    z-index: 0;
+    background-color: var(--maintenance-gray);
+    box-shadow: 0 0 15px 9px var(--grey-shadow);
+    border-radius: 6px;
+}
+
+
+/*
+ * Styling for login interface
+ * It is required to avoid the opacity from being too transparent
+ */
+
+.login-interface {
+    display: block;
+    opacity: 0.9;
+}
+
+
+/*
+ * Styling for the header - on top of the login-panel
+ */
+
+.login-header {
+    position: absolute;
+    padding: 45px;
+    text-align: right;
+    width: 100%;
+    box-shadow: 0 8px 10px -6px var(--black);
+    background-color: var(--grey-background);
+    border-radius: 6px 6px 0 0;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+/*
+ * Styling for the "message" box
+ * Using the keyframes for animation
+ */
+
+.login-header-message {
+    position: absolute;
+    width: 338px;
+    top: 140px;
+    margin: 30px;
+    padding: 5px;
+    font-size: 14pt;
+    color: var(--white);
+    background-color: var(--warning-red);
+    border-radius: 6px;
+    vertical-align: top;
+    text-align: center;
+    -webkit-animation: fadeIn 8s;
+    animation: fadeIn 8s;
+}
+
+.login-header-message>i {
+    font-size: 12pt;
+    padding-right: 20px;
+}
+
+
+/*
+ * Styling for form's elements
+ */
+
+.login-form {
+    position: absolute;
+    width: 100%;
+    top: 200px;
+    padding: 30px;
+}
+
+
+/*
+ * Styling for content's on the right hand side
+ */
+
+.login-right-info-box {
+    width: 45%;
+    top: 20%;
+    right: 0;
+    position: absolute;
+    text-align: center;
+    font-size: 25pt;
+}
+
+
+/*
+ * Styling for text input container
+ * This permits the icon to be added to the input box
+ */
+
+.login-form-input-container {
+    display: flex;
+    width: 100%;
+}
+
+
+/*
+ * Styling for icon on the left side of the input box
+ */
+
+.login-form-input-container>.icon {
+    position: absolute;
+    padding: 13px;
+    margin: 10px 0;
+    background: var(--blue);
+    color: var(--white);
+    min-width: 50px;
+    text-align: center;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+
+/*
+ * Styling for the input box
+ */
+
+input[type="text"],
+input[name="password"] {
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    padding-left: 55px;
+    border: 1px solid var(--form-input-border);
+    outline: none;
+    font-size: 15px;
+    border-radius: 12px;
+}
+
+/*
+ * Styling for text's input box
+ */
+
+input[type="text"]:focus,
+input[name="password"]:focus {
+    border: 1px solid var(--blue);
+}
+
+
+/*
+ * Styling for submit button
+ */
+
+input[type="submit"] {
+    max-width: 150px;
+    width: 100%;
+    background: var(--form-button-bg);
+    color: var(--form-button-text);
+    font-size: 15px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    border-radius: 12px;
+    float: right;
+    cursor: pointer;
+    letter-spacing: 4px;
+    opacity: 0.9;
+}
+
+
+/*
+ * Styling for an animation for the submit button when hovering the mouse
+ */
+
+input[type="submit"]:hover {
+    box-shadow: 0 0 4px 4px var(--form-button-bg-hover);
+    opacity: 1;
+}
