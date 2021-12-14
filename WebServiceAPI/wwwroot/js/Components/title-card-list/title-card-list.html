@@ -2,12 +2,13 @@
 <div>
         <div class="row" data-bind="foreach: randomTitles">
                 <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
-                        <div class="card text-white bg-primary mb-3" style="margin: 20px; width: 100%;">
+                        <div class="card text-white bg-primary mb-3" style="margin: 20px; width: 100%; cursor: pointer" data-bind="click: $parent.goToSpecificTitle.bind(this, tconst)">
                                 <img class="card-img-top" alt="Card image cap" data-bind="attr: {src: awards}" style="object-fit: cover;">
                                 <div class="card-body d-flex flex-column">
                                         <div style="margin-top: auto">
                                                 <h5 class="card-title align-self-center"  data-bind="text: primaryTitle"></h5>
                                                 <p class="card-text align-self-center" data-bind="text: primaryTitle"></p>
+                                                <span></span>
                                         </div>
                                 </div>
                                 <div class="card-footer">

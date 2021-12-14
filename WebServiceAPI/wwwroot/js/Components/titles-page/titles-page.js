@@ -1,65 +1,58 @@
 define(["knockout", "dataservice"],
     function (ko, ds) {
 return function(params) {
-    let selectedTitle = ko.observable('tt1954874');
+    let selectedTitle = ko.observable(params);
     
     let cast = ko.observable([]);
-    let getCast = () => {
+ 
 
-            ds.getCast(selectedTitle(),function(data) {
-                console.log(data.cast);
-                cast(data.cast);
-            })};
-      
+    ds.getCast(selectedTitle(),function(data) {
+        cast(data.cast);
+    })
     let titleRating = ko.observable();
     let checkVotes = ko.observable('False');
-
-    let getTitleRating = () => {
-        ds.getTitleRating(selectedTitle(), function (data) {
-            if(data.numVotes > 0){
-                checkVotes('True');
-            }
-            console.log(data);
-            titleRating(data);
-        })
-    };
+    
+    
+    ds.getTitleRating(selectedTitle(), function (data) {
+        if(data.numVotes > 0){
+            checkVotes('True');
+        }
+        console.log(data);
+        titleRating(data);
+    })
 
     let crew = ko.observable([]);
+    
+    ds.getCrew(selectedTitle(), function (data) {
+        console.log(data.crew)
+        crew(data.crew);
+    })
 
-    let getTitleCrew = async () => {
-        await ds.getCrew(selectedTitle(), function (data) {
-            console.log(data.crew)
-            crew(data.crew);
-        })
-    };
+    ds.getTitle(selectedTitle(), async function (data) {
+        console.log(data);
+        title(data);
+        if (data.awards !== null) {
+            await getTitlePoster(data.awards);
+        }
+    })
 
     let title = ko.observable();
-    let getSingleTitle = async () => {
-        await ds.getTitle(selectedTitle(), async function (data) {
-            console.log(data);
-            title(data);
-            if (data.awards !== null) {
-                await getTitlePoster(data.awards);
-            }
-        })
-    };
 
-    let getTitlePoster = async (_url) => {
-        await ds.getPoster(_url);
-    };
     
+
+    let getTitlePoster = (_url) => ds.getPoster(_url);
     
     return {
         selectedTitle,
         titleRating,
-        getTitleRating,
+        //getTitleRating,
         crew,
-        getTitleCrew,
+        //getTitleCrew,
         title,
-        getSingleTitle,
+        //getSingleTitle,
         cast,
-        getCast,
+        //getCast,
         checkVotes,
-        getTitlePoster
+        //getTitlePoster
     }
     }})
