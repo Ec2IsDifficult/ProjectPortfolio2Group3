@@ -17,6 +17,13 @@ define(["knockout", "dataservice", "viewmodel"], function(ko, ds, vm) {
             {year: 1950}, {year: 1960}, {year: 1970}, {year: 1980}, {year: 1990}, {year: 2000}, {year: 2010}, {year: 2020}
         ];
         
+        // go to titlesByYearPage
+        let goToTitlesByYearPage = (year) => {
+            console.log(year)
+            vm.changeContent(vm.componentItems.find(item => item.component === "by-year-pages"));
+        }
+        
+        
         //Should contain function go to by genre
         let genres = ko.observableArray([]);
         ds.getAllGenres(data => genres(data.data));
@@ -24,16 +31,17 @@ define(["knockout", "dataservice", "viewmodel"], function(ko, ds, vm) {
         return {
             leftArrow:leftArrow,
             rightArrow:rightArrow,
-            
+
+            goToTitlesByYearPage: goToTitlesByYearPage,
             
             getMoviesBetween: ds.getMoviesBetween,
             getTitlesByYear: ds.getTitlesByYear,
             titleCardList: titleCardList,
-            goToClassicsPage:goToClassicsPage,
+            goToClassicsPage: goToClassicsPage,
             
             
             yearlySections: yearlySections,
-            genres:genres
+            genres:genres,
         }
     }
 })

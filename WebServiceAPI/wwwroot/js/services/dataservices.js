@@ -7,11 +7,21 @@
     let episodesUrl = "localhost:5001/api/episodes/"
     let genreUrl = "localhost:5001/api/genres/"
     let userUrl = "localhost:5001/api/url/"
-    let peopleUrl = "localhost:5001/api/person/"
+    
+    
+    let searchTitles = (callback, searchPhrase) => {
+        fetch(`${ApiConfig.ApiTitles}searchPhrase=${searchPhrase}`)
+            .then(response => response.json())
+            .then(json => callback(json));
+    }
 
-    let getMoviesBetween = (callback, startYear, endYear) => {
-        console.log(ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear);
-        fetch(ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear)
+    let getMoviesBetween = (callback, startYear, endYear, ApiPath = null) => {
+        let path = "";
+        if(ApiPath != null)
+            path = ApiPath
+        else
+            path = ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear
+        fetch(path)
             .then(response => response.json())
             .then(json => callback(json));
     }
@@ -52,8 +62,8 @@
             .then(json => callback(json));
     }
 
-    let getMovieByGenre = (callback, id) => {
-        fetch(genreUrl + id)
+    let getMovieByGenre = (callback, moviename) => {
+        fetch(genreUrl + moviename)
             .then(response => response.json())
             .then(json => callback(json));
     }
@@ -215,6 +225,7 @@
         getUserRating: getUserRatings,
         getRandomTitles: getRandomTitles,
         getRandomPeople: getRandomPeople,
+        searchTitles:searchTitles,
 
         /* from Janik
         getPerson,

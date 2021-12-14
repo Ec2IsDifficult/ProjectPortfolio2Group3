@@ -199,6 +199,7 @@ namespace WebServiceAPI.Controllers
         [HttpGet("searchPhrase={searchPhrase}")]
         public IActionResult SearchBestMatch(string searchPhrase)
         {
+            searchPhrase = searchPhrase.ToLower();
             var searchResults = _titleService.SearchBestMatch(searchPhrase.Split());
             if (searchResults == null) 
                 return NotFound();

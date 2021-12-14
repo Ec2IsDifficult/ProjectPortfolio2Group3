@@ -11,6 +11,7 @@
         userservice: "services/userservices",
         ApiConfig: "config/ApiConfig",
         AppConfig: "config/AppConfig",
+        pubsub: "services/pub-sub",
     }
 });
 
@@ -19,22 +20,25 @@
  */
 require(['knockout'], (ko) => {
 
-
     let component_auth = ["user-login", "user-recover", "user-register", "user-update-email"];
 
     let component_front_page = [
-        "front-page", "title-card-list", "person-card-list", "navbar", "right-arrow", "left-arrow", "title-carousel"
+        "front-page", "title-card-list", "person-card-list", "right-arrow", "left-arrow", "title-carousel"
     ];
 
     let component_title_logic_page = [
         "title-logic-page", "by-year-pages", "classics-page"
     ];
-    
+    // , "by-genre-pages"
     let component_person_logic_page = [
         "person-logic-page"
     ]
     
-    let components = component_auth.concat(component_front_page, component_title_logic_page, component_person_logic_page);
+    let component_search_result = [
+        "search-result", "search-result-list"
+    ]
+    
+    let components = component_auth.concat(component_front_page, component_title_logic_page, component_person_logic_page, component_search_result);
     components.forEach(registerComponent);
 
     function registerComponent(component_name) {
@@ -47,7 +51,6 @@ require(['knockout'], (ko) => {
             }
         });
     }
-
 });
 
 require(["knockout", "viewmodel"], function (ko, vm) {

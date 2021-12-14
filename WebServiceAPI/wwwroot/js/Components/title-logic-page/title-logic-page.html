@@ -11,7 +11,7 @@
                 <div class="row" data-bind="foreach: yearlySections" >
                     <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
                         <div class="card bg-danger mb-2" >
-                            <div class="card-title " data-bind="text: year" style="color: black"></div>
+                            <div class="card-title "  style="color: black" data-bind="click: $parent.goToTitlesByYearPage.bind(this, year1, year2)"></div>
                             <div class="card-body" style="color: black">Movies from the awesom era of <span data-bind="text: year"></span></div>
                         </div>
                     </div>
