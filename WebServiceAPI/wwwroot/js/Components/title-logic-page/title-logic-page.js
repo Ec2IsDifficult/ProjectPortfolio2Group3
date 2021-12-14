@@ -4,6 +4,7 @@ define(["knockout", "dataservice", "viewmodel"], function(ko, ds, vm) {
         let rightArrow = ko.observable("right-arrow");
         let titleCardList = ko.observable("title-card-list")
         
+        
         //Should contain function go to classics
         let goToClassicsPage = () => {
             vm.changeContent(vm.componentItems.find(item => item.component === "classics-page"));
@@ -14,7 +15,25 @@ define(["knockout", "dataservice", "viewmodel"], function(ko, ds, vm) {
         //check particular year to extend it into the future  
         //fill array until 1959
         let yearlySections = [
-            {year: 1950}, {year: 1960}, {year: 1970}, {year: 1980}, {year: 1990}, {year: 2000}, {year: 2010}, {year: 2020}
+            {
+                year1: 1950, year2: 1960
+            }, 
+            {
+                year1: 1960, year2: 1970
+            }, 
+            {
+                year1: 1970, year2: 1980
+            },
+                {year1: 1980, year2: 1990
+            },
+                {year1: 1990, year2: 2000
+            }, 
+                {year1: 2000, year2: 2010
+            }, 
+                {year1: 2010, year2: 2020
+            }, 
+                {year1: 2020, year2: 2020
+            }
         ];
         
         // go to titlesByYearPage

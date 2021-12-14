@@ -4,7 +4,7 @@
         <ul class="list-group rounded-0 bg-dark">
             <li class="list-group-item border-0 border-bottom-light" style="background-color: #212529; color: white" data-bind="click: goToClassicsPage">
                 <h3>Classic Titles</h3>
-                <div data-bind="component: {name: titleCardList, params: {func: getTitlesByYear, year: 1959}}"></div>
+                <div data-bind="component: {name: titleCardList, params: {func: getTitlesByYear, year: 1959, show: 'dontShow'}}"></div>
             </li>
             <li class="list-group-item border-0 border-bottom-light " style="background-color: #212529; color: white">
                 <h3>Find titles by year</h3>
@@ -12,7 +12,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
                         <div class="card bg-danger mb-2" >
                             <div class="card-title "  style="color: black" data-bind="click: $parent.goToTitlesByYearPage.bind(this, year1, year2)"></div>
-                            <div class="card-body" style="color: black">Movies from the awesom era of <span data-bind="text: year"></span></div>
+                            <div class="card-body" style="color: black">Movies from the awesom era of <span data-bind="text: year1"></span></div>
                         </div>
                     </div>
                 </div>
