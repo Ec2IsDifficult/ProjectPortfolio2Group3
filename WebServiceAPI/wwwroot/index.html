@@ -3,7 +3,20 @@
 <html>
 <head>
     <title>index</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/login.css" />
+
     <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/fa/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
     <style>
         body {
             background-color: #212529;
@@ -11,45 +24,92 @@
         }
     </style>
 </head>
+
 <body>
 
-<div>
-    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-dark bg-primary sticky-lg-top sticky-md-top">
-        <div class="container-fluid">
-        <a class="navbar-brand" href="#FrontPage" data-bind="text: appName"></a>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-expand-md navbar-dark bg-primary sticky-lg-top sticky-md-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#FrontPage" data-bind="text: appName"></a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-        <div class="collapse navbar-collapse position-relative" id="navbarSupportedContent">
-            <ul class="navbar-nav  mr-auto m-2">
-                <li class="nav-item">
-                    <a class="nav-link" href="#recover">
-                        Recover
-                    </a>
-                </li>
-            </ul>
-            <ul class="navbar-nav mr-auto m-2">
-                <li class="nav-item">
-                    <a class="nav-link" href="#register">
-                        Register
-                    </a>
-                </li>
-            </ul>
-            <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-secondary m-2" type="submit">Search</button>
-        </div>
-        <div class="text-end m-2" role="button" data-bs-toggle="modal" data-bs-target="#myModal">
-            Login
-        </div>
-        </div>
-        
-    </nav>
-</div>
+                <div class="collapse navbar-collapse position-relative" id="navbarSupportedContent">
+                    <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-secondary m-2" type="submit">Search</button>
+                </div>
 
-<div data-bind="component: {name: currentView, params: currentParams}"></div>
-<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+                <ul class="navbar-nav">
+
+
+                    <li class="nav-item" data-bind="visible: loginOK()">
+                        <div class="text-end m-2" role="button"
+                             data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <a class="nav-link">
+                                <i class="bi bi-person-circle"></i>
+                                Login
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown" id="myDropdown">
+                        <div class="text-end m-2" role="button" data-bind="visible: !loginOK()">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                <i class="fa fa-user"></i> Profile
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                       data-bs-toggle="modal" data-bs-target="#updateEmailModal">
+                                        <i class="fa fa-envelope-open-o icon"></i> Change Email
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                       data-bs-toggle="modal" data-bs-target="#updatePasswordModal">
+                                        <i class="fa fa-unlock-alt icon"></i> Change Password
+                                    </a>
+                                </li>
+
+                                <li> <div class="dropdown-divider"></div></li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#" data-bind="click: logout">
+                                        <i class="fa fa-sign-out icon"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </li>
+
+                    <li class="nav-item" data-bind="visible: loginOK()">
+                        <div class="text-end m-2" role="button">
+                            <a class="nav-link" href="#register">
+                                <i class="bi bi-person-plus-fill"></i> Register
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+        </nav>
+    </div>
+
+    <div data-bind="component: {name: loginPage}"></div>
+
+    <div data-bind="component: {name: updateEmailComponent}"></div>
+
+    <div data-bind="component: {name: updatePasswordComponent}"></div>
+
+    <div data-bind="component: {name: currentView, params: currentParams}"></div>
+
+    <script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
 
 </body>
 </html>

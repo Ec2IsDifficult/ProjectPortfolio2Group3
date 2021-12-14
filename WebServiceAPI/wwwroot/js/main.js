@@ -10,7 +10,7 @@
         authservice: "services/authservices",
         userservice: "services/userservices",
         ApiConfig: "config/ApiConfig",
-        AppConfig: "config/AppConfig",
+        AppConfig: "config/AppConfig"
     }
 });
 
@@ -19,22 +19,39 @@
  */
 require(['knockout'], (ko) => {
 
-
-    let component_auth = ["user-login", "user-recover", "user-register", "user-update-email"];
+    let component_auth = [
+        "user-login",
+        "user-recover",
+        "user-register",
+        "user-update-email",
+        "user-update-password"
+    ];
 
     let component_front_page = [
-        "front-page", "title-card-list", "person-card-list", "navbar", "right-arrow", "left-arrow", "title-carousel"
+        "front-page",
+        "title-card-list",
+        "person-card-list",
+        "navbar",
+        "right-arrow",
+        "left-arrow",
+        "title-carousel"
     ];
 
     let component_title_logic_page = [
-        "title-logic-page", "by-year-pages", "classics-page"
+        "title-logic-page",
+        "by-year-pages",
+        "classics-page"
     ];
-    
+
     let component_person_logic_page = [
         "person-logic-page"
     ]
-    
-    let components = component_auth.concat(component_front_page, component_title_logic_page, component_person_logic_page);
+
+    let components = component_auth.concat(
+        component_front_page,
+        component_title_logic_page,
+        component_person_logic_page);
+
     components.forEach(registerComponent);
 
     function registerComponent(component_name) {
