@@ -30,7 +30,13 @@ namespace Dataservices.Repository
         {
             var ctx = new ImdbContext();
             return ctx.CoActors.FromSqlInterpolated($"select * from find_co_actors({id})");
-        }   
+        }
+        //in person controller
+        public IEnumerable<ImdbPrimeProfession> GetProfessions(string id)
+        {
+            var ctx = new ImdbContext();
+            return ctx.ImdbPrimeProfession.Where(x => x.Nconst == id).Include(x=> x.Name);
+        }
         
         //in person controller
         public IEnumerable<ImdbNameBasics> GetPersonsByYear(int year)

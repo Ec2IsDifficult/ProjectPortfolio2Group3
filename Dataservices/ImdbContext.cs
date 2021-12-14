@@ -87,9 +87,13 @@ namespace Dataservices
             modelBuilder.Entity<ImdbNameBasics>()
                 .HasMany(x => x.BookmarkPersons)
                 .WithOne(x => x.Name).HasForeignKey(x => x.Nconst);
-                
+            modelBuilder.Entity<ImdbNameBasics>()
+                .HasMany(x => x.ImdbPrimeProfessions)
+                .WithOne(x => x.Name)
+                .HasForeignKey(x => x.Nconst);
 
-            //ImdbGenre
+
+                //ImdbGenre
             modelBuilder.Entity<ImdbGenre>().ToTable("imdb_genre");
             modelBuilder.Entity<ImdbGenre>().Property(x => x.Tconst).HasColumnName("tconst");
             modelBuilder.Entity<ImdbGenre>().Property(x => x.Genre).HasColumnName("genre");
@@ -122,7 +126,8 @@ namespace Dataservices
             modelBuilder.Entity<ImdbPrimeProfession>().Property(x => x.Nconst).HasColumnName("nconst");
             modelBuilder.Entity<ImdbPrimeProfession>().Property(x => x.Profession).HasColumnName("profession");
             modelBuilder.Entity<ImdbPrimeProfession>().HasKey(x => new {x.Nconst, x.Profession});
-            
+            modelBuilder.Entity<ImdbPrimeProfession>().HasOne(x => x.Name).WithMany(x=>x.ImdbPrimeProfessions);
+
             //ImdbTitleBasics
             modelBuilder.Entity<ImdbTitleBasics>().ToTable("imdb_title_basics");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Tconst).HasColumnName("tconst");
