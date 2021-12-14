@@ -37,7 +37,6 @@ namespace WebServiceAPI.Controllers
             _linkGenerator = linkGenerator;
             _mapper = mapper;
         }
-
         
         [HttpGet(Name = nameof(GetAll))]
         public IActionResult GetAll()
@@ -95,6 +94,7 @@ namespace WebServiceAPI.Controllers
         public IActionResult GetRating(string id)
         {
             var rating = _titleService.GetRating(id);
+            Console.WriteLine(rating);
             if (rating == null)
             {
                 return NotFound();
@@ -117,35 +117,51 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        
         [HttpGet("year/{year}", Name = nameof(GetTitlesByYear))]
-        public IActionResult GetTitlesByYear(int year)
+        public IActionResult GetTitlesByYear(int year, [FromQuery] PaginationQuery paginationQuery)
         {
-            var titles = _titleService.GetTitlesByYear(year);
+            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
+            var titles = _titleService.GetTitlesByYear(year, paginationFilter);
             if (titles == null)
             {
                 return NotFound("No titles for this year available");
             }
-
-            var model = new Collection<TitlesViewModel>();
-            foreach(var title in titles)
-                model.Add(CreateTitlesViewModel(nameof(GetTitlesByYear), title));
-            return Ok(model);
+            
+            var data = _mapper.Map<List<TitlesViewModel>>(titles);
+            foreach(var title in data)
+                title.Url = HttpContext.Request.GetDisplayUrl();
+            
+            var url = $"http://localhost:5000/api/v1/titles/year/{year}";
+            UriService uriService = new UriService(url);
+            
+            //Should not be done this way
+            var totalLength = _titleService.GetTitlesByYear(year, null);
+            
+            var paginationResponse = PaginationHelper.CreatePagenatedResponse(uriService, paginationFilter, data, totalLength.Count());
+            return Ok(paginationResponse);
         }
 
         [HttpGet("between/{year1}/{year2}", Name = nameof(GetTitlesBetween))]
-        public IActionResult GetTitlesBetween(int year1, int year2)
+        public IActionResult GetTitlesBetween(int year1, int year2, [FromQuery] PaginationQuery paginationQuery)
         {
-            var titles = _titleService.GetTitlesBetween(year1, year2);
+            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
+            Console.WriteLine(paginationFilter.PageNumber + " " + paginationFilter.PageSize);
+            var titles = _titleService.GetTitlesBetween(year1, year2, paginationFilter);
+            
             if (titles == null)
             {
                 return NotFound("No titles between these years available");
             }
+
+            var data = _mapper.Map<List<TitlesViewModel>>(titles);
+            foreach(var title in data)
+                title.Url = HttpContext.Request.GetDisplayUrl();
             
-            var model = new Collection<TitlesViewModel>();
-            foreach(var title in titles)
-                model.Add(CreateTitlesViewModel(nameof(GetTitlesBetween), title));
-            return Ok(model);
+            var url = $"http://localhost:5000/api/v1/titles/between/{year1}/{year2}";
+            UriService uriService = new UriService(url);
+            
+            var paginationResponse = PaginationHelper.CreatePagenatedResponse(uriService, paginationFilter, data, _titleService.NumberOfMoviesBetween(year1,year2));
+            return Ok(paginationResponse);
         }
         
         [HttpGet("random/{amount}/{lowestRating}", Name = nameof(GetRandomTitles))]
@@ -157,42 +173,33 @@ namespace WebServiceAPI.Controllers
                 model.Add(CreateTitlesViewModel(nameof(GetTitlesBetween), title));
             return Ok(model);
         }
-        
-        /*
-        [HttpGet("adult", Name = nameof(GetAdultMovies))]
-        public IActionResult GetAdultMovies()
+
+        [HttpGet("{name}/genre", Name = nameof(GetMoviesByGenre))]
+        public IActionResult GetMoviesByGenre(string name, [FromQuery] PaginationQuery paginationQuery)
         {
-            var movies = _titleService.GetAdultMovies();
+            var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
+            var movies = _titleService.GetMoviesByGenre(name, paginationFilter);
             if (movies == null)
             {
                 return NotFound();
             }
-
-            var model = new Collection<TitlesViewModel>();
-            foreach(var title in movies)
-                model.Add(CreateTitlesViewModel(nameof(GetAdultMovies), title));
-            return Ok(model);
-        }*/
-        
-        [HttpGet("{id}/genre", Name = nameof(GetMoviesByGenre))]
-        public IActionResult GetMoviesByGenre(string name)
-        {
-            var movies = _titleService.GetMoviesByGenre(name);
-            if (movies == null)
-            {
-                return NotFound();
-            }
-
-            var model = new Collection<GenreViewModel>();
-            foreach(var title in movies)
-                model.Add(CreateGenreViewModel(nameof(GetMoviesByGenre), title));
-            return Ok(model);
+            
+            var data = _mapper.Map<List<GenreViewModel>>(movies);
+            foreach(var title in data)
+                title.Url = HttpContext.Request.GetDisplayUrl();
+            
+            var url = $"http://localhost:5000/api/v1/titles/{name}/genre";
+            UriService uriService = new UriService(url);
+            
+            var paginationResponse = PaginationHelper.CreatePagenatedResponse(uriService, paginationFilter, data,0);
+            return Ok(paginationResponse);
         }
         
 
         [HttpGet("searchPhrase={searchPhrase}")]
         public IActionResult SearchBestMatch(string searchPhrase)
         {
+            searchPhrase = searchPhrase.ToLower();
             var searchResults = _titleService.SearchBestMatch(searchPhrase.Split());
             if (searchResults == null) 
                 return NotFound();

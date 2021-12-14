@@ -1,5 +1,6 @@
 namespace Dataservices.Repository
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain;
@@ -10,11 +11,9 @@ namespace Dataservices.Repository
 
     public class UserRepository : MutableRepository<CUser>, IUserRepository
     {
-        public UserRepository(ImdbContext context) : base(context)
+        public UserRepository(Func<DbContext> contextFactory) : base(contextFactory)
         {
-            
         }
-
         //in user controller
         public CUser GetReviews(int id)
         {
@@ -104,11 +103,6 @@ namespace Dataservices.Repository
         {
             var ctx = new ImdbContext();
             ctx.Database.ExecuteSqlInterpolated($"select * from update_user_information({uid}, {email})");
-        }
-
-        public ImdbContext ImdbContext
-        {
-            get { return Context as ImdbContext; }
         }
     }
 }

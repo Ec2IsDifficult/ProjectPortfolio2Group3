@@ -22,6 +22,11 @@ namespace WebServiceAPI
         {
             Configuration = configuration;
         }
+        
+        public ImdbContext DbcontextFactory() 
+        {
+            return new ImdbContext();
+        }
 
         public IConfiguration Configuration { get; }
 
@@ -34,12 +39,12 @@ namespace WebServiceAPI
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddSingleton<ITitleRepository, TitleRepository>();
-            services.AddSingleton<IEpisodeRepository, EpisodeRepository>();
-            services.AddSingleton<IPersonRepository, PersonRepository>();
-            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<ITitleRepository, TitleRepository>(x => new TitleRepository(DbcontextFactory));
+            services.AddSingleton<IEpisodeRepository, EpisodeRepository>(x => new EpisodeRepository(DbcontextFactory));
+            services.AddSingleton<IPersonRepository, PersonRepository>(x => new PersonRepository(DbcontextFactory));
+            services.AddSingleton<IUserRepository, UserRepository>(x => new UserRepository(DbcontextFactory));
 
-            services.AddDbContext<ImdbContext>(ServiceLifetime.Singleton);
+            //services.AddDbContext<ImdbContext>(ServiceLifetime.Singleton);
 
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings
                .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -53,13 +58,13 @@ namespace WebServiceAPI
              */
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
-            services.AddSingleton<IUriService>(provider =>
+            /*services.AddSingleton<IUriService>(provider =>
             {
                 var accessor = provider.GetRequiredService<IHttpContextAccessor>();
                 var request = accessor.HttpContext.Request;
                 var absoluteUri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent(), "/");
                 return new UriService(absoluteUri);
-            });
+            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

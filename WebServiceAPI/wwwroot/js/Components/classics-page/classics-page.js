@@ -1,15 +1,10 @@
 define(["knockout", "dataservice"], function(ko, ds) {
     return function(params){
 
-        let classicMovies = ko.observableArray([]);
-
-        let getClassics = () => {
-            ds.getMoviesBetween(data => {classicMovies(data)}, 1959, 1959);
-        }
-        
+        let titleCardList = ko.observable("title-card-list");
         return {
-            getClassics:getClassics,
-            classicMovies:classicMovies
+            titleCardList:titleCardList,
+            getMoviesBetween: ds.getMoviesBetween
         }
     }
 })

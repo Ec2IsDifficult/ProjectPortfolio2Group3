@@ -1,12 +1,13 @@
 namespace Dataservices.Repository
 {
+    using System;
     using CRUDRepository;
     using Domain.User;
     using Microsoft.EntityFrameworkCore;
 
     public class PersonBookMarkRepository : MutableRepository<CBookmarkPerson> 
     {
-        public PersonBookMarkRepository(DbContext context) : base(context)
+        public PersonBookMarkRepository(Func<DbContext> contextFactory) : base(contextFactory)
         {
         }
     }

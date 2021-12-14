@@ -25,12 +25,16 @@ namespace ProjectPortfolioTesting
 
         public CrudRepositoryTest()
         {
-            _ctx = new ImdbContext();
-            _personRepository = new PersonRepository(_ctx);
-            _titleRepository = new TitleRepository(_ctx);
-            _userRepository = new UserRepository(_ctx);
+            _personRepository = new PersonRepository(DbcontextFactory);
+            _titleRepository = new TitleRepository(DbcontextFactory);
+            _userRepository = new UserRepository(DbcontextFactory);
         }
         
+        public ImdbContext DbcontextFactory() 
+        {
+            return new ImdbContext();
+        }
+
         //Testing the Get method on Persons framework
         [Theory]
         [InlineData("nm0000001", "Fred Astaire")]

@@ -1,5 +1,7 @@
-define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "Sammy"],
-    function (ko, ds, auth, user, AppConfig, Sammy) {
+//import {publish} from "./services/pub-sub";
+
+define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "Sammy", "pubsub"],
+    function (ko, ds, auth, user, AppConfig, Sammy, Ps) {
 
 
         /**
@@ -59,8 +61,28 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 title: "Person logic page",
                 component: "person-logic-page",
                 hash: "#People",
+            },
+            {
+                title: "Classics Page",
+                component: "classics-page",
+                hash: "#Classics",
+            },
+            {
+                title: "Search Result Page",
+                component: "search-result",
+                hash: "#SearchPage",
+            },
+            {
+                title: "Titles By Year Page",
+                component: "by-year-pages",
+                hash: "#FromYear",
             }
-
+            ,
+            {
+                title: "Search Result List",
+                component: "search-result-list",
+                hash: "#Search",
+            }
         ];
 
         // Main view
@@ -69,6 +91,16 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
 
         // Main parameters
         let currentParams = ko.observable({});
+        
+        let searchResult = ko.observable("search-result")
+        
+        //let searchPhrase = document.getElementById("searchField");
+        let search = () => {
+            changeContent(componentItems.find(item => item.component === "search-result"));
+            //Ps.publish("search_result_publish", searchPhrase.value);
+        }
+        
+        
 
         // Component: Login
         c = componentItems.find(item => item.component == "user-login");
@@ -102,7 +134,6 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
 
         let reviewTitle = ko.observable("Best movie ever!");
 
-        let searchPhrase = ko.observable("Harry Potter");
 
         /**
          * Connecting from model (Rating a title) to data service
@@ -267,8 +298,7 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
 
         /*************************************************/
 
-        let changeContent = menuItem => {
-            console.log("Change view");
+        let changeContent = (menuItem) => {
             currentParams({});
             window.location = menuItem.hash;
         };
@@ -283,8 +313,6 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 });
 
                 if (singleItem !== undefined && singleItem.length != 0) {
-                    console.log("Sammy routing");
-                    console.log(singleItem);
                     currentView(singleItem.component);
                 }
             });
@@ -364,9 +392,11 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             updateReviewTitle,
 
             /* User search */
-            searchPhrase,
             userSearchPhrase,
-            userLoadSearchHistory
+            userLoadSearchHistory,
+
+            search,
+            searchResult
 
         }
     });
