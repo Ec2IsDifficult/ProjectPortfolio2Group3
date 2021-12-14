@@ -7,29 +7,22 @@ namespace Dataservices.CRUDRepository
 {
     public class ImmutableRepository<TEntity> : IIMutableRepository<TEntity> where TEntity : class
     {
-        //Since the specific repositories need to inherit the functionality we need protected not private
-        protected readonly DbContext Context;
-
-        public ImmutableRepository(DbContext context)
+        protected readonly Func<DbContext> _contextFactory;
+        public ImmutableRepository(Func<DbContext> contextFactory)
         {
-            Context = context;
+            _contextFactory = contextFactory;
         }
-        
+
         public TEntity Get<T>(T id)
         {
-            //The .Set function return a DbSet<TEntity> for access by subclasses (specific repositories)
-            return Context.Set<TEntity>().Find(id);
+            var context = _contextFactory();
+            return context.Set<TEntity>().Find(id);
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return Context.Set<TEntity>().ToList();
-        }
-
-        //Figure out exactly what this does
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
-        {
-            return Context.Set<TEntity>().Where(predicate);
+            var context = _contextFactory();
+            return context.Set<TEntity>().ToList();
         }
     }
 }

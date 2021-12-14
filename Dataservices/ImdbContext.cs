@@ -42,6 +42,8 @@ namespace Dataservices
         public DbSet<MoviesByGenre> MoviesByGenres { get; set; }
         public DbSet<CoActors> CoActors { get; set; }
         
+        public DbSet<Genres> Genres { get; set; }
+
         public DbSet<BestMatchSearch> BestMatchSearches { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             base.OnConfiguring(optionsBuilder);
@@ -139,8 +141,8 @@ namespace Dataservices
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Plot).HasColumnName("plot");
             modelBuilder.Entity<ImdbTitleBasics>().Property(x => x.Awards).HasColumnName("awards");
             modelBuilder.Entity<ImdbTitleBasics>().HasKey(x => x.Tconst);
-            modelBuilder.Entity<ImdbTitleBasics>().
-                HasOne(x => x.Rating)
+            modelBuilder.Entity<ImdbTitleBasics>()
+                .HasOne(x => x.Rating)
                 .WithOne(/*x => x.Title*/)
                 .HasForeignKey<ImdbTitleRatings>(x => x.Tconst);
             modelBuilder.Entity<ImdbTitleBasics>()
@@ -275,6 +277,9 @@ namespace Dataservices
             modelBuilder.Entity<BestMatchSearch>().Property(x => x.Rank).HasColumnName("rank");
             modelBuilder.Entity<BestMatchSearch>().Property(x => x.BestTitle).HasColumnName("best_title");
             modelBuilder.Entity<BestMatchSearch>().HasNoKey();
+
+            modelBuilder.Entity<Genres>().Property(x => x.Genre).HasColumnName("genre");
+            modelBuilder.Entity<Genres>().HasNoKey();
         }
     }
 }

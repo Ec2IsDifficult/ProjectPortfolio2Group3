@@ -7,10 +7,21 @@
     let episodesUrl = "localhost:5001/api/episodes/"
     let genreUrl = "localhost:5001/api/genres/"
     let userUrl = "localhost:5001/api/url/"
-    let peopleUrl = "localhost:5001/api/person/"
+    
+    
+    let searchTitles = (callback, searchPhrase) => {
+        fetch(`${ApiConfig.ApiTitles}searchPhrase=${searchPhrase}`)
+            .then(response => response.json())
+            .then(json => callback(json));
+    }
 
-    let getMoviesBetween = (callback, startYear, endYear) => {
-        fetch(titlesUrl + "between/" + startYear + "/" + endYear)
+    let getMoviesBetween = (callback, startYear, endYear, ApiPath = null) => {
+        let path = "";
+        if(ApiPath != null)
+            path = ApiPath
+        else
+            path = ApiConfig.ApiTitles + "between/" + startYear + "/" + endYear
+        fetch(path)
             .then(response => response.json())
             .then(json => callback(json));
     }
@@ -51,14 +62,8 @@
             .then(json => callback(json));
     }
 
-    let getMovieByGenre = (callback, id) => {
-        fetch(genreUrl + id)
-            .then(response => response.json())
-            .then(json => callback(json));
-    }
-
-    let getAllGenres = (callback) => {
-        fetch(genreUrl)
+    let getMovieByGenre = (callback, moviename) => {
+        fetch(genreUrl + moviename)
             .then(response => response.json())
             .then(json => callback(json));
     }
@@ -91,6 +96,12 @@
         await fetch(`${ApiConfig.ApiRandomPeople}${amount}`)
             .then(response => response.json())
             .then(json => callback(json));
+    }
+    
+    let getAllGenres = function(callback) {
+        fetch(`${ApiConfig.ApiGenres}`)
+            .then(response => response.json())
+            .then(json => callback(json))
     }
 
     /**
@@ -181,8 +192,11 @@
     };
     
     
-    async function getTitlesByYear (year, callback) {
-    fetch("api/v1/titles/year/"+year)
+
+
+    async function getTitlesByYear (callback, year) {
+    fetch(`${ApiConfig.ApiTitleByYear}${year}`)
+
      .then(response => response.json())
      .then(json => callback(json))
     };
@@ -214,11 +228,12 @@
         getPoster: getPoster,
         getCast: getCast,
         primeProfessions: primeProfessions
-        /*
+
 
         getUserRating: getUserRatings,
         getRandomTitles: getRandomTitles,
         getRandomPeople: getRandomPeople,
+        searchTitles:searchTitles,
 
         /* from Janik
         getPerson,

@@ -7,17 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dataservices.Repository
 {
+    using System;
     using System.Threading.Tasks;
     using Domain.FunctionObjects;
 
     //Will inherit all functionality from the Repository class and a functionality contract from its specific interface
     public class PersonRepository : ImmutableRepository<ImdbNameBasics>, IPersonRepository
     {
-        // : base(context) to access the constructor from the parent class
-        public PersonRepository(ImdbContext context) : base(context)
+        
+        public PersonRepository(Func<DbContext> contextFactory) : base(contextFactory)
         {
-            
         }
+
         //in person controller
         public IEnumerable<ImdbKnownFor> GetKnowFor(string id)
         {
@@ -48,12 +49,6 @@ namespace Dataservices.Repository
         {
             var ctx = new ImdbContext();
             return ctx.ImdbNameBasics.FromSqlInterpolated($"select * from getRandomPeople({amount})");
-        }
-
-        //To cast the generic DbContext inherited from the parent class into an ImdbContext
-        public ImdbContext ImdbContext
-        {
-            get { return Context as ImdbContext; }
         }
     }
 }

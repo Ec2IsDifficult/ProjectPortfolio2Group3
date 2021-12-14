@@ -1,5 +1,7 @@
-define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "Sammy"],
-    function (ko, ds, auth, user, AppConfig, Sammy) {
+//import {publish} from "./services/pub-sub";
+
+define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "Sammy", "pubsub"],
+    function (ko, ds, auth, user, AppConfig, Sammy, Ps) {
 
 
         /**
@@ -43,12 +45,47 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 title: "Title logic page",
                 component: "title-logic-page",
                 hash: "#Titles",
+            },
+            {
+                title: "Person logic page",
+                component: "person-logic-page",
+                hash: "#People",
+            },
+            {
+                title: "Classics Page",
+                component: "classics-page",
+                hash: "#Classics",
+            },
+            {
+                title: "Search Result Page",
+                component: "search-result",
+                hash: "#SearchPage",
+            },
+            {
+                title: "Titles By Year Page",
+                component: "by-year-pages",
+                hash: "#FromYear",
             }
-
+            ,
+            {
+                title: "Search Result List",
+                component: "search-result-list",
+                hash: "#Search",
+            }
         ];
 
         let currentView = ko.observable(componentItems[0].component);
         let currentParams = ko.observable({});
+        
+        let searchResult = ko.observable("search-result")
+        
+        //let searchPhrase = document.getElementById("searchField");
+        let search = () => {
+            changeContent(componentItems.find(item => item.component === "search-result"));
+            //Ps.publish("search_result_publish", searchPhrase.value);
+        }
+        
+        
 
         
         
@@ -80,7 +117,6 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
 
         let reviewTitle = ko.observable("Best movie ever!");
 
-        let searchPhrase = ko.observable("Harry Potter");
 
         /**
          * Connecting from model (Rating a title) to data service
@@ -273,16 +309,40 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
 
         /*************************************************/
 
-        let singleItem = componentItems.find(item => item.hash == "#login");
+        let changeContent = (menuItem) => {
+            currentParams({});
+            window.location = menuItem.hash;
+        };
 
         Sammy(function () {
-            this.get('#:view', function () {
-                singleItem = componentItems.find(item => item.hash == "#" + this.params.view)
-                if (singleItem !== undefined || singleItem.length != 0) {
+            this.get('/#:view', function (eventContext) {
+
+                let hashLink = eventContext.path.split("#");
+
+                singleItem = componentItems.find(item => {
+                    return item.hash == "#" + hashLink[1];
+                });
+
+                if (singleItem !== undefined && singleItem.length != 0) {
                     currentView(singleItem.component);
                 }
             });
-        }).run(singleItem.hash);
+
+            this.get('', function () {
+                this.app.runRoute('get', '/#login')
+            });
+
+        }).run();
+
+        /*
+         *
+         * to use Sammy, in the component, call like this:
+         * replace "page-event-name" with the component name
+
+        vm.changeContent(vm.componentItems.find(item => item.component == "page-event-name"));
+
+        <a href="#hashes"....></a>
+        */
 
         /**
         * Public functions.
@@ -323,6 +383,7 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             appName,
             componentItems,
 
+            changeContent,
             currentView,
             currentParams,
 
@@ -342,9 +403,11 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             updateReviewTitle,
 
             /* User search */
-            searchPhrase,
             userSearchPhrase,
-            userLoadSearchHistory
+            userLoadSearchHistory,
+
+            search,
+            searchResult
 
         }
     });
