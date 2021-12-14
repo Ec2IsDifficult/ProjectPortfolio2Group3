@@ -1,4 +1,4 @@
-define(["knockout", "dataservice"], function (ko, ds) {
+define(["knockout", "dataservice", "viewmodel"], function (ko, ds, vm) {
     return function (params) {
         let randomTitles = ko.observableArray([]);
 
@@ -70,6 +70,12 @@ define(["knockout", "dataservice"], function (ko, ds) {
             console.log(prevPageUrl)
             execute(prevPageUrl)
         }
+        
+        let goToSpecificTitle = (tconst) => {
+            vm.changeContent(vm.componentItems.find(item => item.component === "titles-page"));
+            vm.currentParams(tconst);
+
+        }
 
         /**
          * Sourced from
@@ -92,7 +98,8 @@ define(["knockout", "dataservice"], function (ko, ds) {
             prevPage: prevPage,
             goToNextPage: goToNextPage,
             goToPrevPage: goToPrevPage,
-            showButtonDiv:showButtonDiv
+            showButtonDiv:showButtonDiv,
+            goToSpecificTitle:goToSpecificTitle,
         }
     }
 });
