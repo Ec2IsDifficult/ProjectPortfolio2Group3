@@ -13,7 +13,20 @@ define(["knockout", "dataservice"], function (ko, ds) {
                 if (data.data) {
 
                     return_data = data.data;
-                    console.log(return_data);
+
+                    /**
+                     * Check if image exists
+                     */
+                    for (var k in return_data) {
+                        exist = false;
+
+                        if (return_data[k].awards != null && return_data[k].awards != undefined && return_data[k].awards != 'N/A')
+                            exist = imageExists(return_data[k].awards);
+
+                        if (!exist) {
+                            return_data[k].awards = "image/plain-bg.jpeg";
+                        }
+                    }
 
                     randomTitles(data.data);
                     nextPage(data.nextPage)
@@ -29,9 +42,9 @@ define(["knockout", "dataservice"], function (ko, ds) {
                      */
                     for (var k in return_data) {
                         exist = false;
+
                         if (return_data[k].awards != null && return_data[k].awards != undefined && return_data[k].awards != 'N/A')
                             exist = imageExists(return_data[k].awards);
-                        console.log(exist)
 
                         if (!exist) {
                             return_data[k].awards = "image/plain-bg.jpeg";
