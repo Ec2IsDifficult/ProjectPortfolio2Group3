@@ -16,10 +16,14 @@ namespace ProjectPortfolioTesting
 
         public UserRepositoryTests()
         {
-            var _ctx = new ImdbContext();
-            _userRepository = new UserRepository(_ctx);
-            _personBookMarkRepository = new PersonBookMarkRepository(_ctx);
-            _titleBookMarkRepository = new TitleBookmarkRepository(_ctx);
+            _userRepository = new UserRepository(DbcontextFactory);
+            _personBookMarkRepository = new PersonBookMarkRepository(DbcontextFactory);
+            _titleBookMarkRepository = new TitleBookmarkRepository(DbcontextFactory);
+        }
+        
+        public ImdbContext DbcontextFactory() 
+        {
+            return new ImdbContext();
         }
 
         [Fact]

@@ -8,45 +8,44 @@ namespace Dataservices.CRUDRepository
 {
     public class MutableRepository<TEntity> : ImmutableRepository<TEntity>, IMutableRepository<TEntity> where TEntity : class
     {
-        public MutableRepository(DbContext context) : base(context)
+        public MutableRepository(Func<DbContext> contextFactory) : base(contextFactory)
         {
-           
         }
+
         public void Add(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
-            Context.SaveChanges();
+            var context = _contextFactory();
+            context.Set<TEntity>().Add(entity);
+            context.SaveChanges();
         }
         
         //We might not need to have this functionality at all
         public void AddAll(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().AddRange(entities);
-            Context.SaveChanges();
+            var context = _contextFactory();
+            context.Set<TEntity>().AddRange(entities);
+            context.SaveChanges();
         }
 
         public void Update(TEntity entity)
         {
-            Context.Set<TEntity>().Update(entity);
-            Context.SaveChanges();
+            var context = _contextFactory();
+            context.Set<TEntity>().Update(entity);
+            context.SaveChanges();
         }
 
         public void UpdateAll(IEnumerable<TEntity> entities)
         {
-            Context.Set<TEntity>().UpdateRange(entities);
-            Context.SaveChanges();
+            var context = _contextFactory();
+            context.Set<TEntity>().UpdateRange(entities);
+            context.SaveChanges();
         }
 
         public void Delete(TEntity entity)
         {
-            Context.Set<TEntity>().Remove(entity);
-            Context.SaveChanges();
-        }
-
-        public void DeleteAll(IEnumerable<TEntity> entities)
-        {
-            Context.Set<TEntity>().RemoveRange(entities);
-            Context.SaveChanges();
+            var context = _contextFactory();
+            context.Set<TEntity>().Remove(entity);
+            context.SaveChanges();
         }
     }
 }

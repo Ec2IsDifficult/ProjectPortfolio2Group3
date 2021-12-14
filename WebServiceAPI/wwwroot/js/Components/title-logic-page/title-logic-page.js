@@ -1,14 +1,13 @@
-define(["knockout", "dataservice"], function(ko, ds) {
+define(["knockout", "dataservice", "viewmodel"], function(ko, ds, vm) {
     return function(params) {
         let leftArrow = ko.observable("left-arrow");
         let rightArrow = ko.observable("right-arrow");
         let titleCardList = ko.observable("title-card-list")
         
         //Should contain function go to classics
-        /*let goToClassicsPage = () => {
+        let goToClassicsPage = () => {
             vm.changeContent(vm.componentItems.find(item => item.component === "classics-page"));
-        }*/
-        let goToClassicsPage = undefined;
+        }
         
         //Should contain function go to function by year
         //making a for loop 
@@ -18,22 +17,31 @@ define(["knockout", "dataservice"], function(ko, ds) {
             {year: 1950}, {year: 1960}, {year: 1970}, {year: 1980}, {year: 1990}, {year: 2000}, {year: 2010}, {year: 2020}
         ];
         
+        // go to titlesByYearPage
+        let goToTitlesByYearPage = (year) => {
+            console.log(year)
+            vm.changeContent(vm.componentItems.find(item => item.component === "by-year-pages"));
+        }
+        
+        
         //Should contain function go to by genre
         let genres = ko.observableArray([]);
-        ds.getAllGenres(data => genres(data));
+        ds.getAllGenres(data => genres(data.data));
         
         return {
             leftArrow:leftArrow,
             rightArrow:rightArrow,
-            
+
+            goToTitlesByYearPage: goToTitlesByYearPage,
             
             getMoviesBetween: ds.getMoviesBetween,
+            getTitlesByYear: ds.getTitlesByYear,
             titleCardList: titleCardList,
-            goToClassicsPage:goToClassicsPage,
+            goToClassicsPage: goToClassicsPage,
             
             
             yearlySections: yearlySections,
-            genres:genres
+            genres:genres,
         }
     }
 })

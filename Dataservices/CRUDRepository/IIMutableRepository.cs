@@ -9,8 +9,5 @@ namespace Dataservices.CRUDRepository
     {
         TEntity Get<T>(T id);
         IEnumerable<TEntity> GetAll();
-        
-        //The find function takes a predicate which is a lambda function "Expression<Func<TEntity, bool>>"
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
     }
 }

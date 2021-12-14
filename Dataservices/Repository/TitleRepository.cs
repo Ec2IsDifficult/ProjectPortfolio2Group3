@@ -1,5 +1,6 @@
 namespace Dataservices.Repository
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.Immutable;
     using System.Linq;
@@ -13,15 +14,21 @@ namespace Dataservices.Repository
 
     public class TitleRepository : ImmutableRepository<ImdbTitleBasics>, ITitleRepository
     {
-        public TitleRepository(ImdbContext context) :base(context)
+        
+        public TitleRepository(Func<DbContext> contextFactory) : base(contextFactory)
         {
             
         }
         //in titles controller
-        public IEnumerable<ImdbTitleBasics> GetTitlesByYear(int year)
-        {            
+        public IEnumerable<ImdbTitleBasics> GetTitlesByYear(int year, PaginationFilter paginationFilter)
+        {        
             var ctx = new ImdbContext();
-            return ctx.ImdbTitleBasics.Where(x => x.StartYear == year);
+            if(paginationFilter == null)
+                return ctx.ImdbTitleBasics.Where(x => x.StartYear == year);
+            
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return ctx.ImdbTitleBasics.Where(x => x.StartYear == year).Skip(skip).Take(paginationFilter.PageSize);
+
         }
         //in titles controller
         public ImdbTitleBasics GetCast(string id)
@@ -52,11 +59,17 @@ namespace Dataservices.Repository
         }
 
         //in titles controller
-        public IEnumerable<ImdbTitleBasics> GetTitlesBetween(int startYear, int endYear)
+        public IEnumerable<ImdbTitleBasics> GetTitlesBetween(int startYear, int endYear, PaginationFilter paginationFilter)
         {
             var ctx = new ImdbContext();
-            return ctx.ImdbTitleBasics.Where(x => x.StartYear >= startYear && x.StartYear <= endYear);
+            if(paginationFilter == null)
+                return ctx.ImdbTitleBasics.Where(x => x.StartYear >= startYear && x.StartYear <= endYear);
+            
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return ctx.ImdbTitleBasics.Where(x => x.StartYear >= startYear && x.StartYear <= endYear).Skip(skip)
+                .Take(paginationFilter.PageSize);
         }
+        
         //in titles controller
         public ImdbTitleBasics GetEpisodes(string id)
         {
@@ -73,11 +86,15 @@ namespace Dataservices.Repository
         
 
         //in titles controller
-        public IQueryable<MoviesByGenre> GetMoviesByGenre(string moviename)
+        public IQueryable<MoviesByGenre> GetMoviesByGenre(string moviename, PaginationFilter paginationFilter)
         {
 
             var ctx = new ImdbContext();
-            return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({moviename})");
+            if (paginationFilter == null)
+                return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({moviename})");
+            
+            var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
+            return ctx.MoviesByGenres.FromSqlInterpolated($"select * from similar_movies_genre({moviename})").Skip(skip).Take(paginationFilter.PageSize);
         }
 
         //
@@ -111,10 +128,11 @@ namespace Dataservices.Repository
             var ctx = new ImdbContext();
             return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()").Count();
         }
-
-        public ImdbContext ImdbContext
+        
+        public int NumberOfMoviesBetween(int startYear, int endYear)
         {
-            get { return Context as ImdbContext; }
+            var ctx = new ImdbContext();
+            return ctx.ImdbTitleBasics.Count(x => x.StartYear >= startYear && x.StartYear <= endYear);
         }
     }
 }

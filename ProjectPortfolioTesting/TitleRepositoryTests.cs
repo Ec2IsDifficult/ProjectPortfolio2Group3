@@ -13,12 +13,15 @@ namespace ProjectPortfolioTesting
     public class TitleRepositoryTests
     {
         private TitleRepository _titleRepository;
-        private ImdbContext _ctx; 
 
         public TitleRepositoryTests()
         {
-            _ctx = new ImdbContext();
-            _titleRepository = new TitleRepository(_ctx);
+            _titleRepository = new TitleRepository(DbcontextFactory);
+        }
+        
+        public ImdbContext DbcontextFactory() 
+        {
+            return new ImdbContext();
         }
         
         [Fact]
@@ -32,7 +35,7 @@ namespace ProjectPortfolioTesting
         [Fact]
         public void GetTitlesByYearTest()
         {
-            var titlesByYear = _titleRepository.GetTitlesByYear(1959);
+            var titlesByYear = _titleRepository.GetTitlesByYear(1959, null);
             Assert.Equal("The Twilight Zone",titlesByYear.First().PrimaryTitle);
             Assert.Equal("Where Is Everybody?",titlesByYear.Last().PrimaryTitle);
         }
@@ -64,7 +67,7 @@ namespace ProjectPortfolioTesting
         public void TestMoviesByGenre()
         {
             string movieName = "The Twilight Zone";
-            var otherMovies = _titleRepository.GetMoviesByGenre("The Twilight Zone");
+            var otherMovies = _titleRepository.GetMoviesByGenre("The Twilight Zone", null);
             //var otherMovies = _ctx.GetMoviesByGenre("The Twilight Zone");
             Assert.Contains(otherMovies, x => x.Tconst == "tt10220588");
             Assert.Contains(otherMovies, x => x.Tconst == "tt12624348");

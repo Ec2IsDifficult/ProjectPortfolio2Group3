@@ -36,6 +36,8 @@
     let ApiTitles = ApiPath + "titles/"
     
     let ApiGenres = ApiPath + "titles/genres/"
+    
+    let ApiTitleByYear = ApiPath + "titles/year/" 
 
     return {
         ApiUserLogin,
@@ -53,6 +55,7 @@
         ApiRandomTitles,
         ApiRandomPeople,
         ApiTitles,
-        ApiGenres
+        ApiGenres,
+        ApiTitleByYear
     }
 });

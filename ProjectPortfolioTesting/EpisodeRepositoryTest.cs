@@ -10,13 +10,16 @@ namespace ProjectPortfolioTesting
     public class EpisodeRepositoryTest
     {
         private EpisodeRepository _episodeRepository;
-        private ImdbContext _ctx;
 
 
         public EpisodeRepositoryTest( )
         {
-            _ctx = new ImdbContext();
-            _episodeRepository = new EpisodeRepository(_ctx);
+            _episodeRepository = new EpisodeRepository(DbcontextFactory);
+        }
+        
+        public ImdbContext DbcontextFactory() 
+        {
+            return new ImdbContext();
         }
 
         [Fact]
