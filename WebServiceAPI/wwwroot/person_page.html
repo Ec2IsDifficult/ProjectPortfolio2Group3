@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Page</title>
+    <link href="css/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<div>
+    <button data-bind="click: function(){getPerson();getKnownFor();getCoActors(); getPrimeProfessions();}" class="btn btn-primary">Find</button>
+    Find <input class="form-control" data-bind="value: selectedPerson" />
+</div>
+
+<div class="container">
+    <div class="row" data-bind="foreach:personData" style="font-size: 3vw">
+        <div class="col">
+            <span data-bind="text: name"></span>
+        </div>
+        <div class="col">
+            <span>&#9913;<span data-bind="text: birthYear"></span></span>
+        </div>
+        <div class="col" data-bind="visible: deathYear !== null">
+            <span>&#9904;<span data-bind="text: deathYear"></span></span>
+        </div>
+    </div>
+    <div class="row mt-2" data-bind="visible: professions ">
+        <span class="col">Professions: <span data-bind="text: professions"></span></span>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col" >
+            <div data-bind="if: availableKnownFor() === 'True'">
+                <span>Titles the actor is known for</span>
+                <table class="table">
+                    <thead>
+                    <tr><th>Name</th></tr>
+                    </thead>
+                    <tbody data-bind="foreach: knownfor">
+                    <tr>
+                        <td data-bind="text: title.primaryTitle"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div data-bind="if: availableKnownFor() === 'False'">
+                <span>No titles the actor is known for available..</span>
+            </div>
+        </div>
+        
+        <div class="col" >
+            <div data-bind="if: availableCoActors() === 'True'">
+                <span>Most frequent Co-Actors</span>
+            <table class="table">
+                <thead>
+                <tr><th>Name</th><th>Appearances together</th></tr>
+                </thead>
+                <tbody data-bind="foreach: coactors">
+                <tr>
+                    <td data-bind="text: coActorName"></td>
+                    <td data-bind="text: actCount"></td>
+                </tr>
+                </tbody>
+            </table>
+                </div>
+            <div data-bind="if: availableCoActors() === 'False'">
+                <span>No Co-Actors available.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script data-main="js/main.js" src="js/lib/requirejs/require.js"></script>
+</body>
+</html>

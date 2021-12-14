@@ -13,7 +13,7 @@ namespace Dataservices.IRepositories
         IEnumerable<ImdbKnownFor> GetKnowFor(string id);
         IEnumerable<CoActors> CoActors(string id);
         IEnumerable<ImdbNameBasics> GetPersonsByYear(int year);
-
+        IEnumerable<ImdbPrimeProfession> GetProfessions(string id);
         IEnumerable<ImdbNameBasics> GetRandomPeople(int amount);
     }
 }

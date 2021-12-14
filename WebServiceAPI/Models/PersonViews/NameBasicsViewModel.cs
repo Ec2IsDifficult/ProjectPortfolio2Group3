@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Dataservices.Domain;
+
 namespace WebServiceAPI.Models.PersonViews
 {
     public class NameBasicsViewModel
@@ -7,6 +10,7 @@ namespace WebServiceAPI.Models.PersonViews
         public string Name { get; set; }
         public int? BirthYear { get; set; }
         public int? DeathYear { get; set; }
+        public List<ImdbPrimeProfession> ImdbPrimeProfessions { get; set; }
     }
 
     public class CreateNameBasicsViewModel
@@ -15,5 +19,6 @@ namespace WebServiceAPI.Models.PersonViews
         public string Name { get; set; }
         public int? BirthYear { get; set; }
         public int? DeathYear { get; set; }
+        public List<ImdbPrimeProfession> ImdbPrimeProfessions { get; set; }
     }
 }

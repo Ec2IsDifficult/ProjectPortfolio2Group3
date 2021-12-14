@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using AutoMapper;
 using Dataservices.Domain;
 using Dataservices.Domain.FunctionObjects;
@@ -68,10 +69,23 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
-        [HttpGet("{name}/coactors")]
-        public IActionResult CoActors(string name)
+        [HttpGet("{id}/primeProfessions")]
+        public IActionResult GetProfessions(string id)
         {
-            var actors = _personService.CoActors(name);
+            var professions = _personService.GetProfessions(id);
+            if (professions == null)
+            {
+                return NotFound();
+            }
+
+            var model = professions.Select(CreateProfessionsViewModel);
+            return Ok(model);
+        }
+
+        [HttpGet("{id}/coactors")]
+        public IActionResult CoActors(string id)
+        {
+            var actors = _personService.CoActors(id);
             if (actors == null)
             {
                 return NotFound();
@@ -102,6 +116,12 @@ namespace WebServiceAPI.Controllers
             return Ok(model);
         }
 
+        public ProfessionsViewModel CreateProfessionsViewModel(ImdbPrimeProfession profession)
+        {
+            var model = _mapper.Map<ProfessionsViewModel>(profession);
+            model.Url = HttpContext.Request.GetDisplayUrl();
+            return model;
+        }
         public NameBasicsViewModel CreateNameBasicsViewModel(ImdbNameBasics actors)
         {
             var model = _mapper.Map<NameBasicsViewModel>(actors);
