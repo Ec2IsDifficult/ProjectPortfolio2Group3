@@ -37,9 +37,8 @@ namespace ProjectPortfolioTesting
         [Fact]
         public void GetUserRatingsTest()
         {
-            var user = _userRepository.GetRatings(1);
-            Assert.Contains(user.Ratings, x => x.Rating == 8);
-            Assert.Contains(user.Ratings, x => x.Rating == 5);
+            var user = _userRepository.GetRatings(2);
+            Assert.Contains(user.Ratings, x => x.Rating == 2);
         }
 
         [Fact]
@@ -56,19 +55,10 @@ namespace ProjectPortfolioTesting
         public void TestAddToSearchHistory()
         {
             var uid = 1;
-            string searchphrase  = "Asa Akira";
+            string searchphrase  = "Hello";
             _userRepository.AddToSearchHistory(uid, searchphrase);
         }
-        
-        [Fact]
-        public void TestRate()
-        {
-            var uid = 1;
-            string movieConst = "ttTEST";
-            int rating = 8;
-            _userRepository.Rate(uid, movieConst, rating);
-        }
-        
+
         [Fact]
         public void TestAddReview()
         {

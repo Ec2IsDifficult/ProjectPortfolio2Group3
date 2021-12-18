@@ -59,8 +59,8 @@ namespace ProjectPortfolioTesting
         public void GetRating()
         {
             var titles = _titleRepository.GetRating("tt9025492");
-            Assert.Equal(5411, titles.SumRating);
-            Assert.Equal(635, titles.NumVotes);
+            Assert.Equal(5491, titles.SumRating);
+            Assert.Equal(646, titles.NumVotes);
         }
 
         [Fact]

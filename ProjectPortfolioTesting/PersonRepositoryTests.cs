@@ -40,7 +40,7 @@ namespace ProjectPortfolioTesting
         [Fact]
         public void TestGetCoActors()
         {
-            var actors = _personRepository.CoActors("Lauren Bacall");
+            var actors = _personRepository.CoActors("nm0000002");
             Assert.Contains(actors, x => x.CoActorNconst == "nm0000173");
             Assert.Contains(actors, x => x.CoActorName == "Nicole Kidman");
         }

@@ -38,11 +38,5 @@ namespace ProjectPortfolioTesting
 
         }
         
-        [Fact]
-        public void TestGetEpisodeRating()
-        {
-            var res = _episodeRepository.GetEpisodeRating("tt11584286");
-            Assert.Contains(res, x => x.MainTitle.Rating.NumVotes == 635);
-        }
     }
 }
