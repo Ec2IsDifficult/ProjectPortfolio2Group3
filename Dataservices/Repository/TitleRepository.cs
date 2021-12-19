@@ -77,13 +77,6 @@ namespace Dataservices.Repository
             return ctx.ImdbTitleBasics.Include(x => x.Episodes).FirstOrDefault(x => x.Tconst == id);
         }
 
-        //in titles controller
-        public IEnumerable<ImdbTitleBasics> GetAdultMovies()
-        {
-            var ctx = new ImdbContext();
-            return ctx.ImdbTitleBasics.Where(x => x.IsAdult == true);
-        }
-        
 
         //in titles controller
         public IQueryable<MoviesByGenre> GetMoviesByGenre(string moviename, PaginationFilter paginationFilter)
@@ -120,7 +113,8 @@ namespace Dataservices.Repository
                 return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()");
 
             var skip = (paginationFilter.PageNumber - 1) * paginationFilter.PageSize;
-            return ctx.Genres.FromSqlInterpolated($"select * from getallgenres()").Skip(skip).Take(paginationFilter.PageSize);
+            var ret = ctx.Genres.FromSqlInterpolated($"select * from getallgenres()").Skip(skip).Take(paginationFilter.PageSize);
+            return ret;
         }
 
         public int NumberOfGenres()

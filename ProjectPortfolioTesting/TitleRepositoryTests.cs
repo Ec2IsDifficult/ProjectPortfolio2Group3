@@ -72,15 +72,5 @@ namespace ProjectPortfolioTesting
             Assert.Contains(otherMovies, x => x.Tconst == "tt10220588");
             Assert.Contains(otherMovies, x => x.Tconst == "tt12624348");
         }
-
-        [Fact]
-        public void TestGetAdultMovies()
-        {
-            var res = _titleRepository.GetAdultMovies();
-            Assert.Contains(res, x => x
-                .Tconst == "tt10666102" && x
-                .IsAdult == true && x
-                .PrimaryTitle == "Longwood goes deep into Amber Jayne") ;
-        }
     }
 }
