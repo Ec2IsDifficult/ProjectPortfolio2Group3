@@ -21,7 +21,6 @@ namespace ProjectPortfolioTesting
         private PersonRepository _personRepository;
         private TitleRepository _titleRepository;
         private UserRepository _userRepository;
-        private ImdbContext _ctx;
 
         public CrudRepositoryTest()
         {
@@ -63,15 +62,13 @@ namespace ProjectPortfolioTesting
         public void CreateUser()
         {
             CUser newUser = new CUser();
-            newUser.UserName = "TestUser";
-            newUser.Email = "TestUser@Test.dk";
-            newUser.Password = "Jajo";
+            newUser.UserName = "unittestuser";
+            newUser.Email = "unittestuser@unittestuser.dk";
+            newUser.Password = "password";
             _userRepository.Add(newUser);
-            _ctx.SaveChanges();
             CUser user = _userRepository.Get(newUser.UserId);
-            Assert.Equal("TestUser", user.UserName);
-            Assert.Equal("TestUser@Test.dk", newUser.Email);
-            Assert.Equal("Jajo", newUser.Password);
+            Assert.Equal("unittestuser", user.UserName);
+            Assert.Equal("unittestuser@unittestuser.dk", newUser.Email);
             _userRepository.Delete(newUser);
         }
 
@@ -83,11 +80,11 @@ namespace ProjectPortfolioTesting
             newUser.Email = "TestUser@Test.dk";
             newUser.Password = "Jajo";
             _userRepository.Add(newUser);
-            _ctx.SaveChanges();
+            //_ctx.SaveChanges();
             
             //Delete user
             _userRepository.Delete(newUser);
-            _ctx.SaveChanges();
+            //_ctx.SaveChanges();
             
             //Try to get user
             CUser user = _userRepository.Get(newUser.UserId);
@@ -106,14 +103,14 @@ namespace ProjectPortfolioTesting
             newUser.Email = "TestUser@Test.dk";
             newUser.Password = "Jajo";
             _userRepository.Add(newUser);
-            _ctx.SaveChanges();
+            //_ctx.SaveChanges();
             
             //Update user
             newUser.UserName = "ChangedNameForUser";
             newUser.Email = "TestUser@Test.dk";
             newUser.Password = "JajoJajo";
             _userRepository.Update(newUser);
-            _ctx.SaveChanges();
+            //_ctx.SaveChanges();
             
             //Get the user and test
             CUser user = _userRepository.Get(newUser.UserId);
@@ -121,7 +118,7 @@ namespace ProjectPortfolioTesting
             Assert.Equal("TestUser@Test.dk", newUser.Email);
             Assert.Equal("JajoJajo", newUser.Password);
             _userRepository.Delete(newUser);
-            _ctx.SaveChanges();
+            //_ctx.SaveChanges();
         }
     }
 }

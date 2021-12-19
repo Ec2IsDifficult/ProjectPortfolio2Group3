@@ -235,6 +235,7 @@
         getRandomPeople: getRandomPeople,
         searchTitles:searchTitles,
 
+        //TODO: Delete
         /* from Janik
         getPerson,
         getAllPersons,

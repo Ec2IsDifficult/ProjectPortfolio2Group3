@@ -10,7 +10,7 @@ namespace Dataservices.IRepositories
         public CUser GetReviews(int id);
         CUser GetRatings(int id);
         CUser GetSearchHistory(int id);
-        void Rate(int uid, string movieConst, int rating);
+        void Rate(string uid, string movieConst, int rating);
         void AddReview(int uid, string movieConst, string review);
         void AddToSearchHistory(int uid, string searchstring);
         void BookmarkPerson(string nConst, int uid, bool alreadyMarked);
