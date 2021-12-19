@@ -210,7 +210,7 @@ namespace WebServiceAPI.Controllers
             {
                 try
                 {
-                    _userService.Rate(Int32.Parse(user_id), rating.Tconst, rating.Rating);
+                    _userService.Rate(user_id, rating.Tconst, rating.Rating);
                     return Created("Success", rating);
                 }
                 catch

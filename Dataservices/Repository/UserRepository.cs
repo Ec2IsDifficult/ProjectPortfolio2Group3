@@ -36,7 +36,7 @@ namespace Dataservices.Repository
         }
         
         //implemented in user controller
-        public void Rate(int uid, string movieConst, int rating)
+        public void Rate(string uid, string movieConst, int rating)
         {
             var ctx = new ImdbContext();
             ctx.Database.ExecuteSqlInterpolated($"select * from rate({uid}, {movieConst}, {rating})");
