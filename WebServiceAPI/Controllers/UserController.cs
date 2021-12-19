@@ -99,14 +99,6 @@ namespace WebServiceAPI.Controllers
         [HttpGet("searchhistory")]
         public IActionResult GetSearchHistory()
         {
-            //var history = _userService.GetSearchHistory(id);
-            //if (history == null)
-            //{
-            //    return NotFound("no previous searches");
-            //}
-
-            //var model = CreateSearchHistoryViewModel(history);
-            //return Ok(model);
 
             var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
 
@@ -136,31 +128,71 @@ namespace WebServiceAPI.Controllers
             return BadRequest("No user information found from the token.");
         }
 
-        [HttpGet("{id}/bookmarks/titles")]
-        public IActionResult GetTitleBookmarksByUser(int id)
+        [Authorization]
+        [HttpGet("bookmarks/titles")]
+        public IActionResult GetTitleBookmarksByUser()
         {
-            var marks = _userService.GetTitleBookmarksByUser(id);
-            if (marks == null)
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
+
+            var auth = new AuthenticateResponse(_configuration);
+
+            string user_id = auth.AuthenticateJwtToken(token);
+
+            if (user_id.Length > 0 && user_id != "0")
             {
-                return NotFound();
+                try
+                {
+                    var marks = _userService.GetTitleBookmarksByUser(Int32.Parse(user_id));
+                    if (marks == null)
+                    {
+                        return NotFound("No bookmark found");
+                    }
+
+                    var model = marks.Select(CreateBookmarkTitleViewModel);
+                    return Ok(model);
+                }
+                catch
+                {
+                    return BadRequest("No bookmark found.");
+                }
             }
 
-            var model = marks.Select(CreateBookmarkTitleViewModel);
-            return Ok(model);
+            return BadRequest("No user information found from the token.");
+
         }
 
-        //in user controller
-        [HttpGet("{id}/bookmarks/person")]
+        [Authorization]
+        [HttpGet("bookmarks/person")]
         public IActionResult GetPersonBookmarksByUser(int id)
         {
-            var persons = _userService.GetPersonBookmarksByUser(id);
-            if (persons == null)
+
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last().ToString();
+
+            var auth = new AuthenticateResponse(_configuration);
+
+            string user_id = auth.AuthenticateJwtToken(token);
+
+            if (user_id.Length > 0 && user_id != "0")
             {
-                return NotFound();
+                try
+                {
+                    var persons = _userService.GetPersonBookmarksByUser(Int32.Parse(user_id));
+                    if (persons == null)
+                    {
+                        return NotFound("No bookmark found");
+                    }
+
+                    var model = persons.Select(CreateBookmarkPersonViewModel);
+                    return Ok(model);
+                }
+                catch
+                {
+                    return BadRequest("No bookmark found.");
+                }
             }
 
-            var model = persons.Select(CreateBookmarkPersonViewModel);
-            return Ok(model);
+            return BadRequest("No user information found from the token.");
+
         }
 
         [Authorization]

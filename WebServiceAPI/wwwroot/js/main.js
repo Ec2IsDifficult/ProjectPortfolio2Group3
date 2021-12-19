@@ -57,8 +57,20 @@ require(['knockout'], (ko) => {
         "titles-page",
         "person-page"
     ]
+
+    let user_bookmark = [
+        "bookmark-title",
+        "bookmark-person"
+    ]
     
-    let components = component_auth.concat(component_front_page, component_title_logic_page, component_person_logic_page, component_search_result, titles_person_result);
+    let components = component_auth.concat(
+        component_front_page,
+        component_title_logic_page,
+        component_person_logic_page,
+        component_search_result,
+        titles_person_result,
+        user_bookmark);
+
     components.forEach(registerComponent);
 
     function registerComponent(component_name) {

@@ -70,14 +70,14 @@ namespace Dataservices.Repository
         public IEnumerable<CBookmarkTitle> GetTitleBookmarksByUser(int id)
         {
             var ctx = new ImdbContext();
-            return ctx.CBookmarkTitle.Where(x => x.UserId == id);
+            return ctx.CBookmarkTitle.Include(x => x.Title).Where(x => x.UserId == id);
         }
 
         //in user controller
         public IEnumerable<CBookmarkPerson> GetPersonBookmarksByUser(int id)
         {
             var ctx = new ImdbContext();
-            return ctx.CBookmarkPerson.Where(x => x.UserId == id);
+            return ctx.CBookmarkPerson.Include(x => x.Name).Where(x => x.UserId == id);
 
         }
 

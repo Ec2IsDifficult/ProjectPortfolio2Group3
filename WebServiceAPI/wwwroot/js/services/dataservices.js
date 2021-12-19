@@ -1,4 +1,4 @@
-﻿define(["ApiConfig"], (ApiConfig) => {
+﻿define(["ApiConfig", "authservice"], (ApiConfig, auth) => {
 
     /**
      * From Rasmus
@@ -142,7 +142,7 @@
     };
     
     
-    function personYear (year, callback) {
+    function personYear(year, callback) {
     fetch("api/v1/person/year/"+year)
      .then(response => response.json())
      .then(json => callback(json))
@@ -184,23 +184,132 @@
      .then(json => callback(json))
     };
     
-    
     async function getTitleRating (tconst, callback) {
     fetch("api/v1/titles/"+tconst+"/rating")
      .then(response => response.json())
      .then(json => callback(json))
     };
     
-    
-
-
     async function getTitlesByYear (callback, year) {
     fetch(`${ApiConfig.ApiTitleByYear}${year}`)
 
      .then(response => response.json())
      .then(json => callback(json))
     };
-    
+
+    /**
+    * API getUserBookmarkedTitles
+    * Returns status (201, 400, 401, 405)
+    * Returns statusText
+    * @param {Function} callback
+    */
+    function getUserBookmarkedTitles(callback) {
+
+        token = auth.imdb_auth.getCookie("token");
+
+        let param = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        }
+
+        console.log("Calling: User services - Get bookmarked titles");
+
+        fetch(ApiConfig.ApiUserBoookmarkedTitles, param)
+            .then(function (result) {
+
+                console.log(result.status);
+
+                // Success
+                if (result.status == "200") {
+                    console.log(result.statusText);
+                    result.text().then(function (text) {
+                        console.log(text);
+                        callback(JSON.parse(text));
+                    });
+                }
+
+                // Bad request
+                if (result.status == "400") {
+                    console.log(result.statusText);
+                    result.text().then(function (text) {
+                        console.log(text);
+                        callback(text);
+                    });
+                }
+
+                // Unauthorized
+                if (result.status == "401") {
+                    console.log(result.statusText);
+                    callback(result.statusText);
+                }
+
+                // Methods not allowed
+                if (result.status == "405") {
+                    console.log(result.statusText);
+                    callback(result.statusText);
+                }
+            });
+    };
+
+    /**
+    * API getUserBookmarkedTitles
+    * Returns status (201, 400, 401, 405)
+    * Returns statusText
+    * @param {Function} callback
+    */
+    function getUserBookmarkedPerson(callback) {
+
+        token = auth.imdb_auth.getCookie("token");
+
+        let param = {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            }
+        }
+
+        console.log("Calling: User services - Get bookmarked person");
+
+        fetch(ApiConfig.ApiUserBoookmarkedPerson, param)
+            .then(function (result) {
+
+                console.log(result.status);
+
+                // Success
+                if (result.status == "200") {
+                    console.log(result.statusText);
+                    result.text().then(function (text) {
+                        console.log(text);
+                        callback(JSON.parse(text));
+                    });
+                }
+
+                // Bad request
+                if (result.status == "400") {
+                    console.log(result.statusText);
+                    result.text().then(function (text) {
+                        console.log(text);
+                        callback(text);
+                    });
+                }
+
+                // Unauthorized
+                if (result.status == "401") {
+                    console.log(result.statusText);
+                    callback(result.statusText);
+                }
+
+                // Methods not allowed
+                if (result.status == "405") {
+                    console.log(result.statusText);
+                    callback(result.statusText);
+                }
+            });
+    };
 
 
     return {
@@ -233,7 +342,10 @@
         getUserRating: getUserRatings,
         getRandomTitles: getRandomTitles,
         getRandomPeople: getRandomPeople,
-        searchTitles:searchTitles,
+        searchTitles: searchTitles,
+
+        getUserBookmarkedTitles,
+        getUserBookmarkedPerson
 
         /* from Janik
         getPerson,

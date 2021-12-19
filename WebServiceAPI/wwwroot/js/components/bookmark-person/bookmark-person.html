@@ -1,0 +1,31 @@
+<hr class="my-4">
+
+<div>
+    <h4>Bookmarked Person</h4>
+</div>
+
+<hr class="my-4">
+
+<!-- ko if: bookmarkedPerson().length > 0 -->
+<div>
+    <div class="row" data-bind="foreach: bookmarkedPerson" style="font-size: 3vw">
+        <div class="col">
+            <span data-bind="text: name.name"></span>
+        </div>
+        <div class="col">
+            <span>&#9913;<span data-bind="text: name.birthYear"></span></span>
+        </div>
+        <div class="col" data-bind="visible: name.deathYear !== null">
+            <span>&#9904;<span data-bind="text: name.deathYear"></span></span>
+        </div>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko ifnot: bookmarkedPerson().length > 0 -->
+<div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+    <div class="card text-white bg-primary mb-3"
+         style="margin: 20px; width: 100%; cursor: pointer">
+        You haven't made any bookmark.
+    </div>
+</div>
+<!-- /ko -->

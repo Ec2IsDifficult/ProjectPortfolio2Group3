@@ -76,8 +76,7 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 title: "Titles By Year Page",
                 component: "by-year-pages",
                 hash: "#FromYear",
-            }
-            ,
+            },
             {
                 title: "Search Result List",
                 component: "search-result-list",
@@ -92,8 +91,18 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
                 title: "Person Page",
                 component: "person-page",
                 hash: "#person"
+            },
+            {
+                title: "Bookmarked Titles",
+                component: "bookmark-title",
+                hash: "#bookmarktitle"
+            },
+            {
+                title: "Bookmarked Person",
+                component: "bookmark-person",
+                hash: "#bookmarkperson"
             }
-            
+
         ];
 
         // Main view
@@ -102,14 +111,14 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
 
         // Main parameters
         let currentParams = ko.observable({});
-        
+
         let searchResult = ko.observable("search-result");
-        
+
         let search = () => {
             changeContent(componentItems.find(item => item.component === "search-result"));
             //Ps.publish("search_result_publish", searchPhrase.value);
         }
-        
+
         // Component: Login
         c = componentItems.find(item => item.component == "user-login");
         let loginPage = ko.observable(c.component);
@@ -117,12 +126,10 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
         // Component: Update email
         c = componentItems.find(item => item.component == "user-update-email");
         let updateEmailComponent = ko.observable(c.component);
-        
+
         // Component: Update password
         c = componentItems.find(item => item.component == "user-update-password");
         let updatePasswordComponent = ko.observable(c.component);
-
-        
 
         /**
         * Connecting from model (logout) to data service
@@ -204,12 +211,12 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             console.log(data.$values[0]);
             persons(data.$values[11]);
         });*/
-        
+
         let selectedPerson = ko.observable('tt1954874');
         //'tt1954874'
-        
 
-  
+
+
         let personsbyyear = ko.observable([]);
 
         let getPersonByYear = () => {
@@ -219,13 +226,6 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             })
         };
 
-
-
-
-
-      
-
-        //let posterHeight = ko.observable(document.getElementById("PosterDiv").clientHeight);
         let titlesbyyear = ko.observable([]);
 
         let getTitlesByYear = () => {
@@ -257,13 +257,12 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             });
 
             this.get('', function () {
-                this.app.runRoute('get', '/#Frontpage')
+                this.app.runRoute('get', '/#FrontPage')
             });
 
         }).run();
 
         /*
-         *
          * to use Sammy, in the component, call like this:
          * replace "page-event-name" with the component name
 
@@ -281,15 +280,9 @@ define(["knockout", "dataservice", "authservice", "userservice", "AppConfig", "S
             selectedPerson,
             getPersonByYear,
             personsbyyear,
-            
-            
 
-            /*titles*/
-           // posterHeight,
-            
             titlesbyyear,
             getTitlesByYear,
-            
 
             appName,
             componentItems,

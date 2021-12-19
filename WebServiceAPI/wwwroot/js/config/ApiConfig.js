@@ -29,15 +29,19 @@
 
     let ApiUserSearchHistory = ApiPath + "user/searchhistory";
     
-    let ApiRandomTitles = ApiPath + "titles/random/"
+    let ApiRandomTitles = ApiPath + "titles/random/";
     
-    let ApiRandomPeople = ApiPath + "person/random/"
+    let ApiRandomPeople = ApiPath + "person/random/";
     
-    let ApiTitles = ApiPath + "titles/"
+    let ApiTitles = ApiPath + "titles/";
     
-    let ApiGenres = ApiPath + "titles/genres/"
+    let ApiGenres = ApiPath + "titles/genres/";
     
-    let ApiTitleByYear = ApiPath + "titles/year/" 
+    let ApiTitleByYear = ApiPath + "titles/year/";
+
+    let ApiUserBoookmarkedTitles = ApiPath + "user/bookmarks/titles";
+
+    let ApiUserBoookmarkedPerson = ApiPath + "user/bookmarks/person";
 
     return {
         ApiUserLogin,
@@ -56,6 +60,9 @@
         ApiRandomPeople,
         ApiTitles,
         ApiGenres,
-        ApiTitleByYear
+        ApiTitleByYear,
+
+        ApiUserBoookmarkedTitles,
+        ApiUserBoookmarkedPerson
     }
 });
