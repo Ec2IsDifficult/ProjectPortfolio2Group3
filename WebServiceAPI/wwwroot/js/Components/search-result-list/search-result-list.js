@@ -1,10 +1,16 @@
-define(["knockout", "viewmodel"], function(ko, vw){
+define(["knockout", "viewmodel", "viewmodel"], function(ko, vm){
     return function(params) {
-        let test = ko.observableArray(params);
-        console.log("I am also here")
+        let results = ko.observableArray(params);
+        console.log(results())
 
+        let goToSpecificTitle = (tconst) => {
+            vm.changeContent(vm.componentItems.find(item => item.component === "titles-page"));
+            vm.currentParams(tconst);
+
+        }
         return {
-            test
+            results,
+            goToSpecificTitle:goToSpecificTitle
         }
     }    
 });

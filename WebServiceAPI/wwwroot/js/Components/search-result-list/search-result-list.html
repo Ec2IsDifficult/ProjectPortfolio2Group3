@@ -1,3 +1,13 @@
-<div data-bind="foreach: test">
-    <span data-bind="text: bestTitle"></span>
+<div>
+    <table class="table">
+        <thead>
+        <tr><th>Title</th></tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+        <tr>
+            <td style="cursor:pointer" data-bind="text: bestTitle, click: $parent.goToSpecificTitle.bind(this, bestTconst)"></td>
+            
+        </tr>
+        </tbody>
+    </table>
 </div>
