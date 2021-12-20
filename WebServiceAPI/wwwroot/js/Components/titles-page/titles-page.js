@@ -1,8 +1,9 @@
 define(["knockout", "dataservice", "viewmodel"],
     function (ko, ds, vm) {
         return function (params) {
-            //let selectedTitle = ko.observable(params);
-            let selectedTitle = ko.observable('tt1954874');
+            let selectedTitle = ko.observable(params);
+            
+            //let selectedTitle = ko.observable('tt1954874');
 
             let cast = ko.observable([]);
 
@@ -47,17 +48,19 @@ define(["knockout", "dataservice", "viewmodel"],
             };
 
             let posterHeight = ko.observable();
-
-
+            
             /**
              * Sourced from
              * https://stackoverflow.com/questions/106828/javascript-get-image-height
              */
             let getImgSize = function (imgSrc) {
                 console.log(imgSrc)
-                var newImg = new Image();
+                let newImg = new Image();
                 newImg.addEventListener("load", function () {
-                    posterHeight(this.naturalHeight);
+                    let first = document.querySelector('#firstrow').scrollHeight;
+                    let second = document.querySelector('#secondrow').scrollHeight;
+                    let third = document.querySelector('#thirdrow').scrollHeight;
+                    posterHeight(this.naturalHeight - first - second -third);
                     //alert(this.naturalWidth + ' ' + this.naturalHeight);
                 });
                 newImg.src = imgSrc;

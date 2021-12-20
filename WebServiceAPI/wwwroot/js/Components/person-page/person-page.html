@@ -1,17 +1,13 @@
-<!--<div>
-    <button data-bind="click: }" class="btn btn-primary">Find</button>
-    Find <input class="form-control" data-bind="value: selectedPerson" />
-</div>-->
 
 <div class="container">
     <div class="row" data-bind="foreach:personData" style="font-size: 3vw">
-        <div class="col">
+        <div class="col-lg-6 col-md-auto col-sm-auto">
             <span data-bind="text: name"></span>
         </div>
-        <div class="col">
+        <div class="col-lg-3 col-md-auto col-sm-auto" data-bind="visible:birthYear">
             <span>&#9913;<span data-bind="text: birthYear"></span></span>
         </div>
-        <div class="col" data-bind="visible: deathYear !== null">
+        <div class="col-lg-3 col-md-auto col-sm-auto" data-bind="visible: deathYear">
             <span>&#9904;<span data-bind="text: deathYear"></span></span>
         </div>
     </div>
@@ -20,7 +16,7 @@
     </div>
     
     <div class="row mt-5">
-        <div class="col" >
+        <div class="col-lg-6 col-md-auto col-sm-auto" >
             <div data-bind="if: availableKnownFor() === 'True'">
                 <span>Titles the actor is known for</span>
                 <table class="table">
@@ -39,9 +35,9 @@
             </div>
         </div>
         
-        <div class="col" >
+        <div class="col-lg-6 col-md-auto col-sm-auto" >
             <div data-bind="if: availableCoActors() === 'True'">
-                <span>Most frequent Co-Actors</span>
+                <span>5 Most frequent Co-Actors</span>
             <table class="table">
                 <thead>
                 <tr><th>Name</th><th>Appearances together</th></tr>
